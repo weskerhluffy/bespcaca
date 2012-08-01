@@ -1,0 +1,504 @@
+package mx.ipn.escom.cdt.besp.controller;
+
+import java.util.List;
+
+import javax.inject.Named;
+import javax.servlet.http.HttpServletRequest;
+
+import mx.ipn.escom.cdt.besp.modelo.Estructura;
+import mx.ipn.escom.cdt.besp.modelo.Nivel;
+import mx.ipn.escom.cdt.besp.modelo.Nodo;
+import mx.ipn.escom.cdt.besp.modelo.Periodo;
+import mx.ipn.escom.cdt.besp.modelo.Programa;
+import mx.ipn.escom.cdt.besp.modelo.Usuario;
+import mx.ipn.escom.cdt.besp.negocio.EstructuraNegocio;
+import mx.ipn.escom.cdt.besp.negocio.NivelNegocio;
+import mx.ipn.escom.cdt.besp.negocio.PeriodoNegocio;
+import mx.ipn.escom.cdt.besp.negocio.ProgramaNegocio;
+import mx.ipn.escom.cdt.besp.negocio.UsuarioNegocio;
+import mx.ipn.escom.cdt.besp.util.NombreObjetosSesion;
+
+import org.apache.log4j.Logger;
+import org.apache.struts2.convention.annotation.Result;
+import org.apache.struts2.convention.annotation.Results;
+import org.apache.struts2.interceptor.validation.SkipValidation;
+import org.apache.struts2.rest.DefaultHttpHeaders;
+import org.apache.struts2.rest.HttpHeaders;
+import org.directwebremoting.WebContext;
+import org.directwebremoting.WebContextFactory;
+import org.directwebremoting.annotations.RemoteMethod;
+import org.directwebremoting.annotations.RemoteProxy;
+
+import com.opensymphony.xwork2.ActionContext;
+import com.opensymphony.xwork2.ActionSupport;
+import com.opensymphony.xwork2.ModelDriven;
+import com.opensymphony.xwork2.validator.annotations.RegexFieldValidator;
+import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
+import com.opensymphony.xwork2.validator.annotations.Validations;
+import com.opensymphony.xwork2.validator.annotations.ValidatorType;
+
+@Named
+@Results({
+		@Result(name = "success", type = "redirectAction", params = {
+				"actionName", "catalogo-estructura" }),
+		@Result(name = "sinNivel", location = "catalogo-estructura/index.jsp") })
+@RemoteProxy
+public class CatalogoEstructuraController extends ActionSupport implements
+		ModelDriven<Estructura> {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2435993624471516075L;
+	private Logger logger = Logger
+			.getLogger(CatalogoEstructuraController.class);
+	private UsuarioNegocio usuarioNegocio;
+
+	public static final int BANDERA_DURACION = 0;
+	public static final int BANDERA_FECHA = 1;
+	public static final int BANDERA_INDEFINIDO = 2;
+	private EstructuraNegocio estructuraNegocio;
+	private ProgramaNegocio programaNegocio;
+	private PeriodoNegocio periodoNegocio;
+	private NivelNegocio nivelNegocio;
+	private Integer idSel;
+	private Estructura model;
+	private Programa programaSel;
+	private Estructura estructuraPadreSel;
+	private String ruta;
+	private Integer banderaTipoPeriodo;
+	private Integer idEstructuraPadreSel;
+	private Nivel nivelEstructuraSel;
+	private Nodo nodoRestrictivo;
+
+	@SkipValidation
+	public HttpHeaders index() {
+		ActionContext.getContext().getSession()
+				.remove(NombreObjetosSesion.ESTRUCTURA_PADRE);
+		return new DefaultHttpHeaders("index").disableCaching();
+	}
+
+	public String editNew() {
+		List<Nivel> niveles;
+		logger.trace("En editNew");
+		estructuraPadreSel = (Estructura) ActionContext.getContext()
+				.getSession().get(NombreObjetosSesion.ESTRUCTURA_PADRE);		
+		programaSel = ((Usuario) ActionContext.getContext().getSession()
+				.get(NombreObjetosSesion.USUARIO)).getProgramas().get(0);
+		if (idEstructuraPadreSel != null) {
+			estructuraPadreSel = estructuraNegocio
+					.findById(idEstructuraPadreSel);
+			ActionContext
+					.getContext()
+					.getSession()
+					.put(NombreObjetosSesion.ESTRUCTURA_PADRE,
+							estructuraPadreSel);
+		}
+
+		if (estructuraPadreSel != null) {
+
+			ruta = estructuraNegocio.getRuta(programaSel.getId());
+
+			nivelEstructuraSel = new Nivel();
+			nivelEstructuraSel.setIdPrograma(programaSel.getId());
+			nivelEstructuraSel.setPosicion(estructuraPadreSel.getIdNivel() + 1);
+			niveles = nivelNegocio.findByExample(nivelEstructuraSel);
+
+			model.setPrograma(programaSel);
+			model.setIdNivel(estructuraPadreSel.getIdNivel() + 1);
+			if (!estructuraNegocio.validarNivel(model)) {
+				addActionError("No se puede crear por que excede el nivel de profundidad definido por el programa");
+				return "sinNivel";
+			}
+
+			logger.trace("Nombre de la estr sel: "
+					+ estructuraPadreSel.getNombre() + " nivel nombre: "
+					+ niveles.get(0).getNombre() + " nivel"
+					+ niveles.get(0).getPosicion());
+
+			ActionContext.getContext().getSession()
+					.put(NombreObjetosSesion.NIVEL_ESTRUCTURA, niveles.get(0));
+			logger.trace("Se subio a sesion nivel de padre " + niveles.get(0));
+			ruta = estructuraNegocio.getRuta(idEstructuraPadreSel);
+			ActionContext.getContext().getSession()
+					.put(NombreObjetosSesion.MIGAJAS_ESTRUCTURA, ruta);
+			model.setNodoPadre(estructuraPadreSel);
+
+		} else {
+			if (!programaNegocio.tieneNiveles(programaSel)) {
+				addActionError("El programa seleccionado debe tener niveles seleccionados");
+				return "sinNivel";
+			}
+			ruta = programaSel.getNombre();
+			model.setNodoPadre(programaSel);
+			ActionContext
+					.getContext()
+					.getSession()
+					.put(NombreObjetosSesion.NIVEL_ESTRUCTURA,
+							programaSel.getNiveles().get(0));
+			ruta = programaSel.getNombre();
+			ActionContext.getContext().getSession()
+					.put(NombreObjetosSesion.MIGAJAS_ESTRUCTURA, ruta);
+		}
+
+		nodoRestrictivo = periodoNegocio
+				.getNodoPadreConPeriodoRestrictivo(model);
+
+		ActionContext
+				.getContext()
+				.getSession()
+				.put(NombreObjetosSesion.NODO_CON_PERIODO_RESTRICTIVO,
+						nodoRestrictivo);
+		banderaTipoPeriodo = BANDERA_INDEFINIDO;
+
+		return "editNew";
+	}
+
+	public String show() {
+		return "show";
+	}
+
+	public void validateCreate() {
+		logger.trace("Validando la creación");
+		Nodo nodoPadre = null;
+
+		nodoPadre = (Nodo) ActionContext.getContext().getSession()
+				.get(NombreObjetosSesion.ESTRUCTURA_PADRE);
+		if (nodoPadre == null) {
+			nodoPadre = ((Usuario) ActionContext.getContext().getSession()
+					.get(NombreObjetosSesion.USUARIO)).getProgramas().get(0);
+		}
+		nivelEstructuraSel = (Nivel) ActionContext.getContext().getSession()
+				.get(NombreObjetosSesion.NIVEL_ESTRUCTURA);
+
+		model.setIdNivel(nivelEstructuraSel.getPosicion());
+		logger.trace("El nivel de la estructura es " + nivelEstructuraSel);
+
+		model.setIdPadre(nodoPadre.getClass().equals(Estructura.class) ? ((Estructura) nodoPadre)
+				.getIdEstructura() : null);
+		model.setEstructuraPadre(nodoPadre.getClass().equals(Estructura.class) ? (Estructura) nodoPadre
+				: null);
+
+		if (model.getPeriodo() == null) {
+			model.setPeriodo(new Periodo());
+		}
+
+		model.setPrograma(((Usuario) ActionContext.getContext().getSession()
+				.get(NombreObjetosSesion.USUARIO)).getProgramas().get(0));
+
+		if (!estructuraNegocio.validarNivel(model)) {
+			addActionError("No se puede crear por que excede el nivel de profundidad definido por el programa");
+		}
+
+		if (banderaTipoPeriodo != null) {
+			switch (banderaTipoPeriodo) {
+			case BANDERA_DURACION:
+				if (model.getPeriodo().getDuracion() == null) {
+					addActionError("La duración debe ser indroducida");
+				}
+				break;
+			case BANDERA_FECHA:
+				if (model.getPeriodo().getFechaFin() == null) {
+					addActionError("La fecha final debe ser indroducida");
+				}
+				if (model.getPeriodo().getFechaInicio() == null) {
+					addActionError("La fecha inicial debe ser indroducida");
+				}
+				break;
+			case BANDERA_INDEFINIDO:
+				break;
+			default:
+				break;
+			}
+		} else {
+			addActionError(getText("banderaTipoPeriodo"));
+		}
+
+		if (!periodoNegocio.validaPeriodo(model)) {
+			addActionError("El periodo entra en conflicto con los ancestros de esta estructura");
+		}
+		if (!periodoNegocio.validaBienFormado(model.getPeriodo())) {
+			addActionError("El periodo no esta bien formado");
+		}
+		if (!estructuraNegocio.validaNombreUnico(model)) {
+			addActionError(getText("validaNombreUnicoEstructura"));
+		}
+
+	}
+
+	@Validations(requiredStrings = {
+			@RequiredStringValidator(fieldName = "model.nombre", type = ValidatorType.SIMPLE, key = "Datos incompletos"),
+			@RequiredStringValidator(fieldName = "model.nombre", type = ValidatorType.SIMPLE, key = "introNombre"),
+			@RequiredStringValidator(fieldName = "model.descripcion", type = ValidatorType.SIMPLE, key = "introDescrip") }, regexFields = {
+			@RegexFieldValidator(fieldName = "model.nombre", type = ValidatorType.SIMPLE, expression = "[A-Za-zÑñÁÉÍÓÚáéíóúÜü]([A-Za-zÑñÁÉÍÓÚáéíóúÜü0-9.,/#]|\\s|\\-){1,50}", key = "nombreError.max50"),
+			@RegexFieldValidator(fieldName = "model.descripcion", type = ValidatorType.SIMPLE, expression = "[A-Za-zÑñÁÉÍÓÚáéíóúÜü]([A-Za-zÑñÁÉÍÓÚáéíóúÜü0-9.,/#]|\\s|\\-){0,250}", key = "descripcionError.max250") }
+
+	)
+	public String create() {
+		Periodo periodo;
+
+		logger.trace("en la creación del cielo y de la tierra");
+
+		periodo = periodoNegocio.save(model.getPeriodo());
+
+		model.setIdPeriodo(periodo.getIdPeriodo());
+		nivelEstructuraSel = (Nivel) ActionContext.getContext().getSession()
+				.get(NombreObjetosSesion.NIVEL_ESTRUCTURA);
+		estructuraPadreSel = (Estructura) ActionContext.getContext()
+				.getSession().get(NombreObjetosSesion.ESTRUCTURA_PADRE);
+		programaSel = ((Usuario) ActionContext.getContext().getSession()
+				.get(NombreObjetosSesion.USUARIO)).getProgramas().get(0);
+
+		model.setIdPadre(estructuraPadreSel == null ? null : estructuraPadreSel
+				.getId());
+		model.setIdPrograma(programaSel.getId());
+		model.setIdNivel(nivelEstructuraSel.getPosicion());
+
+		logger.trace("Nivel nuevo: " + model.getIdNivel());
+
+		model = estructuraNegocio.save(model);
+
+		return SUCCESS;
+
+	}
+
+	@SkipValidation
+	public String edit() {
+
+		ActionContext.getContext().getSession()
+				.put(NombreObjetosSesion.NIVEL_ESTRUCTURA, model.getNivel());
+
+		ruta = estructuraNegocio.getRuta(idSel);
+		nodoRestrictivo = periodoNegocio
+				.getNodoPadreConPeriodoRestrictivo(model);
+
+		ActionContext
+				.getContext()
+				.getSession()
+				.put(NombreObjetosSesion.NODO_CON_PERIODO_RESTRICTIVO,
+						nodoRestrictivo);
+		ActionContext.getContext().getSession()
+				.put(NombreObjetosSesion.MIGAJAS_ESTRUCTURA, ruta);
+		getBanderaTipoPeriodo();
+
+		return "edit";
+	}
+
+	public void validateUpdate() {
+		logger.trace("************ENTRANDO A LA VALIDACION DE UPDATE*******");
+		System.out
+				.println("**********ENTRANDO A LA VALIDACION DE UPDATE*******");
+		if (!periodoNegocio.validaPeriodo(model)) {
+			addActionError(getText("errorValidaPeriodo"));
+		}
+		logger.trace("valido periodo");
+		if (!periodoNegocio.validaBienFormado(model.getPeriodo())) {
+			addActionError(getText("errorValidaBienFormado"));
+		}
+		logger.trace("valido periodo bien formado");
+		if (!estructuraNegocio.validaNombreUnico(model)) {
+			addActionError(getText("validaNombreUnicoEstructura"));
+		}
+		if (!estructuraNegocio.validaPeriodoHaciaAbajo(model)) {
+			addActionError(getText("errorValidaEstructuraHaciaAbajo"));
+		}
+		logger.trace("termino de validar ipdate");
+	}
+
+	@Validations(requiredStrings = {
+			@RequiredStringValidator(fieldName = "model.nombre", type = ValidatorType.SIMPLE, key = "introNombre"),
+			@RequiredStringValidator(fieldName = "model.descripcion", type = ValidatorType.SIMPLE, key = "introDescrip") }, regexFields = {
+			@RegexFieldValidator(fieldName = "model.nombre", type = ValidatorType.SIMPLE, expression = "[A-Za-zÑñÁÉÍÓÚáéíóúÜü]([A-Za-zÑñÁÉÍÓÚáéíóúÜü0-9.,/#]|\\s|\\-){1,50}", key = "nombreError.max50"),
+			@RegexFieldValidator(fieldName = "model.descripcion", type = ValidatorType.SIMPLE, expression = "[A-Za-zÑñÁÉÍÓÚáéíóúÜü]([A-Za-zÑñÁÉÍÓÚáéíóúÜü0-9.,/#]|\\s|\\-){0,250}", key = "descripcionError.max250") }
+
+	)
+	public String update() {
+
+		periodoNegocio.save(model.getPeriodo());
+		model = estructuraNegocio.save(model);
+
+		addActionMessage("El/La " + model + " se modificó exitosamente");
+		return "success";
+	}
+
+	public void validateDestroy() {
+		logger.trace("Validando la destrucción");
+		if (estructuraNegocio.validaEstructurasAlineadas(model)) {
+			addActionError("La estructura no debe tener proyectos alineados");
+		}
+	}
+
+	@SkipValidation
+	public String deleteConfirm() {
+		return "deleteConfirm";
+	}
+
+	public String destroy() {
+		Periodo periodo;
+		logger.trace("Eliminando la basura");
+
+		periodo = model.getPeriodo();
+		estructuraNegocio.delete(model);
+		periodoNegocio.delete(periodo);
+		addActionMessage("El/La " + model.getNombre()
+				+ " se eliminó exitosamente");
+
+		return "success";
+	}
+
+	@RemoteMethod
+	public Nodo getNodos() {
+		Nodo raiz;
+		Usuario us = new Usuario();
+		Programa programa;
+
+		WebContext ctx = WebContextFactory.get();
+		HttpServletRequest req = ctx.getHttpServletRequest();
+		us = (Usuario) req.getSession().getAttribute(
+				NombreObjetosSesion.USUARIO);
+		logger.trace("El usuario loggueado es " + us);
+
+		programa = programaNegocio.findById(us.getProgramas().get(0).getId());
+		raiz = programa;
+		logger.trace("Aventando las estructuras de " + programa);
+		programa.getNodosHijo();
+		logger.trace("Que son " + programa.getNodosHijo().size());
+		return raiz;
+	}
+
+	public Integer getBanderaTipoPeriodo() {
+		if (banderaTipoPeriodo == null && model != null
+				&& model.getPeriodo() != null) {
+			switch (model.getPeriodo().getTipoPeriodo()) {
+			case Periodo.PERIODO_INDEFINIDO:
+				banderaTipoPeriodo = BANDERA_INDEFINIDO;
+				break;
+			case Periodo.PERIODO_RELATIVO:
+				banderaTipoPeriodo = BANDERA_DURACION;
+				break;
+			case Periodo.PERIODO_DEFINIDO:
+				if (model.getPeriodo().getFechaFin() == null) {
+					banderaTipoPeriodo = BANDERA_DURACION;
+				} else {
+					banderaTipoPeriodo = BANDERA_FECHA;
+				}
+				break;
+			default:
+				break;
+			}
+		}
+		return banderaTipoPeriodo;
+	}
+
+	public void setIdSel(Integer idSel) {
+		this.idSel = idSel;
+		if (idSel != null) {
+			model = estructuraNegocio.findById(idSel);
+		}
+	}
+
+	public UsuarioNegocio getUsuarioNegocio() {
+		return usuarioNegocio;
+	}
+
+	public void setUsuarioNegocio(UsuarioNegocio usuarioNegocio) {
+		this.usuarioNegocio = usuarioNegocio;
+
+	}
+
+	public EstructuraNegocio getEstructuraNegocio() {
+		return estructuraNegocio;
+	}
+
+	public void setEstructuraNegocio(EstructuraNegocio estructuraNegocio) {
+		this.estructuraNegocio = estructuraNegocio;
+	}
+
+	public ProgramaNegocio getProgramaNegocio() {
+		return programaNegocio;
+	}
+
+	public void setProgramaNegocio(ProgramaNegocio programaNegocio) {
+		this.programaNegocio = programaNegocio;
+	}
+
+	public Estructura getModel() {
+		if (model == null) {
+			model = new Estructura();
+		}
+		return model;
+	}
+
+	public Integer getIdSel() {
+		return idSel;
+	}
+
+	public void setModel(Estructura model) {
+		this.model = model;
+	}
+
+	public PeriodoNegocio getPeriodoNegocio() {
+		return periodoNegocio;
+	}
+
+	public void setPeriodoNegocio(PeriodoNegocio periodoNegocio) {
+		this.periodoNegocio = periodoNegocio;
+	}
+
+	public void setBanderaTipoPeriodo(Integer banderaTipoPeriodo) {
+		this.banderaTipoPeriodo = banderaTipoPeriodo;
+	}
+
+	public NivelNegocio getNivelNegocio() {
+		return nivelNegocio;
+	}
+
+	public void setNivelNegocio(NivelNegocio nivelNegocio) {
+		this.nivelNegocio = nivelNegocio;
+	}
+
+	public String getRuta() {
+		if (ruta == null) {
+			ruta = (String) ActionContext.getContext().getSession()
+					.get(NombreObjetosSesion.MIGAJAS_ESTRUCTURA);
+		}
+		return ruta;
+	}
+
+	public void setRuta(String ruta) {
+		this.ruta = ruta;
+	}
+
+	public Programa getProgramaSel() {
+		return programaSel;
+	}
+
+	public void setProgramaSel(Programa programaSel) {
+		this.programaSel = programaSel;
+	}
+
+	public Estructura getEstructuraPadreSel() {
+		return estructuraPadreSel;
+	}
+
+	public void setEstructuraPadreSel(Estructura estructuraPadreSel) {
+		this.estructuraPadreSel = estructuraPadreSel;
+	}
+
+	public Integer getIdEstructuraPadreSel() {
+		return idEstructuraPadreSel;
+	}
+
+	public void setIdEstructuraPadreSel(Integer idEstructuraPadreSel) {
+		this.idEstructuraPadreSel = idEstructuraPadreSel;
+	}
+
+	public Nodo getNodoRestrictivo() {
+		return nodoRestrictivo;
+	}
+
+	public void setNodoRestrictivo(Nodo nodoRestrictivo) {
+		this.nodoRestrictivo = nodoRestrictivo;
+	}
+
+}
