@@ -22,7 +22,7 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="src" path="src/main/webapp"/>
+	<classpathentry excluding="contenido/|contenido/notificaciones/|decorators/|images/|images/banner/|images/buttons/|images/icons/|images/icons/menu/|images/project/|scripts/|scripts/dataTables/extras/|scripts/dataTables/extras/FixedHeader/|scripts/dataTables/extras/FixedHeader/js/|scripts/dataTables/extras/KeyTable/|scripts/dataTables/extras/KeyTable/js/|scripts/dataTables/extras/TableTools/|scripts/dataTables/extras/TableTools/media/css/|scripts/dataTables/extras/TableTools/media/images/|scripts/dataTables/extras/TableTools/media/js/|scripts/dataTables/extras/TableTools/media/swf/|scripts/dataTables/extras/TableTools/media/ZeroClipboard/|scripts/dataTables/media/css/|scripts/dataTables/media/images/|scripts/dataTables/media/js/|scripts/dataTables/media/unit_testing/|scripts/dataTables/media/unit_testing/performance/|scripts/dataTables/media/unit_testing/templates/|scripts/dataTables/media/unit_testing/tests/|scripts/dataTables/media/unit_testing/tests_onhold/|styles/|styles/images/|styles/images/banner/|styles/images/buttons/|styles/images/icons/|styles/images/icons/menu/|styles/images/project/|styles/imgs/|styles/imgs/menu/|template/themes/|template/" kind="src" path="src/main/webapp"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6">
 		<attributes>
 			<attribute name="maven.pomderived" value="true"/>

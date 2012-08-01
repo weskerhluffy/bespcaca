@@ -15,10 +15,7 @@
 		<param-value>classpath:applicationContext.xml</param-value>
 		<!-- <param-value>file:src/main/resources/applicationContext.xml</param-value> -->
 	</context-param>
-	<context-param>
-		<param-name>webAppRootKey</param-name>
-		<param-value>besp</param-value>
-	</context-param>
+
 
 
 	<servlet>
