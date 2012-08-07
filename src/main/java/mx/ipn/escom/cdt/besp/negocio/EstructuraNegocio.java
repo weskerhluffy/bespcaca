@@ -110,8 +110,8 @@ public class EstructuraNegocio {
 	}
 
 	/**
-	 * Este método valida la regla de negocio 36, la cual enuncia que si vamos a
-	 * eliminar una estructura, debemos revisar si tiene proyectos asociados
+	 * Este método valida la regla de negocio 36, la cual enuncia que si vamos
+	 * a eliminar una estructura, debemos revisar si tiene proyectos asociados
 	 * 
 	 * @return
 	 */
@@ -156,6 +156,7 @@ public class EstructuraNegocio {
 		Estructura estructura;
 		String ruta = null;
 
+		logger.trace("La estructura q c busca es " + idEstructura);
 		estructura = findById(idEstructura);
 		ruta = estructura.getNombre();
 
@@ -200,9 +201,8 @@ public class EstructuraNegocio {
 	 * @return Verdadero si el periodo de <code>estructuraAValidar</code> no
 	 *         entra en conflicto con el de sus ancestros.
 	 */
-	
-	
-	//esta madre es la que tengo que hacer
+
+	// esta madre es la que tengo que hacer
 	@Transactional
 	public Boolean validaPeriodo(Nodo estructuraAValidar, Nodo raiz) {
 		Boolean valido = true;
@@ -242,10 +242,6 @@ public class EstructuraNegocio {
 		}
 		return valido;
 	}
-	
-	
-	
-	
 
 	/**
 	 * Valida la RN33 para estructura

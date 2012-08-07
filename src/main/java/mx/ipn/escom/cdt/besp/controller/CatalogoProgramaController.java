@@ -45,8 +45,8 @@ public class CatalogoProgramaController extends ActionSupport implements
 	private PeriodoNegocio periodoNegocio;
 
 	/**
-	 * Referencia el Tipo de unidad con el que se est� trabajando, para el caso
-	 * de nuevo, editar y eliminar.
+	 * Referencia el Tipo de unidad con el que se est� trabajando, para el
+	 * caso de nuevo, editar y eliminar.
 	 */
 	private Programa model = null;
 
@@ -61,7 +61,6 @@ public class CatalogoProgramaController extends ActionSupport implements
 	 */
 	private List<Programa> list = null;
 
-
 	@SkipValidation
 	public String editNew() {
 		logger.trace("Si estalla el mundo, sera por que te amo");
@@ -70,7 +69,7 @@ public class CatalogoProgramaController extends ActionSupport implements
 				.getSession()
 				.put(NombreObjetosSesion.ES_SECTORIAL,
 						programaNegocio.esSectorial());
-		ActionContext.getContext().getSession().put("model",model);
+		ActionContext.getContext().getSession().put("model", model);
 		return "editNew";
 	}
 
@@ -132,8 +131,8 @@ public class CatalogoProgramaController extends ActionSupport implements
 
 		periodo = periodoNegocio.save(model.getPeriodo());//
 		model.setIdPeriodo(periodo.getIdPeriodo());
-//		model.setIdUsuario(usuario.getIdUsuario());
-		model.setIdUsuario(1);
+		model.setIdUsuario(usuario.getIdUsuario());
+		// model.setIdUsuario(1);
 		model.setSectorial(model.getSectorial() == null ? false : model
 				.getSectorial());
 		model = programaNegocio.save(model);
@@ -146,8 +145,8 @@ public class CatalogoProgramaController extends ActionSupport implements
 	public String edit() {
 		Boolean sectorial;
 		sectorial = model.getSectorial();
-		ActionContext.getContext().getSession().put("model",model);
-		if (sectorial == false&&programaNegocio.esSectorial()==true) {
+		ActionContext.getContext().getSession().put("model", model);
+		if (sectorial == false && programaNegocio.esSectorial() == true) {
 			ActionContext.getContext().getSession()
 					.put(NombreObjetosSesion.ES_SECTORIAL, true);
 		} else {
@@ -170,8 +169,8 @@ public class CatalogoProgramaController extends ActionSupport implements
 		/**
 		 * valida si esta bien formado el periodo
 		 */
-		logger.trace("Validando programa "+ model);
-	
+		logger.trace("Validando programa " + model);
+
 		if (!periodoNegocio.validaBienFormado(model.getPeriodo())) {
 			addActionError("El periodo no esta bien formado");
 		}
@@ -226,15 +225,16 @@ public class CatalogoProgramaController extends ActionSupport implements
 	}
 
 	public void validateDestroy() {
-		/*if (programaNegocio.validarSectorial(model)) {
-			addActionError("No se puede eliminar programa " + model.getNombre()
-					+ " ya que es un programa sectorial");
-		}*/
+		/*
+		 * if (programaNegocio.validarSectorial(model)) {
+		 * addActionError("No se puede eliminar programa " + model.getNombre() +
+		 * " ya que es un programa sectorial"); }
+		 */
 		if (programaNegocio.validarProyectos(model)) {
 			addActionError("No se puede eliminar programa " + model.getNombre()
 					+ " ya que tiene un proyecto en ejecución");
 		}
-		if(programaNegocio.tieneNiveles(model)){
+		if (programaNegocio.tieneNiveles(model)) {
 			addActionError("No se puede eliminar programa " + model.getNombre()
 					+ " ya que tiene niveles asociados");
 		}
@@ -250,7 +250,7 @@ public class CatalogoProgramaController extends ActionSupport implements
 	@SkipValidation
 	public HttpHeaders index() {
 		list = programaNegocio.findAll();
-	
+
 		return new DefaultHttpHeaders("index").disableCaching();
 	}
 

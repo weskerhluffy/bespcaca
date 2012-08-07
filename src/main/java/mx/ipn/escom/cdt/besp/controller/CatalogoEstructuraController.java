@@ -97,7 +97,7 @@ public class CatalogoEstructuraController extends ActionSupport implements
 
 		if (estructuraPadreSel != null) {
 
-			ruta = estructuraNegocio.getRuta(programaSel.getId());
+			ruta = estructuraNegocio.getRuta(estructuraPadreSel.getId());
 
 			nivelEstructuraSel = new Nivel();
 			nivelEstructuraSel.setIdPrograma(programaSel.getId());
