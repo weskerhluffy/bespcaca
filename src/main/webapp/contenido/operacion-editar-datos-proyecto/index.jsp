@@ -82,10 +82,7 @@
 					<td><label>Nombre del proyecto:</label></td>
 					<td><s:textfield id="txtNomProy" name="model.nombre" /></td>
 				</tr>
-				<tr>
-					<td><label>Costo total:</label></td>
-					<td><s:textfield id="txtCostoProy" name="model.costoTotal" /></td>
-				</tr>
+				
 				<tr>
 					<td><label>Siglas:</label></td>
 					<td><s:textfield id="txtSiglasProy" name="model.siglas" /></td>
