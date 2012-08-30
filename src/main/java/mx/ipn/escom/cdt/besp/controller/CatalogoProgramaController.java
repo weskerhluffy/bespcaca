@@ -143,16 +143,16 @@ public class CatalogoProgramaController extends ActionSupport implements
 
 	@SkipValidation
 	public String edit() {
-		Boolean sectorial;
-		sectorial = model.getSectorial();
-		ActionContext.getContext().getSession().put("model", model);
-		if (sectorial == false && programaNegocio.esSectorial() == true) {
-			ActionContext.getContext().getSession()
-					.put(NombreObjetosSesion.ES_SECTORIAL, true);
-		} else {
-			ActionContext.getContext().getSession()
-					.put(NombreObjetosSesion.ES_SECTORIAL, false);
-		}
+
+		ActionContext
+				.getContext()
+				.getSession()
+				.put(NombreObjetosSesion.HAY_SECTORIAL,
+						programaNegocio.esSectorial());
+
+		ActionContext.getContext().getSession()
+				.put(NombreObjetosSesion.ES_SECTORIAL, model.getSectorial());
+
 		if (model.getPeriodo().getDuracion() != null) {
 			banderaTipoPeriodo = BANDERA_DURACION;
 		} else if ((model.getPeriodo().getFechaInicio() != null)

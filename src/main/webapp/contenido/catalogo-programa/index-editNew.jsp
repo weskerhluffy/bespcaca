@@ -30,10 +30,7 @@
 		<form>
 			<div class="title">Nuevo Programa</div>
 			<div class="section">Datos del Programa</div>
-			<s:checkbox id="stSectorial"
-						disabled="%{#session.esSectorial}" name="model.sectorial"
-						cssStyle="display: %{#session.esSectorial?'none':'block'};" />
-						<label>Programa Sectorial</label>
+
 				
 			<table>
 				<tr>

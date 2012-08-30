@@ -49,5 +49,6 @@ public class NombreObjetosSesion {
 
 	public static final String LIST_COORDINADORES="listCoordinadores";
 	public static final String OPERACION_ESTADO="operacionEstado";
+	public static final String HAY_SECTORIAL = "haySectorial";
 	
 }
