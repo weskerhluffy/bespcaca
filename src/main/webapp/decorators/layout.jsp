@@ -90,6 +90,10 @@
 				<a class="selected"
 					href="${pageContext.request.contextPath}/catalogo-estructura">Niveles de estructura</a>
 				<br />
+				
+				<a class="selected"
+					href="${pageContext.request.contextPath}/catalogo-nivel">Niveles de estructura</a>
+				<br />
 				<a class="selected"
 					href="${pageContext.request.contextPath}/catalogo-eje-tematico">Ejes temáticos</a>
 					<br />	
