@@ -73,6 +73,12 @@ public class CatalogoEstructuraController extends ActionSupport implements
 
 	@SkipValidation
 	public HttpHeaders index() {
+		Usuario usuario;
+		usuario = (Usuario) ActionContext.getContext().getSession()
+				.get(NombreObjetosSesion.USUARIO);
+		usuario = usuarioNegocio.findById(usuario.getIdUsuario());
+		ActionContext.getContext().getSession()
+				.put(NombreObjetosSesion.USUARIO, usuario);
 		ActionContext.getContext().getSession()
 				.remove(NombreObjetosSesion.ESTRUCTURA_PADRE);
 		return new DefaultHttpHeaders("index").disableCaching();
@@ -82,7 +88,7 @@ public class CatalogoEstructuraController extends ActionSupport implements
 		List<Nivel> niveles;
 		logger.trace("En editNew");
 		estructuraPadreSel = (Estructura) ActionContext.getContext()
-				.getSession().get(NombreObjetosSesion.ESTRUCTURA_PADRE);		
+				.getSession().get(NombreObjetosSesion.ESTRUCTURA_PADRE);
 		programaSel = ((Usuario) ActionContext.getContext().getSession()
 				.get(NombreObjetosSesion.USUARIO)).getProgramas().get(0);
 		if (idEstructuraPadreSel != null) {
@@ -125,6 +131,8 @@ public class CatalogoEstructuraController extends ActionSupport implements
 			model.setNodoPadre(estructuraPadreSel);
 
 		} else {
+			logger.trace("El programa al q se a–adira una estructura de primer nivel "
+					+ programaSel.getNombre());
 			if (!programaNegocio.tieneNiveles(programaSel)) {
 				addActionError("El programa seleccionado debe tener niveles seleccionados");
 				return "sinNivel";
