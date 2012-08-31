@@ -106,12 +106,12 @@
 					<td colspan="2"><s:textarea rows="5" cols="40"
 							id="txtObGenProy" name="model.objetivoGeneral" /></td>
 				</tr>
-				<tr>
+				<!-- <tr>
 					<td><label>Costo Total del Proyecto $:</label></td>
 					<td><s:textfield id="txtCostoTotProy" name="model.costoTotal" />
 					</td>
 				</tr>
-
+               -->
 
 			</table>
 			<!-- <table border="0">
