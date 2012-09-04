@@ -6,7 +6,6 @@ import javax.inject.Named;
 
 import mx.ipn.escom.cdt.besp.modelo.Nivel;
 import mx.ipn.escom.cdt.besp.modelo.Programa;
-import mx.ipn.escom.cdt.besp.modelo.Usuario;
 import mx.ipn.escom.cdt.besp.negocio.NivelNegocio;
 import mx.ipn.escom.cdt.besp.negocio.ProgramaNegocio;
 import mx.ipn.escom.cdt.besp.util.NombreObjetosSesion;

@@ -50,6 +50,8 @@
 						href="${pageContext.request.contextPath}/catalogo-programa/${idPrograma}/deleteConfirm"><img
 							height="20" width="20" src="images/buttons/eliminar.png" /> </a> <a
 						href="${pageContext.request.contextPath}/catalogo-nivel?idProgramaSel=${idPrograma}">Niveles
+					</a> <a
+						href="${pageContext.request.contextPath}/catalogo-estructura?idProgramaSel=${idPrograma}">Estructuras
 					</a></td>
 				</tr>
 			</s:iterator>

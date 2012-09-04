@@ -70,6 +70,7 @@ public class CatalogoEstructuraController extends ActionSupport implements
 	private Integer idEstructuraPadreSel;
 	private Nivel nivelEstructuraSel;
 	private Nodo nodoRestrictivo;
+	private Integer idProgramaSel;
 
 	@SkipValidation
 	public HttpHeaders index() {
@@ -81,6 +82,17 @@ public class CatalogoEstructuraController extends ActionSupport implements
 				.put(NombreObjetosSesion.USUARIO, usuario);
 		ActionContext.getContext().getSession()
 				.remove(NombreObjetosSesion.ESTRUCTURA_PADRE);
+
+		if (idProgramaSel != null) {
+			ActionContext
+					.getContext()
+					.getSession()
+					.put(NombreObjetosSesion.PROGRAMA,
+							programaNegocio.findById(idProgramaSel));
+			logger.trace("El puto programa es "
+					+ ActionContext.getContext().getSession()
+							.get(NombreObjetosSesion.PROGRAMA));
+		}
 		return new DefaultHttpHeaders("index").disableCaching();
 	}
 
@@ -89,8 +101,8 @@ public class CatalogoEstructuraController extends ActionSupport implements
 		logger.trace("En editNew");
 		estructuraPadreSel = (Estructura) ActionContext.getContext()
 				.getSession().get(NombreObjetosSesion.ESTRUCTURA_PADRE);
-		programaSel = ((Usuario) ActionContext.getContext().getSession()
-				.get(NombreObjetosSesion.USUARIO)).getProgramas().get(0);
+		programaSel = (Programa) ActionContext.getContext().getSession()
+				.get(NombreObjetosSesion.PROGRAMA);
 		if (idEstructuraPadreSel != null) {
 			estructuraPadreSel = estructuraNegocio
 					.findById(idEstructuraPadreSel);
@@ -178,6 +190,8 @@ public class CatalogoEstructuraController extends ActionSupport implements
 		}
 		nivelEstructuraSel = (Nivel) ActionContext.getContext().getSession()
 				.get(NombreObjetosSesion.NIVEL_ESTRUCTURA);
+		programaSel = (Programa) ActionContext.getContext().getSession()
+				.get(NombreObjetosSesion.PROGRAMA);
 
 		model.setIdNivel(nivelEstructuraSel.getPosicion());
 		logger.trace("El nivel de la estructura es " + nivelEstructuraSel);
@@ -191,8 +205,7 @@ public class CatalogoEstructuraController extends ActionSupport implements
 			model.setPeriodo(new Periodo());
 		}
 
-		model.setPrograma(((Usuario) ActionContext.getContext().getSession()
-				.get(NombreObjetosSesion.USUARIO)).getProgramas().get(0));
+		model.setPrograma(programaSel);
 
 		if (!estructuraNegocio.validarNivel(model)) {
 			addActionError("No se puede crear por que excede el nivel de profundidad definido por el programa");
@@ -254,8 +267,8 @@ public class CatalogoEstructuraController extends ActionSupport implements
 				.get(NombreObjetosSesion.NIVEL_ESTRUCTURA);
 		estructuraPadreSel = (Estructura) ActionContext.getContext()
 				.getSession().get(NombreObjetosSesion.ESTRUCTURA_PADRE);
-		programaSel = ((Usuario) ActionContext.getContext().getSession()
-				.get(NombreObjetosSesion.USUARIO)).getProgramas().get(0);
+		programaSel = (Programa) ActionContext.getContext().getSession()
+				.get(NombreObjetosSesion.PROGRAMA);
 
 		model.setIdPadre(estructuraPadreSel == null ? null : estructuraPadreSel
 				.getId());
@@ -357,16 +370,16 @@ public class CatalogoEstructuraController extends ActionSupport implements
 	@RemoteMethod
 	public Nodo getNodos() {
 		Nodo raiz;
-		Usuario us = new Usuario();
 		Programa programa;
 
 		WebContext ctx = WebContextFactory.get();
 		HttpServletRequest req = ctx.getHttpServletRequest();
-		us = (Usuario) req.getSession().getAttribute(
-				NombreObjetosSesion.USUARIO);
-		logger.trace("El usuario loggueado es " + us);
 
-		programa = programaNegocio.findById(us.getProgramas().get(0).getId());
+		logger.trace("El programa de mierda en getNodos es "
+				+ req.getSession().getAttribute(NombreObjetosSesion.PROGRAMA));
+
+		programa = programaNegocio.findById(((Programa) req.getSession()
+				.getAttribute(NombreObjetosSesion.PROGRAMA)).getIdPrograma());
 		raiz = programa;
 		logger.trace("Aventando las estructuras de " + programa);
 		programa.getNodosHijo();
@@ -507,6 +520,22 @@ public class CatalogoEstructuraController extends ActionSupport implements
 
 	public void setNodoRestrictivo(Nodo nodoRestrictivo) {
 		this.nodoRestrictivo = nodoRestrictivo;
+	}
+
+	public Nivel getNivelEstructuraSel() {
+		return nivelEstructuraSel;
+	}
+
+	public void setNivelEstructuraSel(Nivel nivelEstructuraSel) {
+		this.nivelEstructuraSel = nivelEstructuraSel;
+	}
+
+	public Integer getIdProgramaSel() {
+		return idProgramaSel;
+	}
+
+	public void setIdProgramaSel(Integer idProgramaSel) {
+		this.idProgramaSel = idProgramaSel;
 	}
 
 }
