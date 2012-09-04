@@ -72,8 +72,8 @@ public class CatalogoNivelController extends ActionSupport implements
 
 	@SkipValidation
 	public HttpHeaders index() {
-		programaSel = ((Usuario) ActionContext.getContext().getSession()
-				.get(NombreObjetosSesion.USUARIO)).getProgramas().get(0);
+		programaSel = (Programa) ActionContext.getContext().getSession()
+				.get(NombreObjetosSesion.PROGRAMA);
 		if (programaSel != null) {
 			this.programaSel = programaNegocio.findById(programaSel
 					.getIdPrograma());
