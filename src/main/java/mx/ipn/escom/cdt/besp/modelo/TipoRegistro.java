@@ -13,7 +13,7 @@ import javax.persistence.Table;
 import org.directwebremoting.annotations.DataTransferObject;
 import org.directwebremoting.annotations.RemoteProperty;
 
-
+import com.sun.tools.internal.jxc.apt.Const;
 
 @DataTransferObject
 @Entity

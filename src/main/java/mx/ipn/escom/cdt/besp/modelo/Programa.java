@@ -36,6 +36,7 @@ public class Programa implements Nodo {
 	private List<Estructura> estructuras;
 	private Boolean sectorial;
 	private List<Estructura> estructurasTodas;
+	private List<Programa> programas = null;
 
 	@RemoteProperty
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -241,58 +242,60 @@ public class Programa implements Nodo {
 	}
 
 	/**
-	 * Se obtiene la cantidad de restricciones atendidas del programa
+	 * Se obtiene la cantidad de restricciones atendidas del programa 
 	 * 
 	 * @return Cantidad de restricciones atendidas del proyecto en cuestion
 	 */
 	@RemoteProperty
 	@Transient
-	public Integer getRestriccionesAtendidas() {
-		// Creo una lista temporal para obtener todas las estructuras
+	public Integer getRestriccionesAtendidas()
+	{
+		//Creo una lista temporal para obtener todas las estructuras
 		List<Estructura> estructuras;
 
-		// Creo una variable que me ayudara a obtener la cantidad de
-		// restricciones atendidas
+		//Creo una variable que me ayudara a obtener la cantidad de restricciones atendidas
 		Integer cantidad = 0;
 
-		// Obtengo las estructuras del programa
+		//Obtengo las estructuras del programa
 		estructuras = this.getEstructurasTodas();
 
-		// Por cada estructura
-		for (Estructura estructura : estructuras) {
-			// Obtengo la cantidad de restricciones atendidas
+		//Por cada estructura
+		for(Estructura estructura : estructuras)
+		{
+			//Obtengo la cantidad de restricciones atendidas
 			cantidad += estructura.getRestriccionesAtendidas();
 		}
-
-		// Retorno la cantidad de restricciones atendidas
+		
+		//Retorno la cantidad de restricciones atendidas
 		return cantidad;
 	}
 
 	/**
-	 * Se obtiene la cantidad de restricciones turnadas del programa
+	 * Se obtiene la cantidad de restricciones turnadas del programa 
 	 * 
 	 * @return Cantidad de restricciones turnadas del programa en cuestion
 	 */
 	@RemoteProperty
 	@Transient
-	public Integer getRestriccionesTurnadas() {
-		// Creo una lista temporal para obtener todas las estructuras
+	public Integer getRestriccionesTurnadas()
+	{
+		//Creo una lista temporal para obtener todas las estructuras
 		List<Estructura> estructuras;
 
-		// Creo una variable que me ayudara a obtener la cantidad de
-		// restricciones atendidas
+		//Creo una variable que me ayudara a obtener la cantidad de restricciones atendidas
 		Integer cantidad = 0;
 
-		// Obtengo las estructuras del programa
+		//Obtengo las estructuras del programa
 		estructuras = this.getEstructurasTodas();
 
-		// Por cada estructura
-		for (Estructura estructura : estructuras) {
-			// Obtengo la cantidad de restricciones turnadas
+		//Por cada estructura
+		for(Estructura estructura : estructuras)
+		{
+			//Obtengo la cantidad de restricciones turnadas
 			cantidad += estructura.getRestriccionesTurnadas();
 		}
 
-		// Retorno la cantidad de restricciones turnadas
+		//Retorno la cantidad de restricciones turnadas
 		return cantidad;
 	}
 
@@ -303,50 +306,49 @@ public class Programa implements Nodo {
 	 */
 	@RemoteProperty
 	@Transient
-	public Integer getRestriccionesNoAtendidas() {
-		// Creo una lista temporal para obtener todas las estructuras
+	public Integer getRestriccionesNoAtendidas()
+	{
+		//Creo una lista temporal para obtener todas las estructuras
 		List<Estructura> estructuras;
 
-		// Creo una variable que me ayudara a obtener la cantidad de
-		// restricciones atendidas
+		//Creo una variable que me ayudara a obtener la cantidad de restricciones atendidas
 		Integer cantidad = 0;
 
-		// Obtengo las estructuras del programa
+		//Obtengo las estructuras del programa
 		estructuras = this.getEstructurasTodas();
 
-		// Por cada estructura
-		for (Estructura estructura : estructuras) {
-			// Obtengo la cantidad de restricciones no atendidas
+		//Por cada estructura
+		for(Estructura estructura : estructuras)
+		{
+			//Obtengo la cantidad de restricciones no atendidas
 			cantidad += estructura.getRestriccionesNoAtendidas();
 		}
 
-		// Retorno la cantidad de restricciones no atendidas
+		//Retorno la cantidad de restricciones no atendidas
 		return cantidad;
 	}
-
+	
 	@Transient
 	@RemoteProperty
-	public String getUnidadMedidaDuracion() {
-		// todo: LOGIGA DE CONVERSION
-
-		// si la duracion son años exactos
-		if (this.periodo.getDuracion() % 365 == 0) {
-			return this.periodo.getDuracion() / 365 + " año(s)";
-		}
-		// si la duracion son meses exactos
-		if (this.periodo.getDuracion() % 30 == 0) {
-			return this.periodo.getDuracion() + " mes(es)";
-		}
-		// si la duracion son semanas exactos
-		if (this.periodo.getDuracion() % 7 == 0) {
-			return this.periodo.getDuracion() / 7 + " semana(s)";
-		}
-		// si la duracion no son años, semanas o meses exactos
-		if (this.periodo.getDuracion() % 365 != 0
-				&& this.periodo.getDuracion() % 7 != 0
-				&& this.periodo.getDuracion() % 30 != 0) {
-			return this.periodo.getDuracion() + " día(s)";
-		}
+	public String getUnidadMedidaDuracion(){
+		//todo: LOGIGA DE CONVERSION
+	
+			//si la duracion son años exactos
+			if(this.periodo.getDuracion()%365==0){
+				return this.periodo.getDuracion()/365 + " año(s)";
+			}
+			//si la duracion son meses exactos
+			if(this.periodo.getDuracion()%30==0){
+				return this.periodo.getDuracion() + " mes(es)";
+			}
+			//si la duracion son semanas exactos
+			if(this.periodo.getDuracion()%7==0){
+				return this.periodo.getDuracion()/7 + " semana(s)";
+			}
+			//si la duracion no son años, semanas o meses exactos
+			if(this.periodo.getDuracion()%365!=0&&this.periodo.getDuracion()%7!=0&&this.periodo.getDuracion()%30!=0){
+				return this.periodo.getDuracion() + " día(s)";
+			}
 		return "";
 	}
 }

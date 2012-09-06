@@ -85,7 +85,7 @@
 									cssStyle="display:none;" size="10" />
 							</div>
 						</td>
-						
+						<!--<s:textfield name="avance" value="%{avance}" disabled="true" id="textFieldAvance">-->
 						<td><div style="text-align: left;">
 								<b>barra avance</b>
 							</div>

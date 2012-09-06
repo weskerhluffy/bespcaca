@@ -29,7 +29,6 @@
 				<th>Duración</th>
 				<th>Fecha Inicio</th>
 				<th>Fecha Fin</th>
-				<th>Sectorial</th>
 				<th>Acciones</th>
 			</tr>
 		</thead>
@@ -43,15 +42,12 @@
 					<td><s:date name="periodo.fechaInicio" format="yyyy-MM-dd" />
 					</td>
 					<td><s:date name="periodo.fechaFin" format="yyyy-MM-dd" /></td>
-					<td><s:if test="%{sectorial}">Si</s:if></td>
 					<td><a
 						href="${pageContext.request.contextPath}/catalogo-programa/${idPrograma}/edit"><img
-							height="20" width="20" src="images/buttons/editar.png" /> </a> <a
-						href="${pageContext.request.contextPath}/catalogo-programa/${idPrograma}/deleteConfirm"><img
-							height="20" width="20" src="images/buttons/eliminar.png" /> </a> <a
-						href="${pageContext.request.contextPath}/catalogo-nivel?idProgramaSel=${idPrograma}">Niveles
+							height="20" width="20" src="images/buttons/editar.png" />
 					</a> <a
-						href="${pageContext.request.contextPath}/catalogo-estructura?idProgramaSel=${idPrograma}">Estructuras
+						href="${pageContext.request.contextPath}/catalogo-programa/${idPrograma}/deleteConfirm"><img
+							height="20" width="20" src="images/buttons/eliminar.png" />
 					</a></td>
 				</tr>
 			</s:iterator>

@@ -6,6 +6,7 @@ import javax.inject.Named;
 
 import mx.ipn.escom.cdt.besp.modelo.Nivel;
 import mx.ipn.escom.cdt.besp.modelo.Programa;
+import mx.ipn.escom.cdt.besp.modelo.Usuario;
 import mx.ipn.escom.cdt.besp.negocio.NivelNegocio;
 import mx.ipn.escom.cdt.besp.negocio.ProgramaNegocio;
 import mx.ipn.escom.cdt.besp.util.NombreObjetosSesion;
@@ -71,8 +72,8 @@ public class CatalogoNivelController extends ActionSupport implements
 
 	@SkipValidation
 	public HttpHeaders index() {
-		programaSel = (Programa) ActionContext.getContext().getSession()
-				.get(NombreObjetosSesion.PROGRAMA);
+		programaSel = ((Usuario) ActionContext.getContext().getSession()
+				.get(NombreObjetosSesion.USUARIO)).getProgramas().get(0);
 		if (programaSel != null) {
 			this.programaSel = programaNegocio.findById(programaSel
 					.getIdPrograma());
