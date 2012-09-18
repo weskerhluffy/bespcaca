@@ -157,6 +157,29 @@ public class UsuarioNegocio {
 		return usuariosDisponibles;
 	}
 
+	/**
+	 * Busca los usuarios de tipo {@link PerfilUsuario#GERENTE} que no tengan
+	 * asociado un programa.
+	 * 
+	 * @return La lista de los gerentes que se pueden asignar a un programa.
+	 */
+	@Transactional
+	public List<Usuario> getGerentesAsignables() {
+		List<Usuario> gerentes = null;
+		Usuario usuarioEjemplo;
+
+		usuarioEjemplo = new Usuario();
+		usuarioEjemplo.setIdPerfilUsuario(PerfilUsuario.GERENTE);
+
+		gerentes = new ArrayList<Usuario>();
+		for (Usuario usuario : usuarioDao.findByExample(usuarioEjemplo)) {
+			if (usuario.getProgramas().size() == 0) {
+				gerentes.add(usuario);
+			}
+		}
+		return gerentes;
+	}
+
 	public UsuarioDao getUsuarioDao() {
 		return usuarioDao;
 	}

@@ -1,7 +1,6 @@
 package mx.ipn.escom.cdt.besp.modelo;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -21,15 +20,12 @@ import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-//import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
-import mx.ipn.escom.cdt.besp.negocio.ProgramaNegocio;
-
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.hibernate.annotations.Where;
 
 @NamedQueries({
-	@NamedQuery(name = "eliminaUsuario", query = "delete from Usuario where idUsuario= :id"),
-	@NamedQuery(name = "eliminaDireccion", query = "delete from Direccion where idUsuario=:id") })
+		@NamedQuery(name = "eliminaUsuario", query = "delete from Usuario where idUsuario= :id"),
+		@NamedQuery(name = "eliminaDireccion", query = "delete from Direccion where idUsuario=:id") })
 @Entity
 @Table(name = "t010_usuario_cat")
 public class Usuario {
@@ -45,7 +41,7 @@ public class Usuario {
 	private Integer idPerfilUsuario;
 	private Integer idArea;
 	private Boolean activado;
-	
+
 	private Direccion direccion;
 	private PerfilUsuario perfilUsuario;
 	private Area area;
@@ -142,7 +138,7 @@ public class Usuario {
 	}
 
 	public void setRfc(String rfc) {
-		if(rfc.equals("")){
+		if (rfc.equals("")) {
 			rfc = "RFC";
 		}
 		this.rfc = rfc;
@@ -241,7 +237,7 @@ public class Usuario {
 
 		reflectionToStringBuilder.setExcludeFieldNames(new String[] {
 				"direccion", "perfilUsuario", "area", "proyectos", "programas",
-		"contactos" });
+				"contactos" });
 		return reflectionToStringBuilder.toString();
 	}
 
@@ -250,23 +246,20 @@ public class Usuario {
 	 * 
 	 * @return Cantidad de restricciones no atendidas del proyecto en cuestion
 	 */
-	/*@Transient
-	public List<Proyecto> getProyectosCreados() {
-		List<Proyecto> proyectos;
-		List<Proyecto> proyectosCreados = new ArrayList<Proyecto>();
-		proyectos = this.getProyectos();
-		for (Proyecto proyecto : proyectos) {
-			if (proyecto.getIdEstado().equals(estado.REGISTRADO))
-				proyectosCreados.add(proyecto);
-		}
-		Collections.reverse(proyectosCreados);
-		return proyectosCreados;
-	}*/
+	/*
+	 * @Transient public List<Proyecto> getProyectosCreados() { List<Proyecto>
+	 * proyectos; List<Proyecto> proyectosCreados = new ArrayList<Proyecto>();
+	 * proyectos = this.getProyectos(); for (Proyecto proyecto : proyectos) { if
+	 * (proyecto.getIdEstado().equals(estado.REGISTRADO))
+	 * proyectosCreados.add(proyecto); } Collections.reverse(proyectosCreados);
+	 * return proyectosCreados; }
+	 */
 
 	/**
 	 * Se obtienen los proyectos creados por el usuario
 	 * 
-	 * @return Una lista con los proyectos que tienen estado de registrado, ordenados por ID y por fecha de registro descendentemente
+	 * @return Una lista con los proyectos que tienen estado de registrado,
+	 *         ordenados por ID y por fecha de registro descendentemente
 	 */
 	@OneToMany(mappedBy = "responsable")
 	@Where(clause = "id_estado = " + Estado.REGISTRADO)
@@ -279,11 +272,12 @@ public class Usuario {
 		this.proyectosCreados = proyectosCreados;
 	}
 
-
 	/**
-	 * Se obtienen los proyectos asignados al usuario y que tienen observaciones o restriciones atendidas
+	 * Se obtienen los proyectos asignados al usuario y que tienen observaciones
+	 * o restriciones atendidas
 	 * 
-	 * @return Una lista con los proyectos que tienen estado de registrado, ordenados por ID y por fecha de registro descendentemente
+	 * @return Una lista con los proyectos que tienen estado de registrado,
+	 *         ordenados por ID y por fecha de registro descendentemente
 	 */
 	@OneToMany(mappedBy = "responsable")
 	@OrderBy("fechaModificacion DESC")
@@ -291,14 +285,17 @@ public class Usuario {
 		return proyectosOrdenadosFechaModificacion;
 	}
 
-	public void setProyectosOrdenadosFechaModificacion(List<Proyecto> proyectosOrdenadosFechaModificacion) {
+	public void setProyectosOrdenadosFechaModificacion(
+			List<Proyecto> proyectosOrdenadosFechaModificacion) {
 		this.proyectosOrdenadosFechaModificacion = proyectosOrdenadosFechaModificacion;
 	}
 
 	/**
-	 * Se obtienen los proyectos asignados al usuario y que tienen observaciones o restriciones atendidas
+	 * Se obtienen los proyectos asignados al usuario y que tienen observaciones
+	 * o restriciones atendidas
 	 * 
-	 * @return Una lista con los proyectos que tienen estado de registrado, ordenados por ID y por fecha de registro descendentemente
+	 * @return Una lista con los proyectos que tienen estado de registrado,
+	 *         ordenados por ID y por fecha de registro descendentemente
 	 */
 	@Transient
 	public List<Proyecto> getProyectosConPendientes() {
@@ -308,49 +305,50 @@ public class Usuario {
 		List<Programa> programas = new ArrayList<Programa>();
 		List<Estructura> estructuras;
 
-		switch(this.idPerfilUsuario)
-		{
+		switch (this.idPerfilUsuario) {
 		case PerfilUsuario.COORDINADOR:
-			proyectosUsuario =  this.getProyectosOrdenadosFechaModificacion();
+			proyectosUsuario = this.getProyectosOrdenadosFechaModificacion();
 			break;
 
 		case PerfilUsuario.GERENTE:
 			programas = this.getProgramas();
-			for(Programa programa : programas){
+			for (Programa programa : programas) {
 				estructuras = new ArrayList<Estructura>();
 				estructuras = programa.getEstructurasTodas();
-				for(Estructura estructura : estructuras){
+				for (Estructura estructura : estructuras) {
 					proyectosUsuario.addAll(estructura.getProyectos());
 				}
 			}
 			break;
 
 		case PerfilUsuario.SECRETARIO:
-			//programas = programaNegocio.findAll();
-			for(Programa programa : programas){
+			// programas = programaNegocio.findAll();
+			for (Programa programa : programas) {
 				estructuras = new ArrayList<Estructura>();
 				estructuras = programa.getEstructurasTodas();
-				for(Estructura estructura : estructuras){
+				for (Estructura estructura : estructuras) {
 					proyectosUsuario.addAll(estructura.getProyectos());
 				}
 			}
 			break;
 		}
 
-		for(Proyecto proyecto : proyectosUsuario){
-			switch(this.idPerfilUsuario){
+		for (Proyecto proyecto : proyectosUsuario) {
+			switch (this.idPerfilUsuario) {
 			case PerfilUsuario.COORDINADOR:
-				if(proyecto.getRestriccionesNoAtendidas() > 0 || proyecto.getObservaciones() > 0)
+				if (proyecto.getRestriccionesNoAtendidas() > 0
+						|| proyecto.getObservaciones() > 0)
 					proyectosConPendientes.add(proyecto);
 				break;
 
 			case PerfilUsuario.GERENTE:
-				if(proyecto.getRestriccionesNoAtendidas() > 0 || proyecto.getRestriccionesTurnadas() > 0)
+				if (proyecto.getRestriccionesNoAtendidas() > 0
+						|| proyecto.getRestriccionesTurnadas() > 0)
 					proyectosConPendientes.add(proyecto);
 				break;
 
 			case PerfilUsuario.SECRETARIO:
-				if(proyecto.getRestriccionesNoAtendidas() > 0)
+				if (proyecto.getRestriccionesNoAtendidas() > 0)
 					proyectosConPendientes.add(proyecto);
 				break;
 			}

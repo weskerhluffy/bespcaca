@@ -31,21 +31,17 @@
 			<div class="title">Nuevo Programa</div>
 			<div class="section">Datos del Programa</div>
 
-				
+
 			<table>
 				<tr>
-					<td><label>Siglas:</label>
-					</td>
+					<td><label>Siglas:</label></td>
 					<td><s:textfield id="txtsiglas" name="model.siglas"
-							maxlength="10" />
-					</td>
+							maxlength="10" /></td>
 				</tr>
 				<tr>
-					<td><label>Nombre del Programa:</label>
-					</td>
+					<td><label>Nombre del Programa:</label></td>
 					<td><s:textfield id="txtNombre" name="model.nombre"
-							maxlength="70" />
-					</td>
+							maxlength="70" /></td>
 				</tr>
 				<tr>
 
@@ -53,60 +49,63 @@
 							id="txtResumen" name="model.resumen" cols="70" rows="5"
 							maxlength="255" /></td>
 				</tr>
+				<tr>
+
+					<td colspan="2"><label>Responsable:</label> <br /> <s:select
+							list="#session[@mx.ipn.escom.cdt.besp.util.NombreObjetosSesion@GERENTES_ASIGNABLES]"
+							listKey="idUsuario" listValue="nombre" name="model.idUsuario" /></td>
+				</tr>
 			</table>
-			
-			
+
+
 			<table border="0">
-							<tr>
-								<td>Período</td>
-							</tr>
-							<tr>
-								<td>Por duración <input type="radio" id="duracion"
-									name="tipoPeriodo" value="duracion" />Por fechas<input
-									type="radio" id="fechas" name="tipoPeriodo" value="fechas" />
-									Indefinido <input type="radio" id="indefinido"
-									name="tipoPeriodo" value="indefinido" /></td>
-							</tr>
-						</table>
+				<tr>
+					<td>Período</td>
+				</tr>
+				<tr>
+					<td>Por duración <input type="radio" id="duracion"
+						name="tipoPeriodo" value="duracion" />Por fechas<input
+						type="radio" id="fechas" name="tipoPeriodo" value="fechas" />
+						Indefinido <input type="radio" id="indefinido" name="tipoPeriodo"
+						value="indefinido" /></td>
+				</tr>
+			</table>
 			<div id="periodoConDuracion" style="display: none">
-							<table>
-								<tr>
-									<td>Duración</td>
-									<td><s:textfield name="model.periodo.duracion"
-											id="txtDuracion" size="5" cssClass="campoDuracion" />
-									 <select
-										id="comboTipoPeriodo">
-											<option value="day">dias</option>
-											<option value="week">semanas</option>
-											<option value="month">meses</option>
-											<option value="year">años</option>
-									</select></td>
-								</tr>
-								
-							</table>
-						</div>
-						<div id="periodoSinDuracion" style="display: none">
-							<table>
-								<tr>
-									<td>Inicio</td>
-									<td><sj:datepicker name="model.periodo.fechaInicio"
-											displayFormat="yy-mm-dd" id="dtpFechaInicio"
-											cssClass="campoFechas" readonly="true"/>
-									</td>
-								</tr>
-								<tr>
-									<td>Fin</td>
-									<td><sj:datepicker name="model.periodo.fechaFin"
-											displayFormat="yy-mm-dd" id="dtpFechaFin"
-											cssClass="campoFechas" readonly="true"/>
-									</td>
-								</tr>
-							</table>
-						</div>
-					<s:hidden id="banderaTipoPeriodo" name="banderaTipoPeriodo" />
-					<sj:submit id="btnAceptar" value="Aceptar" button="true" /> 
-		<sj:a id="btnCancelar" button="true" 
-			href="#" onclick="location.href='%{urlCancelar}'">Cancelar</sj:a>
+				<table>
+					<tr>
+						<td>Duración</td>
+						<td><s:textfield name="model.periodo.duracion"
+								id="txtDuracion" size="5" cssClass="campoDuracion" /> <select
+							id="comboTipoPeriodo">
+								<option value="day">dias</option>
+								<option value="week">semanas</option>
+								<option value="month">meses</option>
+								<option value="year">años</option>
+						</select></td>
+					</tr>
+
+				</table>
+			</div>
+			<div id="periodoSinDuracion" style="display: none">
+				<table>
+					<tr>
+						<td>Inicio</td>
+						<td><sj:datepicker name="model.periodo.fechaInicio"
+								displayFormat="yy-mm-dd" id="dtpFechaInicio"
+								cssClass="campoFechas" readonly="true" /></td>
+					</tr>
+					<tr>
+						<td>Fin</td>
+						<td><sj:datepicker name="model.periodo.fechaFin"
+								displayFormat="yy-mm-dd" id="dtpFechaFin" cssClass="campoFechas"
+								readonly="true" /></td>
+					</tr>
+				</table>
+			</div>
+			<s:hidden id="banderaTipoPeriodo" name="banderaTipoPeriodo" />
+			<sj:submit id="btnAceptar" value="Aceptar" button="true" />
+			<sj:a id="btnCancelar" button="true" href="#"
+				onclick="location.href='%{urlCancelar}'">Cancelar</sj:a>
 		</form>
 	</s:form>
 

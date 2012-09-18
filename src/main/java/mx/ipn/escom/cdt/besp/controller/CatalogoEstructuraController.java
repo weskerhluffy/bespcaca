@@ -93,6 +93,22 @@ public class CatalogoEstructuraController extends ActionSupport implements
 					+ ActionContext.getContext().getSession()
 							.get(NombreObjetosSesion.PROGRAMA));
 		}
+		if (idProgramaSel == null
+				&& ActionContext.getContext().getSession()
+						.get(NombreObjetosSesion.PROGRAMA) == null) {
+			ActionContext
+					.getContext()
+					.getSession()
+					.put(NombreObjetosSesion.PROGRAMA,
+							((Usuario) ActionContext.getContext().getSession()
+									.get(NombreObjetosSesion.USUARIO))
+									.getProgramas().get(0));
+			logger.trace("El programa del usuario "
+					+ usuario.getLogin()
+					+ " es "
+					+ ((Usuario) ActionContext.getContext().getSession()
+							.get(NombreObjetosSesion.USUARIO)).getProgramas());
+		}
 		return new DefaultHttpHeaders("index").disableCaching();
 	}
 

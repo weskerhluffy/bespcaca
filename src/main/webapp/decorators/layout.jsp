@@ -121,6 +121,11 @@
 						href="${pageContext.request.contextPath}/consultar-proyectos">Consultar
 						proyectos</a>
 					<br />
+					<h3>Estructura</h3>
+					<a class="selected"
+						href="${pageContext.request.contextPath}/catalogo-estructura">Definir
+						estructura de programa. </a>
+					<br />
 					<a class="selected"
 						href="${pageContext.request.contextPath}/operacion-bitacora">Seguimiento
 						de Proyecto </a>
@@ -151,12 +156,7 @@
 					<a class="selected"
 						href="${pageContext.request.contextPath}/notificaciones">
 						Notificaciones</a>
-					<!-- 				<h3>Proyectos</h3> -->
-					<!-- 				<br /> -->
 
-					<!-- 				<br /> -->
-					<!-- 				<h3>Proyectos Disponibles</h3> -->
-					<!-- 				<br /> -->
 
 				</s:if>
 				<s:if

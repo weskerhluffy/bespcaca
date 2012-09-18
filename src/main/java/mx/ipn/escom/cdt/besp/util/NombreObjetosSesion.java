@@ -45,10 +45,11 @@ public class NombreObjetosSesion {
 	public static final String AVANCEVIEJO = "avanceViejo";
 	public static final String CON_TRABAJO = "conTrabajo";
 
-	public static final String CONTACTOS_TEMPORALES="listContactosTemporales";
+	public static final String CONTACTOS_TEMPORALES = "listContactosTemporales";
 
-	public static final String LIST_COORDINADORES="listCoordinadores";
-	public static final String OPERACION_ESTADO="operacionEstado";
+	public static final String LIST_COORDINADORES = "listCoordinadores";
+	public static final String OPERACION_ESTADO = "operacionEstado";
 	public static final String HAY_SECTORIAL = "haySectorial";
-	
+	public static final String GERENTES_ASIGNABLES = "gerentesAsignables";
+
 }

@@ -43,6 +43,7 @@ public class CatalogoProgramaController extends ActionSupport implements
 	 */
 	private ProgramaNegocio programaNegocio;
 	private PeriodoNegocio periodoNegocio;
+	private UsuarioNegocio usuarioNegocio;
 
 	/**
 	 * Referencia el Tipo de unidad con el que se est� trabajando, para el
@@ -60,6 +61,21 @@ public class CatalogoProgramaController extends ActionSupport implements
 	 * Contiene todos los Tipos de Unidades que se encontraron el la BD.
 	 */
 	private List<Programa> list = null;
+
+	@SkipValidation
+	public HttpHeaders index() {
+		list = programaNegocio.findAll();
+		ActionContext
+				.getContext()
+				.getSession()
+				.put(NombreObjetosSesion.GERENTES_ASIGNABLES,
+						usuarioNegocio.getGerentesAsignables());
+
+		logger.trace("El numero de gerentes asignables es "
+				+ ActionContext.getContext().getSession()
+						.get(NombreObjetosSesion.GERENTES_ASIGNABLES));
+		return new DefaultHttpHeaders("index").disableCaching();
+	}
 
 	@SkipValidation
 	public String editNew() {
@@ -124,15 +140,10 @@ public class CatalogoProgramaController extends ActionSupport implements
 			@RequiredStringValidator(fieldName = "model.resumen", type = ValidatorType.FIELD, key = "introRes") })
 	public HttpHeaders create() {
 		Periodo periodo;
-		Usuario usuario;
-
-		usuario = (Usuario) ActionContext.getContext().getSession()
-				.get(NombreObjetosSesion.USUARIO);
 
 		periodo = periodoNegocio.save(model.getPeriodo());//
 		model.setIdPeriodo(periodo.getIdPeriodo());
-		model.setIdUsuario(usuario.getIdUsuario());
-		// model.setIdUsuario(1);
+
 		model.setSectorial(model.getSectorial() == null ? false : model
 				.getSectorial());
 		model = programaNegocio.save(model);
@@ -247,13 +258,6 @@ public class CatalogoProgramaController extends ActionSupport implements
 		return "success";
 	}
 
-	@SkipValidation
-	public HttpHeaders index() {
-		list = programaNegocio.findAll();
-
-		return new DefaultHttpHeaders("index").disableCaching();
-	}
-
 	public void setIdSel(Integer idSel) {
 		this.idSel = idSel;
 		if (idSel != null) {
@@ -307,6 +311,14 @@ public class CatalogoProgramaController extends ActionSupport implements
 
 	public void setBanderaTipoPeriodo(Integer banderaTipoPeriodo) {
 		this.banderaTipoPeriodo = banderaTipoPeriodo;
+	}
+
+	public UsuarioNegocio getUsuarioNegocio() {
+		return usuarioNegocio;
+	}
+
+	public void setUsuarioNegocio(UsuarioNegocio usuarioNegocio) {
+		this.usuarioNegocio = usuarioNegocio;
 	}
 
 }

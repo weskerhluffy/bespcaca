@@ -57,6 +57,17 @@
 				<td><s:textarea id="txtResumen" name="model.resumen" cols="70"
 						rows="5" maxlength="255" /></td>
 			</tr>
+			<tr>
+
+				<td colspan="2"><label>Responsable:</label> <br /> <s:if
+						test="model.estructuras.size lt 1">
+						<s:select
+							list="#session[@mx.ipn.escom.cdt.besp.util.NombreObjetosSesion@GERENTES_ASIGNABLES]"
+							listKey="idUsuario" listValue="nombre" name="model.idUsuario" />
+					</s:if> <s:else>
+						<s:property value="model.usuario.nombre" />
+					</s:else></td>
+			</tr>
 		</table>
 
 		<table border="0">
