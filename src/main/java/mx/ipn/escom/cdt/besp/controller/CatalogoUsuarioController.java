@@ -1,6 +1,5 @@
 package mx.ipn.escom.cdt.besp.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Named;
@@ -92,17 +91,26 @@ public class CatalogoUsuarioController extends ActionSupport implements
 
 	@SkipValidation
 	public HttpHeaders index() {
+		Usuario usuarioFiltro = new Usuario();
 		Usuario usuarioSesion = (Usuario) ActionContext.getContext()
 				.getSession().get(NombreObjetosSesion.USUARIO);
+		usuarioFiltro.setIdArea(usuarioSesion.getIdArea());
 
-		if (usuarioSesion.getIdPerfilUsuario().equals(
-				PerfilUsuario.ADMINISTRADOR)) {
-			list = usuarioNegocio.findAll();
-		} else {
-			Usuario usuarioFiltro = new Usuario();
-			usuarioFiltro.setIdPerfilUsuario(PerfilUsuario.COORDINADOR);
-			usuarioFiltro.setIdArea(usuarioSesion.getIdArea());
+		switch (usuarioSesion.getIdPerfilUsuario()) {
+		case PerfilUsuario.DIRECTORGENERAL:
+			logger.trace("Es director general");
+			usuarioFiltro.setIdPerfilUsuario(PerfilUsuario.GERENTE);
 			list = usuarioNegocio.findByExample(usuarioFiltro);
+			break;
+		case PerfilUsuario.GERENTE:
+			logger.trace("Es gerente ");
+			usuarioFiltro.setIdPerfilUsuario(PerfilUsuario.COORDINADOR);
+			list = usuarioNegocio.findByExample(usuarioFiltro);
+			break;
+		default:
+			logger.trace("Es pendejo");
+			list = usuarioNegocio.findAll();
+			break;
 		}
 
 		ActionContext.getContext().getSession()
@@ -121,8 +129,7 @@ public class CatalogoUsuarioController extends ActionSupport implements
 		perfilUsuarios = perfilUsuarioNegocio.findAll();
 		ActionContext.getContext().getSession()
 				.put(NombreObjetosSesion.PERFIL_USUARIOS, perfilUsuarios);
-		
-		
+
 		listareas = areaNegocio.findAll();
 		ActionContext.getContext().getSession()
 				.put(NombreObjetosSesion.AREAS, listareas);
@@ -150,6 +157,7 @@ public class CatalogoUsuarioController extends ActionSupport implements
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	@Validations(requiredStrings = {
 			@RequiredStringValidator(fieldName = "model.login", type = ValidatorType.FIELD, key = "introLogin"),
 			@RequiredStringValidator(fieldName = "model.psw", type = ValidatorType.FIELD, key = "introPass"),
@@ -158,7 +166,8 @@ public class CatalogoUsuarioController extends ActionSupport implements
 			@RequiredStringValidator(fieldName = "model.apPat", type = ValidatorType.FIELD, key = "introApPat"),
 			@RequiredStringValidator(fieldName = "model.apMat", type = ValidatorType.FIELD, key = "introApMat"),
 			@RequiredStringValidator(fieldName = "model.cargo", type = ValidatorType.FIELD, key = "introCargo"),
-			//@RequiredStringValidator(fieldName = "model.rfc", type = ValidatorType.FIELD, key = "introRFC"),
+			// @RequiredStringValidator(fieldName = "model.rfc", type =
+			// ValidatorType.FIELD, key = "introRFC"),
 			@RequiredStringValidator(fieldName = "model.direccion.calle", type = ValidatorType.FIELD, key = "introCalle"),
 			@RequiredStringValidator(fieldName = "model.direccion.colonia", type = ValidatorType.FIELD, key = "introCol"),
 			@RequiredStringValidator(fieldName = "model.direccion.deleg", type = ValidatorType.FIELD, key = "introDel"),
@@ -314,7 +323,8 @@ public class CatalogoUsuarioController extends ActionSupport implements
 			@RequiredStringValidator(fieldName = "model.psw", type = ValidatorType.FIELD, key = "introPass"),
 			@RequiredStringValidator(fieldName = "psw2", type = ValidatorType.FIELD, key = "introPass2"),
 			@RequiredStringValidator(fieldName = "model.cargo", type = ValidatorType.FIELD, key = "introCargo"),
-			//@RequiredStringValidator(fieldName = "model.rfc", type = ValidatorType.FIELD, key = "introRFC"),
+			// @RequiredStringValidator(fieldName = "model.rfc", type =
+			// ValidatorType.FIELD, key = "introRFC"),
 			@RequiredStringValidator(fieldName = "model.direccion.calle", type = ValidatorType.FIELD, key = "introCalle"),
 			@RequiredStringValidator(fieldName = "model.direccion.colonia", type = ValidatorType.FIELD, key = "introCol"),
 			@RequiredStringValidator(fieldName = "model.direccion.deleg", type = ValidatorType.FIELD, key = "introDel"),

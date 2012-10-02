@@ -14,8 +14,9 @@
 </jsp:text>
 </head>
 <body>
-<s:url id="urlAgregar" value="/catalogo-usuario/new" includeContext="true" />
-<h1>Gestionar Usuario</h1>
+	<s:url id="urlAgregar" value="/catalogo-usuario/new"
+		includeContext="true" />
+	<h1>Gestionar Usuario</h1>
 	<s:actionmessage id="algo" theme="jquery" />
 	<table id="tblUsuario">
 		<thead>
@@ -39,25 +40,30 @@
 					<td>${apMat}</td>
 					<td>${perfilUsuario.nombre}</td>
 					<td>${area.nombre}</td>
-					<td><s:if test="activado">Activado</s:if><s:else>Desactivado</s:else></td>
+					<td><s:if test="activado">Activado</s:if> <s:else>Desactivado</s:else></td>
 					<td><a
-						href="${pageContext.request.contextPath}/catalogo-usuario/${idUsuario}/edit" ><img height="20" width="20" src="images/buttons/editar.png"/></a>
-						<a
-						href="${pageContext.request.contextPath}/catalogo-usuario/${idUsuario}/deleteConfirm"><img height="20" width="20" src="images/buttons/eliminar.png"/></a>
-						<a
-						href="${pageContext.request.contextPath}/catalogo-usuario/${idUsuario}/view"><img height="20" width="20" src="images/buttons/ver.png"/></a>
-<!-- 						<a
-						href="${pageContext.request.contextPath}/catalogo-contacto!index?idUsuarioSel=${idUsuario}">Contacto</a>
-						 -->
-					</td>
+						href="${pageContext.request.contextPath}/catalogo-usuario/${idUsuario}/edit"><img
+							height="20" width="20" src="images/buttons/editar.png" /></a> <a
+						href="${pageContext.request.contextPath}/catalogo-usuario/${idUsuario}/deleteConfirm"><img
+							height="20" width="20" src="images/buttons/eliminar.png" /></a> <a
+						href="${pageContext.request.contextPath}/catalogo-usuario/${idUsuario}/view"><img
+							height="20" width="20" src="images/buttons/ver.png" /></a></td>
 				</tr>
 			</s:iterator>
 		</tbody>
 		<label id="selium"></label>
 	</table>
-	<p>
-	<sj:a id="btnAgregar" button="true"  href="#" onclick="location.href='%{urlAgregar}'">Agregar</sj:a>
-	</p>
+	<s:if
+		test="%{
+		(#session[@mx.ipn.escom.cdt.besp.util.NombreObjetosSesion@USUARIO].idPerfilUsuario==@mx.ipn.escom.cdt.besp.modelo.PerfilUsuario@DIRECTORGENERAL 
+		and list.isEmpty) 
+		or 
+		#session[@mx.ipn.escom.cdt.besp.util.NombreObjetosSesion@USUARIO].idPerfilUsuario!=@mx.ipn.escom.cdt.besp.modelo.PerfilUsuario@DIRECTORGENERAL}">
+		<p>
+			<sj:a id="btnAgregar" button="true" href="#"
+				onclick="location.href='%{urlAgregar}'">Agregar</sj:a>
+		</p>
+	</s:if>
 </body>
 	</html>
 </jsp:root>

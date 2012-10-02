@@ -133,12 +133,12 @@
 						href="${pageContext.request.contextPath}/notificaciones">
 						Notificaciones </a>
 
-					<!-- 				<a class="selected"	href="${pageContext.request.contextPath}/catalogo-nivel">Gestión -->
-					<!-- 					de niveles</a> -->
-					<br />
 
 
 					<br />
+					<h3>Usuario</h3>
+					<a class="selected"
+						href="${pageContext.request.contextPath}/catalogo-usuario">Gestión</a>
 					<br />
 				</s:if>
 				<s:if
@@ -183,11 +183,9 @@
 					<h3>Consultar Proyectos</h3>
 					<a href="${pageContext.request.contextPath}/consultar-proyectos">Consultar
 						proyectos</a>
-					<!--  <h3>Coordinadores</h3>
-				<a class="selected"
-					href="${pageContext.request.contextPath}/catalogo-usuario">Gestión
-					de coordinadores</a>-->
-					<br />
+					<h3>Usuario</h3>
+					<a class="selected"
+						href="${pageContext.request.contextPath}/catalogo-usuario">Gestión</a>
 				</s:if>
 				<s:if test="%{#session.usuario.idPerfilUsuario != null}">
 					<a href="${pageContext.request.contextPath}/logout">
