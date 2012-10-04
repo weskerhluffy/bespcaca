@@ -53,17 +53,11 @@
 		</tbody>
 		<label id="selium"></label>
 	</table>
-	<s:if
-		test="%{
-		(#session[@mx.ipn.escom.cdt.besp.util.NombreObjetosSesion@USUARIO].idPerfilUsuario==@mx.ipn.escom.cdt.besp.modelo.PerfilUsuario@DIRECTORGENERAL 
-		and list.isEmpty) 
-		or 
-		#session[@mx.ipn.escom.cdt.besp.util.NombreObjetosSesion@USUARIO].idPerfilUsuario!=@mx.ipn.escom.cdt.besp.modelo.PerfilUsuario@DIRECTORGENERAL}">
-		<p>
-			<sj:a id="btnAgregar" button="true" href="#"
-				onclick="location.href='%{urlAgregar}'">Agregar</sj:a>
-		</p>
-	</s:if>
+
+	<p>
+		<sj:a id="btnAgregar" button="true" href="#"
+			onclick="location.href='%{urlAgregar}'">Agregar</sj:a>
+	</p>
 </body>
 	</html>
 </jsp:root>
