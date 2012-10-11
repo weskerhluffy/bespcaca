@@ -46,16 +46,25 @@ public class CatalogoAccionController extends ActionSupport implements
 	@SkipValidation
 	public String editNew() {
 		// logger.trace("");
-		
+
 		model = null;
 		model = new Accion();
 		model.setNodoPadre(proyectoNegocio.findById(idSel));
 		nodoRestrictivo = periodoNegocio
 				.getNodoPadreConPeriodoRestrictivo(model);
 		logger.trace("idSel:: " + idSel);
-		if(nodoRestrictivo == null){
+
+		if (nodoRestrictivo == null) {
 			logger.trace("Nodorestric es null");
 		}
+		if (idSel != null) {
+			ActionContext
+					.getContext()
+					.getSession()
+					.put(NombreObjetosSesion.PROYECTO,
+							proyectoNegocio.findById(idSel));
+		}
+
 		ActionContext
 				.getContext()
 				.getSession()
@@ -120,13 +129,14 @@ public class CatalogoAccionController extends ActionSupport implements
 			@RequiredStringValidator(fieldName = "model.descripcion", type = ValidatorType.FIELD, key = "introTelDescr") })
 	public HttpHeaders create() {
 		Periodo periodo;
+
 		periodo = periodoNegocio.save(model.getPeriodo());//
 		model.setIdPeriodo(periodo.getIdPeriodo());
 		logger.trace("Proyecto: " + model.getIdProyecto());
-		//model.setIdProyecto(idProyecto);
+		model.setIdProyecto(((Proyecto) ActionContext.getContext().getSession()
+				.get(NombreObjetosSesion.PROYECTO)).getIdProyecto());
 		model = accionNegocio.save(model);
 		addActionMessage("Se agregó " + model.getNombre() + " exitosamente");
-
 		return new DefaultHttpHeaders("success").setLocationId(model
 				.getIdAccion());
 	}

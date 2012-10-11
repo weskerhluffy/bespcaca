@@ -35,8 +35,7 @@
 		<center>
 			<table border="0">
 				<tr>
-					<td><label>Nombre:</label>
-					</td>
+					<td><label>Nombre:</label></td>
 					<td><s:textfield id="txtNomResp" name="usuarioActual.nombre"
 							disabled="true" /></td>
 				</tr>
@@ -48,8 +47,7 @@
 				</tr>
 
 				<tr>
-					<td><label>Apellido Materno:</label>
-					</td>
+					<td><label>Apellido Materno:</label></td>
 					<td><s:textfield id="txtRFCResp" name="usuarioActual.apMat"
 							disabled="true" /></td>
 				</tr>
@@ -82,15 +80,14 @@
 					<td><label>Nombre del proyecto:</label></td>
 					<td><s:textfield id="txtNomProy" name="model.nombre" /></td>
 				</tr>
-				
+
 				<tr>
 					<td><label>Siglas:</label></td>
 					<td><s:textfield id="txtSiglasProy" name="model.siglas" /></td>
 				</tr>
 
 				<tr>
-					<td colspan="2"><br />
-					<label>Resumen:</label></td>
+					<td colspan="2"><br /> <label>Resumen:</label></td>
 				</tr>
 
 				<br>
@@ -106,84 +103,10 @@
 					<td colspan="2"><s:textarea rows="5" cols="40"
 							id="txtObGenProy" name="model.objetivoGeneral" /></td>
 				</tr>
-				<!-- <tr>
-					<td><label>Costo Total del Proyecto $:</label></td>
-					<td><s:textfield id="txtCostoTotProy" name="model.costoTotal" />
-					</td>
-				</tr>
-               -->
+
 
 			</table>
-			<!-- <table border="0">
-				<tr>
-					<td><label>Nombre:</label> <s:textfield id="txtNomResp"
-							name="usuarioActual.nombre" disabled="true" /></td>
-				</tr>
 
-				<tr>
-					<td><label>Apellido Paterno:</label> <s:textfield
-							id="txtApatResp" name="usuarioActual.apPat" disabled="true" /></td>
-				</tr>
-
-				<tr>
-					<td><label>Apellido Materno:</label> <s:textfield
-							id="txtRFCResp" name="usuarioActual.apMat" disabled="true" /></td>
-				</tr>
-
-				<tr>
-					<td><label>Dirección:</label> <s:textfield id="txtAreaResp"
-							name="usuarioActual.area.nombre" disabled="true" /></td>
-				</tr>
-
-				<tr>
-					<td><label>Cargo:</label> <s:textfield id="txtCargoResp"
-							name="usuarioActual.cargo" disabled="true" /></td>
-				</tr>
-
-				<tr>
-					<td><label>Telefono:</label> <s:textfield id="txtTelResp"
-							name="tel" disabled="true" /></td>
-				</tr>
-
-				<tr>
-					<td><label>Correo:</label> <s:textfield id="txtACorreoResp"
-							name="mail" disabled="true" /></td>
-				</tr>
-
-				<tr>
-					<td><label>Nombre del proyecto:</label> <s:textfield
-							id="txtNomProy" name="model.nombre" /></td>
-				</tr>
-
-				<tr>
-					<td><label>Siglas:</label> <s:textfield id="txtSiglasProy"
-							name="model.siglas" /></td>
-				</tr>
-
-				<tr>
-					<td><label>Resumen:</label></td>
-				</tr>
-
-				<br>
-				<td><s:textarea rows="5" cols="50" id="txtResProy"
-						name="model.resumen" /></td>
-				</br>
-
-				<tr>
-					<td><label>Objetivo Generales:</label></td>
-				</tr>
-
-				<tr>
-					<td><s:textarea rows="5" cols="40" id="txtObGenProy"
-							name="model.objetivoGeneral" /></td>
-				</tr>
-				<tr>
-					<td><label>Costo Total del Proyecto $:</label>				
-					<s:textfield id="txtCostoTotProy" name="model.costoTotal" /></td>
-				</tr>
-			
-
-			</table> -->
 		</center>
 		<center>
 			<div>
@@ -288,25 +211,29 @@
 		</div>
 
 		<center>
-			<s:optiontransferselect id="slcIdEjesTematicosDisponibles"
-				doubleId="slcIdEjesTematicosSeleccionados" doubleMultiple="true"
-				label="Ejes Tematicos" name="idEjesTematicosDisponibles"
-				leftTitle="Ejes Temáticos disponibles"
-				rightTitle="Ejes Temáticos Asociados" list="ejeTematicosDisponibles"
-				listKey="idEje" listValue="nombre" multiple="true"
-				doubleList="ejeTematicosSelecccionados"
-				doubleName="idEjesTematicosSeleccionados" doubleListKey="idEje"
-				doubleListValue="nombre" />
-			<s:optiontransferselect id="slcIdTemasTransversalesDisponibles"
-				doubleId="slcIdTemasTransversalesSeleccionados"
-				label="Temas Transversales" name="idTemasTransversalesDisponibles"
-				leftTitle="Temas Transversales Disponibles"
-				rightTitle="Temas Transversales Asociados"
-				list="temaTransversalDisponibles" listKey="idTema"
-				listValue="nombre" multiple="true"
-				doubleList="temaTransversalSeleccionados	"
-				doubleName="idTemasTransversalesSeleccionados"
-				doubleListKey="idTema" doubleListValue="nombre" />
+			<div id="divEjes">
+				<s:optiontransferselect id="slcIdEjesTematicosDisponibles"
+					doubleId="slcIdEjesTematicosSeleccionados" doubleMultiple="true"
+					label="Ejes Tematicos" name="idEjesTematicosDisponibles"
+					leftTitle="Ejes Temáticos disponibles"
+					rightTitle="Ejes Temáticos Asociados"
+					list="ejeTematicosDisponibles" listKey="idEje" listValue="nombre"
+					multiple="true" doubleList="ejeTematicosSelecccionados"
+					doubleName="idEjesTematicosSeleccionados" doubleListKey="idEje"
+					doubleListValue="nombre" />
+			</div>
+			<div id="divTemas">
+				<s:optiontransferselect id="slcIdTemasTransversalesDisponibles"
+					doubleId="slcIdTemasTransversalesSeleccionados"
+					label="Temas Transversales" name="idTemasTransversalesDisponibles"
+					leftTitle="Temas Transversales Disponibles"
+					rightTitle="Temas Transversales Asociados"
+					list="temaTransversalDisponibles" listKey="idTema"
+					listValue="nombre" multiple="true"
+					doubleList="temaTransversalSeleccionados	"
+					doubleName="idTemasTransversalesSeleccionados"
+					doubleListKey="idTema" doubleListValue="nombre" />
+			</div>
 		</center>
 
 		<s:hidden id="hdnIdEstructuraSectorial"

@@ -33,7 +33,7 @@
 					<tr>
 						<td><a href="recuperar-password">¿Ha olvidado su
 								contraseña?</a></td>
-						<td><s:submit value="Aceptar" /></td>
+						<td><s:submit id="votoLatino" value="Aceptar" /></td>
 					</tr>
 				</table>
 				<s:fielderror />

@@ -149,7 +149,7 @@
 						href="${pageContext.request.contextPath}/proyectos-disponibles/">Ver
 						proyectos disponibles</a>
 					<br />
-					<a class="selected"
+					<a class="selected" id="lnkRegistrarProyecto"
 						href="${pageContext.request.contextPath}/registrar-proyecto/">Registrar
 						proyecto</a>
 					<br />
