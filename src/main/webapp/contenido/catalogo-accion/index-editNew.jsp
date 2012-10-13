@@ -30,7 +30,7 @@
 		<div class="section">Datos Generales</div>
 		<table>
 			<tr>
-				<td><label>Nombre de la acción:</label></td>
+				<td><label>Nombre de la meta intermedia:</label></td>
 				<td><s:textfield name="model.nombre" /></td>
 			</tr>
 			<tr>

@@ -143,7 +143,8 @@ public class CatalogoIndicadorController extends ActionSupport implements
 		if (accion == null) {
 			accion = accionNegocio.findById(1);
 		}
-
+		model.setIdProyecto(((Proyecto) ActionContext.getContext().getSession()
+				.get(NombreObjetosSesion.PROYECTO)).getIdProyecto());
 		model.setIdAccion(accion.getId());
 		model.setIdProyecto(accion.getIdProyecto());
 		model = indicadorNegocio.save(model);

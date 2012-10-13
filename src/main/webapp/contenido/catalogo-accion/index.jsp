@@ -16,7 +16,7 @@
 	</jsp:text>
 	</head>
 	<body>
-	<h1>Gestiona Acción</h1>
+	<h1>Gestiona meta intermedia</h1>
 	<s:actionmessage id="algo" theme="jquery"/>
 	<table id="tblAccion">
 

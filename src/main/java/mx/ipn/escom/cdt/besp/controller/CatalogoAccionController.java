@@ -126,7 +126,7 @@ public class CatalogoAccionController extends ActionSupport implements
 	@Validations(requiredStrings = {
 			@RequiredStringValidator(fieldName = "model.objetivo", type = ValidatorType.FIELD, key = "introObjetivoAccion"),
 			@RequiredStringValidator(fieldName = "model.nombre", type = ValidatorType.FIELD, key = "introNombre"),
-			@RequiredStringValidator(fieldName = "model.descripcion", type = ValidatorType.FIELD, key = "introTelDescr") })
+			@RequiredStringValidator(fieldName = "model.descripcion", type = ValidatorType.FIELD, key = "introAccDescr") })
 	public HttpHeaders create() {
 		Periodo periodo;
 
