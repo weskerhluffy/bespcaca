@@ -53,6 +53,9 @@ public class Usuario {
 	private List<Proyecto> proyectosOrdenadosFechaModificacion;
 	private List<Programa> programas;
 	private List<Contacto> contactos;
+	private List<Usuario> superior;
+
+
 
 	public Usuario() {
 	}
@@ -255,7 +258,13 @@ public class Usuario {
 	}
 	
 	
-	
+	public List<Usuario> getSuperior() {
+		return superior;
+	}
+
+	public void setSuperior(List<Usuario> superior) {
+		this.superior = superior;
+	}
 	
 	
 	
