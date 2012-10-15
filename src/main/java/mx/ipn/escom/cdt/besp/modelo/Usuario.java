@@ -42,20 +42,17 @@ public class Usuario {
 	private Integer idArea;
 	private Boolean activado;
 	private Integer empleado;
-    private Usuario empleados;
-    
-    
+
 	private Direccion direccion;
 	private PerfilUsuario perfilUsuario;
 	private Area area;
+	private Usuario empleados;
 	private List<Proyecto> proyectos;
 	private List<Proyecto> proyectosCreados;
 	private List<Proyecto> proyectosOrdenadosFechaModificacion;
 	private List<Programa> programas;
 	private List<Contacto> contactos;
 	private List<Usuario> superior;
-
-
 
 	public Usuario() {
 	}
@@ -176,8 +173,8 @@ public class Usuario {
 	public void setActivado(Boolean activado) {
 		this.activado = activado;
 	}
-	
-	@Column(name="id_empleado")
+
+	@Column(name = "id_empleado")
 	public Integer getEmpleado() {
 		return empleado;
 	}
@@ -244,11 +241,8 @@ public class Usuario {
 		this.programas = programas;
 	}
 
-	
 	@ManyToOne
-	@JoinColumn(name = "id_padre", referencedColumnName = "id_estructura", insertable = false, updatable = false)
-	
-	
+	@JoinColumn(name = "id_superior", referencedColumnName = "id_estructura", insertable = false, updatable = false)
 	public Usuario getEmpleados() {
 		return empleados;
 	}
@@ -256,8 +250,8 @@ public class Usuario {
 	public void setEmpleados(Usuario empleados) {
 		this.empleados = empleados;
 	}
-	
-	
+
+	@OneToMany(mappedBy = "empleados")
 	public List<Usuario> getSuperior() {
 		return superior;
 	}
@@ -265,10 +259,7 @@ public class Usuario {
 	public void setSuperior(List<Usuario> superior) {
 		this.superior = superior;
 	}
-	
-	
-	
-	
+
 	@Override
 	public String toString() {
 
