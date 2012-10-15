@@ -37,51 +37,39 @@
 			</s:if>
 			<s:else>
 				<tr>
-					<td><label>Nombre:</label>
-					</td>
+					<td><label>Nombre:</label></td>
 					<td><s:textfield id="txtNomResp" name="usuarioActual.nombre"
-							disabled="true" />
-					</td>
+							disabled="true" /></td>
 				</tr>
 				<tr>
-					<td><label>Apellido Paterno:</label>
-					</td>
+					<td><label>Apellido Paterno:</label></td>
 					<td><s:textfield id="txtApatResp" name="usuarioActual.apPat"
-							disabled="true" />
-					</td>
+							disabled="true" /></td>
 				</tr>
 				<tr>
-					<td><label>Apellido Materno:</label>
-					</td>
+					<td><label>Apellido Materno:</label></td>
 					<td><s:textfield id="txtRFCResp" name="usuarioActual.apMat"
-							disabled="true" />
-					</td>
+							disabled="true" /></td>
 				</tr>
 				<tr>
-					<td><label>Dirección:</label>
-					</td>
+					<td><label>Dirección:</label></td>
 					<td><s:textfield id="txtAreaResp"
 							name="usuarioActual.getArea().getNombre()" disabled="true" /></td>
 				</tr>
 				<tr>
-					<td><label>Cargo:</label>
-					</td>
+					<td><label>Cargo:</label></td>
 					<td><s:textfield id="txtCargoResp" name="usuarioActual.cargo"
-							disabled="true" />
-					</td>
+							disabled="true" /></td>
 				</tr>
 				<tr>
-					<td><label>Teléfono:</label>
-					</td>
+					<td><label>Teléfono:</label></td>
 					<td><s:textfield id="txtTelResp" name="tel" disabled="true" />
 					</td>
 				</tr>
 				<tr>
-					<td><label>Correo:</label>
-					</td>
+					<td><label>Correo:</label></td>
 					<td><s:textfield id="txtACorreoResp" name="mail"
-							disabled="true" />
-					</td>
+							disabled="true" /></td>
 				</tr>
 			</s:else>
 			<tr>
@@ -116,12 +104,13 @@
 							</tr>
 							<tr>
 								<td>Por duración <input type="radio" id="duracion"
-									name="tipoPeriodo" value="duracion" />
-									 
+									name="tipoPeriodo" value="duracion" /> 
+									
+									
 									Por fechas<input
 									type="radio" id="fechas" name="tipoPeriodo" value="fechas" />
-									
-									
+
+
 									Indefinido <input type="radio" id="indefinido"
 									name="tipoPeriodo" value="indefinido" />
 								</td>
@@ -139,8 +128,7 @@
 											<option value="week">semanas</option>
 											<option value="month">meses</option>
 											<option value="year">años</option>
-									</select>
-									</td>
+									</select></td>
 								</tr>
 
 							</table>
@@ -171,8 +159,7 @@
 			<tr>
 				<td colspan="2"><sj:submit id="btnAceptar" value="Aceptar"
 						button="true" /> <sj:a id="btnRegresar" button="true" href="#"
-						onclick="history.go(-1)">Cancelar	</sj:a>
-				</td>
+						onclick="history.go(-1)">Cancelar	</sj:a></td>
 			</tr>
 		</table>
 	</s:form>

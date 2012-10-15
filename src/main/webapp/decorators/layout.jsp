@@ -116,15 +116,16 @@
 						href="${pageContext.request.contextPath}/revisar-programa">Revisar
 						programa</a>
 					<br />
+					<a class="selected"
+						href="${pageContext.request.contextPath}/catalogo-programa">Programas</a>
+					<br />
+
 					<h3>Proyectos</h3>
 					<a class="selected"
 						href="${pageContext.request.contextPath}/consultar-proyectos">Consultar
 						proyectos</a>
 					<br />
-					<h3>Estructura</h3>
-					<a class="selected"
-						href="${pageContext.request.contextPath}/catalogo-estructura">Definir
-						estructura de programa. </a>
+
 					<br />
 					<a class="selected"
 						href="${pageContext.request.contextPath}/operacion-bitacora">Seguimiento
@@ -140,6 +141,9 @@
 					<a class="selected"
 						href="${pageContext.request.contextPath}/catalogo-usuario">Gestión</a>
 					<br />
+
+
+
 				</s:if>
 				<s:if
 					test="%{#session.usuario.idPerfilUsuario eq @mx.ipn.escom.cdt.besp.modelo.PerfilUsuario@COORDINADOR}">

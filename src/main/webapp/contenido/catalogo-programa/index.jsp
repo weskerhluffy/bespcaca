@@ -50,15 +50,20 @@
 						href="${pageContext.request.contextPath}/catalogo-programa/${idPrograma}/deleteConfirm"><img
 							height="20" width="20" src="images/buttons/eliminar.png" /> </a> <a
 						href="${pageContext.request.contextPath}/catalogo-nivel?idProgramaSel=${idPrograma}">Niveles
+					</a> <a
+						href="${pageContext.request.contextPath}/catalogo-estructura?idProgramaSel=${idPrograma}">Estructuras
 					</a></td>
 				</tr>
 			</s:iterator>
 		</tbody>
 	</table>
-	<!-- a href="${pageContext.request.contextPath}/catalogo-programa/new"
-			id="lnkNuevoPrograma"><input type="submit" value="Nuevo Programa"></input></a-->
-	<sj:a id="btnRegresar" button="true" href="#"
-		onclick="location.href='%{urlAgregarPrograma}'">Nuevo Programa</sj:a>
+
+	<s:if
+		test="%{(#session[@mx.ipn.escom.cdt.besp.util.NombreObjetosSesion@USUARIO].idPerfilUsuario eq @mx.ipn.escom.cdt.besp.modelo.PerfilUsuario@GERENTE and #session[@mx.ipn.escom.cdt.besp.util.NombreObjetosSesion@USUARIO].programas.isEmpty) 
+			or #session[@mx.ipn.escom.cdt.besp.util.NombreObjetosSesion@USUARIO].idPerfilUsuario eq @mx.ipn.escom.cdt.besp.modelo.PerfilUsuario@ADMINISTRADOR}">
+		<sj:a id="btnAgregar" button="true" href="javascript:void(0)"
+			onclick="location.href='%{urlAgregarPrograma}'">Nuevo Programa</sj:a>
+	</s:if>
 	<br />
 	<br />
 

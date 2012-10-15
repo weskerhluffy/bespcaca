@@ -36,7 +36,18 @@
 		<div class="section">Datos del Programa</div>
 		<table>
 			<s:if
-				test="%{not #session[@mx.ipn.escom.cdt.besp.util.NombreObjetosSesion@HAY_SECTORIAL] or (#session[@mx.ipn.escom.cdt.besp.util.NombreObjetosSesion@HAY_SECTORIAL]  and #session[@mx.ipn.escom.cdt.besp.util.NombreObjetosSesion@ES_SECTORIAL] )}">
+				test="%{
+						#session[@mx.ipn.escom.cdt.besp.util.NombreObjetosSesion@USUARIO].idPerfilUsuario eq @mx.ipn.escom.cdt.besp.modelo.PerfilUsuario@ADMINISTRADOR
+						and 
+						(
+							not #session[@mx.ipn.escom.cdt.besp.util.NombreObjetosSesion@HAY_SECTORIAL] 
+							or 
+							(
+								#session[@mx.ipn.escom.cdt.besp.util.NombreObjetosSesion@HAY_SECTORIAL]  
+								and #session[@mx.ipn.escom.cdt.besp.util.NombreObjetosSesion@ES_SECTORIAL] 
+							)
+						)
+						}">
 				<tr>
 					<td><label>Programa Sectorial</label></td>
 					<td><s:checkbox id="stSectorial" name="model.sectorial" /></td>
@@ -59,14 +70,8 @@
 			</tr>
 			<tr>
 
-				<td colspan="2"><label>Responsable:</label> <br /> <s:if
-						test="model.estructuras.size lt 1">
-						<s:select
-							list="#session[@mx.ipn.escom.cdt.besp.util.NombreObjetosSesion@GERENTES_ASIGNABLES]"
-							listKey="idUsuario" listValue="nombre" name="model.idUsuario" />
-					</s:if> <s:else>
-						<s:property value="model.usuario.nombre" />
-					</s:else></td>
+				<td colspan="2"><label>Responsable:</label> <s:property
+						value="model.usuario.nombre" /></td>
 			</tr>
 		</table>
 

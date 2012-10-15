@@ -64,7 +64,20 @@ public class CatalogoProgramaController extends ActionSupport implements
 
 	@SkipValidation
 	public HttpHeaders index() {
-		list = programaNegocio.findAll();
+		Usuario usuario;
+
+		usuario = usuarioNegocio.findById(
+
+		((Usuario) ActionContext.getContext().getSession()
+				.get(NombreObjetosSesion.USUARIO)).getIdUsuario()
+
+		);
+
+		ActionContext.getContext().getSession()
+				.put(NombreObjetosSesion.USUARIO, usuario);
+
+		list = usuario.getProgramas();
+
 		ActionContext
 				.getContext()
 				.getSession()
