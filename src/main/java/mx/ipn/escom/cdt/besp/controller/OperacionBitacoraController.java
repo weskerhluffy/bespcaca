@@ -27,6 +27,10 @@ import com.opensymphony.xwork2.validator.annotations.ValidatorType;
 			"actionName", "operacion-bitacora/%{idSel}" })})
 public class OperacionBitacoraController extends ActionSupport implements ModelDriven<Bitacora> 
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -707216650810322602L;
 	private String titulo = "Bitácora del seguimiento del proyecto";
 	private BitacoraNegocio bitacoraNegocio;
 	private ProyectoNegocio proyectoNegocio;
