@@ -51,9 +51,11 @@
 				</tr>
 				<tr>
 
-					<td colspan="2"><label>Responsable:</label> <br /> <s:select
-							list="#session[@mx.ipn.escom.cdt.besp.util.NombreObjetosSesion@GERENTES_ASIGNABLES]"
-							listKey="idUsuario" listValue="nombre" name="model.idUsuario" /></td>
+					<td colspan="2"><label>Responsable:</label> <s:property
+							value="#session[@mx.ipn.escom.cdt.besp.util.NombreObjetosSesion@USUARIO].nombre" />
+						<s:hidden
+							value="%{#session[@mx.ipn.escom.cdt.besp.util.NombreObjetosSesion@USUARIO].idUsuario}"
+							name="model.idUsuario" /></td>
 				</tr>
 			</table>
 
