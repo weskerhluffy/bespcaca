@@ -41,7 +41,10 @@ public class Usuario {
 	private Integer idPerfilUsuario;
 	private Integer idArea;
 	private Boolean activado;
-
+	private Integer empleado;
+    private Usuario empleados;
+    
+    
 	private Direccion direccion;
 	private PerfilUsuario perfilUsuario;
 	private Area area;
@@ -170,6 +173,15 @@ public class Usuario {
 	public void setActivado(Boolean activado) {
 		this.activado = activado;
 	}
+	
+	@Column(name="id_empleado")
+	public Integer getEmpleado() {
+		return empleado;
+	}
+
+	public void setEmpleado(Integer empleado) {
+		this.empleado = empleado;
+	}
 
 	@OneToOne
 	@PrimaryKeyJoinColumn(name = "id_usuario")
@@ -229,6 +241,25 @@ public class Usuario {
 		this.programas = programas;
 	}
 
+	
+	@ManyToOne
+	@JoinColumn(name = "id_padre", referencedColumnName = "id_estructura", insertable = false, updatable = false)
+	
+	
+	public Usuario getEmpleados() {
+		return empleados;
+	}
+
+	public void setEmpleados(Usuario empleados) {
+		this.empleados = empleados;
+	}
+	
+	
+	
+	
+	
+	
+	
 	@Override
 	public String toString() {
 
