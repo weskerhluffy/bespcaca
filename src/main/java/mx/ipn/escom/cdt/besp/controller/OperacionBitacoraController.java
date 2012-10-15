@@ -1,11 +1,22 @@
 package mx.ipn.escom.cdt.besp.controller;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 import javax.inject.Named;
 
-import mx.ipn.escom.cdt.besp.modelo.*;
-import mx.ipn.escom.cdt.besp.negocio.*;
+import mx.ipn.escom.cdt.besp.modelo.Bitacora;
+import mx.ipn.escom.cdt.besp.modelo.Estado;
+import mx.ipn.escom.cdt.besp.modelo.PerfilUsuario;
+import mx.ipn.escom.cdt.besp.modelo.Programa;
+import mx.ipn.escom.cdt.besp.modelo.Proyecto;
+import mx.ipn.escom.cdt.besp.modelo.TipoRegistro;
+import mx.ipn.escom.cdt.besp.modelo.Usuario;
+import mx.ipn.escom.cdt.besp.negocio.BitacoraNegocio;
+import mx.ipn.escom.cdt.besp.negocio.ProgramaNegocio;
+import mx.ipn.escom.cdt.besp.negocio.ProyectoNegocio;
+import mx.ipn.escom.cdt.besp.negocio.UsuarioNegocio;
 import mx.ipn.escom.cdt.besp.util.NombreObjetosSesion;
 
 import org.apache.struts2.convention.annotation.Result;
@@ -17,20 +28,19 @@ import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 import com.opensymphony.xwork2.validator.annotations.RegexFieldValidator;
-import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
 import com.opensymphony.xwork2.validator.annotations.Validations;
 import com.opensymphony.xwork2.validator.annotations.ValidatorType;
 
 @Named
-@Results({
-	@Result(name = "success", type = "redirectAction", params = {
-			"actionName", "operacion-bitacora/%{idSel}" })})
-public class OperacionBitacoraController extends ActionSupport implements ModelDriven<Bitacora> 
-{
+@Results({ @Result(name = "success", type = "redirectAction", params = {
+		"actionName", "operacion-bitacora/%{idSel}" }) })
+public class OperacionBitacoraController extends ActionSupport implements
+		ModelDriven<Bitacora> {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -707216650810322602L;
+
 	private String titulo = "Bitácora del seguimiento del proyecto";
 	private BitacoraNegocio bitacoraNegocio;
 	private ProyectoNegocio proyectoNegocio;
@@ -38,7 +48,8 @@ public class OperacionBitacoraController extends ActionSupport implements ModelD
 	private UsuarioNegocio usuarioNegocio;
 	private Bitacora model = null;
 	private Date fecha = new Date();
-	private String descripcion, sugerenciaRestriccion, descripcionRestriccion , accionForma, detallesAccionRestriccion, estadoEdicion;
+	private String descripcion, sugerenciaRestriccion, descripcionRestriccion,
+			accionForma, detallesAccionRestriccion, estadoEdicion;
 	private int idRemitenteSel, idDestinatarioSel, idRestriccionSel;
 	private Usuario usuarioPara;
 	private Integer idSel;
@@ -48,161 +59,172 @@ public class OperacionBitacoraController extends ActionSupport implements ModelD
 	private List<Programa> programas;
 	private Usuario usuarioLogeado, usuarioSecretaria;
 	private Bitacora bitacora;
-	
-	
+
 	public String show() {
 		ActionContext.getContext().getSession()
-		.put(NombreObjetosSesion.OPERACION_ESTADO, 2);
-		//Obtengo el tipo de usuario para saber que operacion realizar
+				.put(NombreObjetosSesion.OPERACION_ESTADO, 2);
+		// Obtengo el tipo de usuario para saber que operacion realizar
 		usuarioLogeado = (Usuario) ActionContext.getContext().getSession()
 				.get(NombreObjetosSesion.USUARIO);
 
-		//Si el usuario es coordinador
-		if(usuarioLogeado.getIdPerfilUsuario().equals(PerfilUsuario.COORDINADOR))
-		{
-			//Obtengo los registros de la bitacora asociados al proyecto seleccionado
+		// Si el usuario es coordinador
+		if (usuarioLogeado.getIdPerfilUsuario().equals(
+				PerfilUsuario.COORDINADOR)) {
+			// Obtengo los registros de la bitacora asociados al proyecto
+			// seleccionado
 			proyectoSel = proyectoNegocio.findById(idSel);
-			registrosBitacora = bitacoraNegocio.getRegistrosBitacoraProyecto(idSel);
+			registrosBitacora = bitacoraNegocio
+					.getRegistrosBitacoraProyecto(idSel);
 
-			//Obtengo el id del usuario responsable del programa asociado al proyecto seleccionado
-			this.idDestinatarioSel = proyectoSel.getProgramaPrincipal().getIdUsuario();//.getIdResponsable();
+			// Obtengo el id del usuario responsable del programa asociado al
+			// proyecto seleccionado
+			this.idDestinatarioSel = proyectoSel.getProgramaPrincipal()
+					.getIdUsuario();// .getIdResponsable();
 			usuarioPara = usuarioNegocio.findById(this.idDestinatarioSel);
 			System.out.println("Nombre::>" + usuarioPara.getNombre());
-		}
-		else
-		{
-			System.out.println("ID Proyecto: "+idSel);
-			//Obtengo los registros de la bitacora asociados a los proyecto asociados al programa seleccionado
-			registrosBitacora = bitacoraNegocio.getRegistrosBitacoraProyecto(idSel);
-			
+		} else {
+			System.out.println("ID Proyecto: " + idSel);
+			// Obtengo los registros de la bitacora asociados a los proyecto
+			// asociados al programa seleccionado
+			registrosBitacora = bitacoraNegocio
+					.getRegistrosBitacoraProyecto(idSel);
+
 		}
 
 		/*
 		 * Esto ya no es necesario pero lo dejo por si las dudas
-		 *
 		 */
-		//Si el usuario es gerente
-		/*if(usuarioLogeado.getIdPerfilUsuario().equals(perfilUsuario.GERENTE))
-		{
-			//Obtengo los registros de la bitacora asociados a los proyecto asociados al programa seleccionado
-			registrosBitacora = bitacoraNegocio.getRegistrosBitacoraPrograma(idSel);
-		}
-
-		//Si el usuario es secretaria
-		if(usuarioLogeado.getIdPerfilUsuario().equals(perfilUsuario.SECRETARIO))
-		{
-			//Obtengo los registros de la bitacora asociados a los proyecto asociados al programa seleccionado
-			registrosBitacora = bitacoraNegocio.getRegistrosBitacoraPrograma(idSel);
-		}*/
+		// Si el usuario es gerente
+		/*
+		 * if(usuarioLogeado.getIdPerfilUsuario().equals(perfilUsuario.GERENTE))
+		 * { //Obtengo los registros de la bitacora asociados a los proyecto
+		 * asociados al programa seleccionado registrosBitacora =
+		 * bitacoraNegocio.getRegistrosBitacoraPrograma(idSel); }
+		 * 
+		 * //Si el usuario es secretaria
+		 * if(usuarioLogeado.getIdPerfilUsuario().equals
+		 * (perfilUsuario.SECRETARIO)) { //Obtengo los registros de la bitacora
+		 * asociados a los proyecto asociados al programa seleccionado
+		 * registrosBitacora =
+		 * bitacoraNegocio.getRegistrosBitacoraPrograma(idSel); }
+		 */
 
 		return "show";
 	}
 
 	public HttpHeaders index() {
 		ActionContext.getContext().getSession()
-		.put(NombreObjetosSesion.OPERACION_ESTADO, 2);
-		//Obtengo el tipo de usuario para saber que operacion realizar
-		usuarioLogeado = (Usuario) ActionContext.getContext().getSession().get(NombreObjetosSesion.USUARIO);
+				.put(NombreObjetosSesion.OPERACION_ESTADO, 2);
+		// Obtengo el tipo de usuario para saber que operacion realizar
+		usuarioLogeado = (Usuario) ActionContext.getContext().getSession()
+				.get(NombreObjetosSesion.USUARIO);
 
 		registrosBitacora = new ArrayList<List<Bitacora>>();
 		programas = new ArrayList<Programa>();
 
-		//Si el usuario es gerente
-		if(usuarioLogeado.getIdPerfilUsuario().equals(PerfilUsuario.GERENTE))
-		{
-			//Obtengo la lista de programas asociados al usuario que esta logeado
+		// Si el usuario es gerente
+		if (usuarioLogeado.getIdPerfilUsuario().equals(PerfilUsuario.GERENTE)) {
+			// Obtengo la lista de programas asociados al usuario que esta
+			// logeado
 			programas = usuarioLogeado.getProgramas();
 
-			//Obtengo los registros de la bitacora asociados a los proyecto asociados a los programas obtenidos
-			for(Programa programaSel : programas)
-			{
-				//System.out.println("ID Programa: "+programaSel.getIdPrograma());
-				registrosBitacora.addAll(bitacoraNegocio.getRegistrosBitacoraPrograma(programaSel.getIdPrograma()));
+			// Obtengo los registros de la bitacora asociados a los proyecto
+			// asociados a los programas obtenidos
+			for (Programa programaSel : programas) {
+				// System.out.println("ID Programa: "+programaSel.getIdPrograma());
+				registrosBitacora.addAll(bitacoraNegocio
+						.getRegistrosBitacoraPrograma(programaSel
+								.getIdPrograma()));
 			}
 		}
 
-		//Si el usuario es secretario
-		if(usuarioLogeado.getIdPerfilUsuario().equals(PerfilUsuario.SECRETARIO))
-		{
-			//Obtengo la lista de programas asociados al usuario que esta logeado
+		// Si el usuario es secretario
+		if (usuarioLogeado.getIdPerfilUsuario()
+				.equals(PerfilUsuario.SECRETARIO)) {
+			// Obtengo la lista de programas asociados al usuario que esta
+			// logeado
 			programas = programaNegocio.findAll();
 
-			//Obtengo los registros de la bitacora asociados a los proyecto asociados a los programas obtenidos
-			for(Programa programaSel : programas)
-			{
-				//System.out.println("ID Programa: "+programaSel.getIdPrograma());
-				registrosBitacora.addAll(bitacoraNegocio.getRegistrosBitacoraPrograma(programaSel.getIdPrograma()));
-			}	
+			// Obtengo los registros de la bitacora asociados a los proyecto
+			// asociados a los programas obtenidos
+			for (Programa programaSel : programas) {
+				// System.out.println("ID Programa: "+programaSel.getIdPrograma());
+				registrosBitacora.addAll(bitacoraNegocio
+						.getRegistrosBitacoraPrograma(programaSel
+								.getIdPrograma()));
+			}
 		}
 
 		return new DefaultHttpHeaders("index").disableCaching();
 	}
 
-	public void validateCreate() { // TODO
-		//Obtengo el usuario que ha iniciado sesion
+	public void validateCreate() {
+		// Obtengo el usuario que ha iniciado sesion
 		usuarioLogeado = (Usuario) ActionContext.getContext().getSession()
 				.get(NombreObjetosSesion.USUARIO);
-		//Si el usuario es coordinador
-		if(usuarioLogeado.getIdPerfilUsuario().equals(PerfilUsuario.COORDINADOR))
-		{
-			//Valido si la descripcion o la sugerencia se obtienen 
-			if(descripcionRestriccion.equals("") || sugerenciaRestriccion.equals(""))
-			{
+		// Si el usuario es coordinador
+		if (usuarioLogeado.getIdPerfilUsuario().equals(
+				PerfilUsuario.COORDINADOR)) {
+			// Valido si la descripcion o la sugerencia se obtienen
+			if (descripcionRestriccion.equals("")
+					|| sugerenciaRestriccion.equals("")) {
 				addActionError("Favor de ingresar todos los datos requeridos");
 			}
-			
-			if(descripcionRestriccion.length() > 120 || sugerenciaRestriccion.length() > 120 )
-			{
+
+			if (descripcionRestriccion.length() > 120
+					|| sugerenciaRestriccion.length() > 120) {
 				addActionError("Debe ingresar solo 120 carateres en la descripcion/sugerencia");
 			}
 
 		}
-		//Si el usuario es gerente
-		if(usuarioLogeado.getIdPerfilUsuario().equals(PerfilUsuario.GERENTE) || usuarioLogeado.getIdPerfilUsuario().equals(PerfilUsuario.SECRETARIO))
-		{
-			if(detallesAccionRestriccion.equals(""))
-			{
+		// Si el usuario es gerente
+		if (usuarioLogeado.getIdPerfilUsuario().equals(PerfilUsuario.GERENTE)
+				|| usuarioLogeado.getIdPerfilUsuario().equals(
+						PerfilUsuario.SECRETARIO)) {
+			if (detallesAccionRestriccion.equals("")) {
 				addActionError("Favor de ingresar todos los datos requeridos");
 			}
-			if(detallesAccionRestriccion.length() > 255)
-			{
+			if (detallesAccionRestriccion.length() > 255) {
 				addActionError("Debe ingresar solo 255 carateres en el mensaje");
 			}
 		}
 	}
 
-	@Validations(/*requiredStrings = {
-			@RequiredStringValidator(fieldName = "descripcionRestriccion", type = ValidatorType.FIELD, key = "introDescrip"),
-			@RequiredStringValidator(fieldName = "sugerenciaRestriccion", type = ValidatorType.FIELD, key = "introSugerencia") },*/ regexFields = {
-					@RegexFieldValidator(fieldName = "descripcion", type = ValidatorType.SIMPLE, expression = "[A-Za-zÑñÁÉÍÓÚáéíóúÜü]([A-Za-zÑñÁÉÍÓÚáéíóúÜü0-9.,/#]|\\s|\\-){0,100}", key = "descripcionError.max100"),
-					@RegexFieldValidator(fieldName = "sugerencia", type = ValidatorType.SIMPLE, expression = "[A-Za-zÑñÁÉÍÓÚáéíóúÜü]([A-Za-zÑñÁÉÍÓÚáéíóúÜü0-9.,/#]|\\s|\\-){0,100}", key = "descripcionError.max100") })
+	@Validations(regexFields = {
+			@RegexFieldValidator(fieldName = "descripcion", type = ValidatorType.SIMPLE, expression = "[A-Za-zÑñÁÉÍÓÚáéíóúÜü]([A-Za-zÑñÁÉÍÓÚáéíóúÜü0-9.,/#]|\\s|\\-){0,100}", key = "descripcionError.max100"),
+			@RegexFieldValidator(fieldName = "sugerencia", type = ValidatorType.SIMPLE, expression = "[A-Za-zÑñÁÉÍÓÚáéíóúÜü]([A-Za-zÑñÁÉÍÓÚáéíóúÜü0-9.,/#]|\\s|\\-){0,100}", key = "descripcionError.max100") })
 	public HttpHeaders create() {
-		String mensaje ="";
+		String mensaje = "";
 		model.setFechaRegistro(fecha);
 
-		//Si la accion que envia la forma es nueva restriccion
-		if(accionForma.equals("nuevaRestriccion"))
-		{
-			//Se  registra el id del proyecto, el tipo de restriccion, el ID del remitente, el ID del destinatario, el contenido de la retriccion y se guarda en BD
+		// Si la accion que envia la forma es nueva restriccion
+		if (accionForma.equals("nuevaRestriccion")) {
+			// Se registra el id del proyecto, el tipo de restriccion, el ID del
+			// remitente, el ID del destinatario, el contenido de la retriccion
+			// y se guarda en BD
 			model.setIdProyecto(idSel);
 			model.setIdTipoRegistro(TipoRegistro.RESTRICCION);
 			model.setIdRemitente(idRemitenteSel);
 			model.setIdDestinatario(idDestinatarioSel);
-			model.setDescripcion(descripcionRestriccion+":desc:"+sugerenciaRestriccion);
+			model.setDescripcion(descripcionRestriccion + ":desc:"
+					+ sugerenciaRestriccion);
 			bitacoraNegocio.save(model);
 			mensaje = "Restriccion registrada satisfactoriamente";
 		}
 
-		//Si la accion que envia la forma es una atencion inmediata
-		if(accionForma.equals("atencionRestriccionInmediata"))
-		{
-			//Obtengo los datos de la restriccion obteniendolos con el id que tiene en la bitacora
+		// Si la accion que envia la forma es una atencion inmediata
+		if (accionForma.equals("atencionRestriccionInmediata")) {
+			// Obtengo los datos de la restriccion obteniendolos con el id que
+			// tiene en la bitacora
 			bitacora = bitacoraNegocio.findById(idRestriccionSel);
-			//Obtengo los datos del proyecto obteniendo el proyecto que se tiene en la restriccion de la bitacora
+			// Obtengo los datos del proyecto obteniendo el proyecto que se
+			// tiene en la restriccion de la bitacora
 			proyecto = proyectoNegocio.findById(bitacora.getIdProyecto());
-			//Obtengo el responsable
+			// Obtengo el responsable
 			idDestinatarioSel = proyecto.getIdResponsable();
-			//Se  registra el id del proyecto, el tipo de restriccion, el ID del remitente, el ID del destinatario, el contenido de la retriccion y se guarda en BD
+			// Se registra el id del proyecto, el tipo de restriccion, el ID del
+			// remitente, el ID del destinatario, el contenido de la retriccion
+			// y se guarda en BD
 			model.setIdProyecto(bitacora.getIdProyecto());
 			model.setIdRegistroReferencia(bitacora.getIdRegistro());
 			model.setIdTipoRegistro(TipoRegistro.ATENCION_INMEDIATA);
@@ -210,27 +232,29 @@ public class OperacionBitacoraController extends ActionSupport implements ModelD
 			model.setIdDestinatario(idDestinatarioSel);
 			model.setDescripcion(detallesAccionRestriccion);
 			bitacoraNegocio.save(model);
-			//Si se habilito la opcion para habilitar la edicion
-			if(estadoEdicion.equals("habilitarEdicion"))
-			{
-				//Pongo su estado en edicion y guardo
+			// Si se habilito la opcion para habilitar la edicion
+			if (estadoEdicion.equals("habilitarEdicion")) {
+				// Pongo su estado en edicion y guardo
 				proyecto.setIdEstado(Estado.EDICION);
 				proyectoNegocio.save(proyecto);
 			}
 			mensaje = "Restriccion atendida satisfactoriamente";
 		}
 
-		//Si la accion que envia la forma es turnar una restriccion
-		if(accionForma.equals("turnarRestriccion"))
-		{
-			//Obtengo los datos de la restriccion obteniendolos con el id que tiene en la bitacora
+		// Si la accion que envia la forma es turnar una restriccion
+		if (accionForma.equals("turnarRestriccion")) {
+			// Obtengo los datos de la restriccion obteniendolos con el id que
+			// tiene en la bitacora
 			bitacora = bitacoraNegocio.findById(idRestriccionSel);
-			//Obtengo los datos del proyecto obteniendo el proyecto que se tiene en la restriccion de la bitacora
+			// Obtengo los datos del proyecto obteniendo el proyecto que se
+			// tiene en la restriccion de la bitacora
 			proyecto = proyectoNegocio.findById(bitacora.getIdProyecto());
-			//Obtengo el ID de secretaria para enviarle la restriccion
-			usuarioSecretaria = usuarioNegocio.getUsuarioSecretaria(); 
+			// Obtengo el ID de secretaria para enviarle la restriccion
+			usuarioSecretaria = usuarioNegocio.getUsuarioSecretaria();
 			idDestinatarioSel = usuarioSecretaria.getIdUsuario();
-			//Se  registra el id del proyecto, el tipo de restriccion, el ID del remitente, el ID del destinatario, el contenido de la retriccion y se guarda en BD
+			// Se registra el id del proyecto, el tipo de restriccion, el ID del
+			// remitente, el ID del destinatario, el contenido de la retriccion
+			// y se guarda en BD
 			model.setIdProyecto(bitacora.getIdProyecto());
 			model.setIdRegistroReferencia(bitacora.getIdRegistro());
 			model.setIdTipoRegistro(TipoRegistro.DERIVACION);
@@ -241,16 +265,21 @@ public class OperacionBitacoraController extends ActionSupport implements ModelD
 			mensaje = "Restriccion turnada satisfactoriamente";
 		}
 
-		//Si la accion que envia la forma es una atencion a restriccion turnada
-		if(accionForma.equals("atencionRestriccionTurnada"))
-		{
-			//Obtengo los datos de la restriccion obteniendolos con el id que tiene en la bitacora
+		// Si la accion que envia la forma es una atencion a restriccion turnada
+		if (accionForma.equals("atencionRestriccionTurnada")) {
+			// Obtengo los datos de la restriccion obteniendolos con el id que
+			// tiene en la bitacora
 			bitacora = bitacoraNegocio.findById(idRestriccionSel);
-			//Obtengo los datos del proyecto obteniendo el proyecto que se tiene en la restriccion de la bitacora
+			// Obtengo los datos del proyecto obteniendo el proyecto que se
+			// tiene en la restriccion de la bitacora
 			proyecto = proyectoNegocio.findById(bitacora.getIdProyecto());
-			//Obtengo el ID del gerente encargado del programa para enviarle la restriccion
-			this.idDestinatarioSel = proyecto.getProgramaPrincipal().getIdUsuario();
-			//Se  registra el id del proyecto, el tipo de restriccion, el ID del remitente, el ID del destinatario, el contenido de la retriccion y se guarda en BD
+			// Obtengo el ID del gerente encargado del programa para enviarle la
+			// restriccion
+			this.idDestinatarioSel = proyecto.getProgramaPrincipal()
+					.getIdUsuario();
+			// Se registra el id del proyecto, el tipo de restriccion, el ID del
+			// remitente, el ID del destinatario, el contenido de la retriccion
+			// y se guarda en BD
 			model.setIdProyecto(bitacora.getIdProyecto());
 			model.setIdRegistroReferencia(bitacora.getIdRegistroReferencia());
 			model.setIdTipoRegistro(TipoRegistro.ATENCION_DIRECTOR);
@@ -261,16 +290,22 @@ public class OperacionBitacoraController extends ActionSupport implements ModelD
 			mensaje = "Restriccion atendida satisfactoriamente";
 		}
 
-		//Si la accion que envia la forma es una atencion a una restriccion atendida por la secretaria
-		if(accionForma.equals("atencionRestriccionSecretaria"))
-		{
-			//Obtengo los datos de la restriccion obteniendolos con el id que tiene en la bitacora
+		// Si la accion que envia la forma es una atencion a una restriccion
+		// atendida por la secretaria
+		if (accionForma.equals("atencionRestriccionSecretaria")) {
+			// Obtengo los datos de la restriccion obteniendolos con el id que
+			// tiene en la bitacora
 			bitacora = bitacoraNegocio.findById(idRestriccionSel);
-			//Obtengo los datos del proyecto obteniendo el proyecto que se tiene en la restriccion de la bitacora
+			// Obtengo los datos del proyecto obteniendo el proyecto que se
+			// tiene en la restriccion de la bitacora
 			proyecto = proyectoNegocio.findById(bitacora.getIdProyecto());
-			//Obtengo el ID del gerente encargado del programa para enviarle la restriccion
-			this.idDestinatarioSel = proyecto.getProgramaPrincipal().getIdUsuario();
-			//Se  registra el id del proyecto, el tipo de restriccion, el ID del remitente, el ID del destinatario, el contenido de la retriccion y se guarda en BD
+			// Obtengo el ID del gerente encargado del programa para enviarle la
+			// restriccion
+			this.idDestinatarioSel = proyecto.getProgramaPrincipal()
+					.getIdUsuario();
+			// Se registra el id del proyecto, el tipo de restriccion, el ID del
+			// remitente, el ID del destinatario, el contenido de la retriccion
+			// y se guarda en BD
 			model.setIdProyecto(bitacora.getIdProyecto());
 			model.setIdRegistroReferencia(bitacora.getIdRegistroReferencia());
 			model.setIdTipoRegistro(TipoRegistro.ATENCION_TURNADA);
@@ -278,10 +313,9 @@ public class OperacionBitacoraController extends ActionSupport implements ModelD
 			model.setIdDestinatario(idDestinatarioSel);
 			model.setDescripcion(detallesAccionRestriccion);
 			bitacoraNegocio.save(model);
-			//Si se habilito la opcion para habilitar la edicion
-			if(estadoEdicion.equals("habilitarEdicion"))
-			{
-				//Pongo su estado en edicion y guardo
+			// Si se habilito la opcion para habilitar la edicion
+			if (estadoEdicion.equals("habilitarEdicion")) {
+				// Pongo su estado en edicion y guardo
 				proyecto.setIdEstado(Estado.EDICION);
 				proyectoNegocio.save(proyecto);
 			}
@@ -291,7 +325,7 @@ public class OperacionBitacoraController extends ActionSupport implements ModelD
 		return new DefaultHttpHeaders("success");
 	}
 
-	public Bitacora getModel() { 
+	public Bitacora getModel() {
 		if (model == null) {
 			model = new Bitacora();
 		}
@@ -326,16 +360,13 @@ public class OperacionBitacoraController extends ActionSupport implements ModelD
 		this.descripcion = descripcion;
 	}
 
-	/*public String getSugerencia() {
-		return sugerencia;
-	}
-
-	public void setSugerencia(String sugerencia) {
-		String[] temp = this.descripcion.split(":desc:",2);
-		this.descripcion = temp[0];
-		this.sugerencia = temp[1];
-		//this.sugerencia = sugerencia;
-	}*/
+	/*
+	 * public String getSugerencia() { return sugerencia; }
+	 * 
+	 * public void setSugerencia(String sugerencia) { String[] temp =
+	 * this.descripcion.split(":desc:",2); this.descripcion = temp[0];
+	 * this.sugerencia = temp[1]; //this.sugerencia = sugerencia; }
+	 */
 
 	public String getSugerenciaRestriccion() {
 		return sugerenciaRestriccion;
