@@ -275,8 +275,7 @@ public class OperacionBitacoraController extends ActionSupport implements
 			proyecto = proyectoNegocio.findById(bitacora.getIdProyecto());
 			// Obtengo el ID del gerente encargado del programa para enviarle la
 			// restriccion
-			this.idDestinatarioSel = proyecto.getProgramaPrincipal()
-					.getIdUsuario();
+			this.idDestinatarioSel = proyecto.getResponsable().getEmpleado();
 			// Se registra el id del proyecto, el tipo de restriccion, el ID del
 			// remitente, el ID del destinatario, el contenido de la retriccion
 			// y se guarda en BD
@@ -301,8 +300,8 @@ public class OperacionBitacoraController extends ActionSupport implements
 			proyecto = proyectoNegocio.findById(bitacora.getIdProyecto());
 			// Obtengo el ID del gerente encargado del programa para enviarle la
 			// restriccion
-			this.idDestinatarioSel = proyecto.getProgramaPrincipal()
-					.getIdUsuario();
+			this.idDestinatarioSel = proyecto.getResponsable().getEmpleado();
+
 			// Se registra el id del proyecto, el tipo de restriccion, el ID del
 			// remitente, el ID del destinatario, el contenido de la retriccion
 			// y se guarda en BD
