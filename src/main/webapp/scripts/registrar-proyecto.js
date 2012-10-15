@@ -1,9 +1,30 @@
+var BANDERA_DURACION = 1;
+var BANDERA_FECHA = 2;
+var BANDERA_INDEFINIDO = 3;
+
 $(document).ready(function() {
+	logger.trace("M kiero cortar los uevos");
 	$("input[name='tipoPeriodo']:radio").change(clickPeriodo);
-	//$("#frmRegistrarProyecto").submit(capturaSubmit);
+	$(document).submit(capturaSubmit);
+
+	switch (parseInt($("#banderaTipoPeriodo").val(), 10)) {
+	case BANDERA_DURACION:
+		$("#duracion").trigger("click");
+		break;
+	case BANDERA_FECHA:
+		$("#fechas").trigger("click");
+		break;
+	case BANDERA_INDEFINIDO:
+		$("#indefinido").trigger("click");
+		break;
+	default:
+		logger.warn("No hay periodo elegido, por defecto indefinido.");
+		$("#indefinido").trigger("click");
+	}
 });
-$(document).submit(capturaSubmit);
+
 function clickPeriodo() {
+	logger.trace("What ya say!?");
 	var seleccionado = $(this).val();
 
 	switch (seleccionado) {
@@ -35,7 +56,7 @@ function clickPeriodo() {
 
 		$(".campoFechas").attr("disabled", "disabled");
 		$(".campoDuracion").attr("disabled", "disabled");
-		
+
 		$("#txtDuracion").removeAttr("disabled");
 		$("#txtDuracion").val(null);
 		$("#dtpFechaInicio").removeAttr("disabled");
@@ -57,22 +78,22 @@ function capturaSubmit() {
 
 	switch (elSeleccionado) {
 	case 'duracion':
-			duracion = parseInt($("#txtDuracion").val());
-			switch (tipoDePeriodo) {
-			case 'day':
-				duracion = duracion;
-				break;
-			case 'week':
-				duracion = duracion * 7;
-				break;
-			case 'month':
-				duracion = duracion * 30;
-				break;
-			case 'year':
-				duracion = duracion * 365;
-				break;
-			}
-			$("#txtDuracion").val(isNaN(duracion) ? 0 : duracion);
+		duracion = parseInt($("#txtDuracion").val());
+		switch (tipoDePeriodo) {
+		case 'day':
+			duracion = duracion;
+			break;
+		case 'week':
+			duracion = duracion * 7;
+			break;
+		case 'month':
+			duracion = duracion * 30;
+			break;
+		case 'year':
+			duracion = duracion * 365;
+			break;
+		}
+		$("#txtDuracion").val(isNaN(duracion) ? 0 : duracion);
 		break;
 	case 'fechas':
 		finicio = $("#dtpFechaInicio").val();
