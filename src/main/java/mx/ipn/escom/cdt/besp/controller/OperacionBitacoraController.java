@@ -78,8 +78,7 @@ public class OperacionBitacoraController extends ActionSupport implements
 
 			// Obtengo el id del usuario responsable del programa asociado al
 			// proyecto seleccionado
-			this.idDestinatarioSel = proyectoSel.getProgramaPrincipal()
-					.getIdUsuario();// .getIdResponsable();
+			this.idDestinatarioSel = proyectoSel.getResponsable().getEmpleado();// .getIdResponsable();
 			usuarioPara = usuarioNegocio.findById(this.idDestinatarioSel);
 			System.out.println("Nombre::>" + usuarioPara.getNombre());
 		} else {
