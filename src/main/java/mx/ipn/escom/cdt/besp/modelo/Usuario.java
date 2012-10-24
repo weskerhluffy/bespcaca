@@ -174,7 +174,7 @@ public class Usuario {
 		this.activado = activado;
 	}
 
-	@Column(name = "id_empleado")
+	@Column(name = "id_superior")
 	public Integer getEmpleado() {
 		return empleado;
 	}
@@ -242,7 +242,7 @@ public class Usuario {
 	}
 
 	@ManyToOne
-	@JoinColumn(name = "id_superior", referencedColumnName = "id_estructura", insertable = false, updatable = false)
+	@JoinColumn(name = "id_superior", referencedColumnName = "id_usuario", insertable = false, updatable = false)
 	public Usuario getEmpleados() {
 		return empleados;
 	}

@@ -17,6 +17,7 @@ public class Direccion {
 	private String deleg;
 	private String edo;
 	private String pais;
+	
 	private Usuario usuario;
 
 	@Id
