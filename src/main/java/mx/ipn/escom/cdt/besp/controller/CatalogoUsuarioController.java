@@ -125,6 +125,7 @@ public class CatalogoUsuarioController extends ActionSupport implements
 		}
 	}
 
+	@Deprecated
 	public String editNewPreregistro() {
 		perfilUsuarios = perfilUsuarioNegocio.findAll();
 		ActionContext.getContext().getSession()

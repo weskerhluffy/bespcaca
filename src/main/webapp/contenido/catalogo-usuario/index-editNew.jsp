@@ -93,7 +93,24 @@
 						<s:hidden name="model.idPerfilUsuario"
 							value="%{@mx.ipn.escom.cdt.besp.modelo.PerfilUsuario@DIRECTORGENERAL}" />
 					</s:if></td>
+
 			</tr>
+
+			<s:if
+				test="%{#session[@mx.ipn.escom.cdt.besp.util.NombreObjetosSesion@USUARIO].idPerfilUsuario !=
+						@mx.ipn.escom.cdt.besp.modelo.PerfilUsuario@ADMINISTRADOR}">
+				<tr>
+					<td><label>Jefazo:</label></td>
+					<td><s:property
+							value="%{#session[@mx.ipn.escom.cdt.besp.util.NombreObjetosSesion@USUARIO].nombre
+							+' '+#session[@mx.ipn.escom.cdt.besp.util.NombreObjetosSesion@USUARIO].apPat
+							+' '+#session[@mx.ipn.escom.cdt.besp.util.NombreObjetosSesion@USUARIO].apMat}" />
+						<s:hidden name="model.empleado"
+							value="%{#session[@mx.ipn.escom.cdt.besp.util.NombreObjetosSesion@USUARIO].idUsuario}" />
+					</td>
+				</tr>
+
+			</s:if>
 			<tr>
 				<td colspan="2"><label>Dirección:</label></td>
 			</tr>
@@ -177,34 +194,7 @@
 						maxlength="70" /></td>
 			</tr>
 		</table>
-		<!-- 
-		<table id="tblContacto">
-		<thead>
-			<tr>
-				<th>Tipo</th>
-				<th>Contacto</th>
-				<th>Descripcion</th>
-				<th>Acciones</th>
-			</tr>
-		</thead>
-		<tbody>
-			<s:iterator value="%{#session[@mx.ipn.escom.cdt.besp.util.NombreObjetosSesion@CONTACTOS_TEMPORALES]}">
-				<tr>
-					<td>${tipoContacto.nombre}</td>
-					<td>${Contacto}</td>
-					<td>${descripcion}</td>
-					<td><a
-						href="${pageContext.request.contextPath}/catalogo-contacto-temporal/${idContacto}!edit">Editar</a>
-						<a
-						href="${pageContext.request.contextPath}/catalogo-contacto-temporal/${idContacto}!deleteConfirm">Eliminar</a>
-					</td>
-				</tr>
-			</s:iterator>
-		</tbody>
-	</table>
-	<p>
-	<sj:a id="btnAgregar" button="true"  href="#" onclick="location.href='%{urlAgregar}'">Agregar Contacto</sj:a>
-	</p>-->
+
 		<br />
 		<sj:submit id="btnAceptar" value="Aceptar" button="true" />
 		<sj:a id="btnRegresar" button="true" href="#"
