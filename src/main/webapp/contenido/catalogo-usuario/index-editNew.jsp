@@ -77,13 +77,13 @@
 				<td><s:if
 						test="%{#session[@mx.ipn.escom.cdt.besp.util.NombreObjetosSesion@USUARIO].idPerfilUsuario==
 						@mx.ipn.escom.cdt.besp.modelo.PerfilUsuario@DIRECTORGENERAL}">
-						<s:label value="Gerente" />
+						<s:label value="Coordinador" />
 						<s:hidden name="model.idPerfilUsuario"
 							value="%{@mx.ipn.escom.cdt.besp.modelo.PerfilUsuario@GERENTE}" />
 					</s:if> <s:if
 						test="%{#session[@mx.ipn.escom.cdt.besp.util.NombreObjetosSesion@USUARIO].idPerfilUsuario==
 						@mx.ipn.escom.cdt.besp.modelo.PerfilUsuario@GERENTE}">
-						<s:label value="Coordinador" />
+						<s:label value="Lider de proyecto" />
 						<s:hidden name="model.idPerfilUsuario"
 							value="%{@mx.ipn.escom.cdt.besp.modelo.PerfilUsuario@COORDINADOR}" />
 					</s:if> <s:if
@@ -100,7 +100,7 @@
 				test="%{#session[@mx.ipn.escom.cdt.besp.util.NombreObjetosSesion@USUARIO].idPerfilUsuario !=
 						@mx.ipn.escom.cdt.besp.modelo.PerfilUsuario@ADMINISTRADOR}">
 				<tr>
-					<td><label>Jefazo:</label></td>
+					<td><label>Jefe inmediato:</label></td>
 					<td><s:property
 							value="%{#session[@mx.ipn.escom.cdt.besp.util.NombreObjetosSesion@USUARIO].nombre
 							+' '+#session[@mx.ipn.escom.cdt.besp.util.NombreObjetosSesion@USUARIO].apPat
