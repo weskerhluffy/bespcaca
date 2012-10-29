@@ -23,7 +23,7 @@
 		<table>
 			<tr>
 				<td><label>Nombre:</label></td>
-				<td><s:textfield id="Nombre" name="model.nombre" maxlength="50" /></td>
+				<td><s:textfield id="Nombre" name="model.nombre" maxlength="100" /></td>
 			</tr>
 			<tr>
 				<td><label>Siglas:</label></td>

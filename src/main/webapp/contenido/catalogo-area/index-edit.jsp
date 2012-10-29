@@ -25,14 +25,14 @@
 				<td><label>Nombre:</label>
 				</td>
 				<td><s:textfield id="nombre" name="model.nombre"
-						disabled="true" maxlength="20" />
+						disabled="true" maxlength="100" />
 				</td>
 			</tr>
 			<tr>
 				<td><label>Siglas:</label>
 				</td>
 				<td><s:textfield id="siglas" name="model.siglas"
-						disabled="true" maxlength="70" />
+						disabled="true" maxlength="10" />
 				</td>
 			</tr>
 			<tr>

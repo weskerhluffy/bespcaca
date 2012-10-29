@@ -62,7 +62,7 @@
 								value="#session[@mx.ipn.escom.cdt.besp.util.NombreObjetosSesion@NIVEL_ESTRUCTURA].nombre" />
 						</td>
 						<td><s:textfield name="model.nombre" id="txtNombre"
-								cssClass="campoEditableEstructura" maxlength="20" />
+								cssClass="campoEditableEstructura" maxlength="200" />
 						</td>
 					</tr>
 					<tr>
@@ -70,7 +70,7 @@
 								value="#session[@mx.ipn.escom.cdt.besp.util.NombreObjetosSesion@NIVEL_ESTRUCTURA].nombre" />
 						</td>
 						<td><s:textfield name="model.descripcion" id="txtDescripcion"
-								cssClass="campoEditableEstructura" maxlength="70" />
+								cssClass="campoEditableEstructura" maxlength="400" />
 						</td>
 					</tr>
 
