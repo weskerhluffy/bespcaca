@@ -159,7 +159,7 @@ public class CatalogoEstructuraController extends ActionSupport implements
 			model.setNodoPadre(estructuraPadreSel);
 
 		} else {
-			logger.trace("El programa al q se a�adira una estructura de primer nivel "
+			logger.trace("El programa al q se a�adira una estructura de primer nivel "
 					+ programaSel.getNombre());
 			if (!programaNegocio.tieneNiveles(programaSel)) {
 				addActionError("El programa seleccionado debe tener niveles seleccionados");
@@ -267,7 +267,7 @@ public class CatalogoEstructuraController extends ActionSupport implements
 			@RequiredStringValidator(fieldName = "model.nombre", type = ValidatorType.SIMPLE, key = "Datos incompletos"),
 			@RequiredStringValidator(fieldName = "model.nombre", type = ValidatorType.SIMPLE, key = "introNombre"),
 			@RequiredStringValidator(fieldName = "model.descripcion", type = ValidatorType.SIMPLE, key = "introDescrip") }, regexFields = {
-			@RegexFieldValidator(fieldName = "model.nombre", type = ValidatorType.SIMPLE, expression = "[A-Za-zÑñÁÉÍÓÚáéíóúÜü]([A-Za-zÑñÁÉÍÓÚáéíóúÜü0-9.,/#]|\\s|\\-){1,50}", key = "nombreError.max50"),
+			@RegexFieldValidator(fieldName = "model.nombre", type = ValidatorType.SIMPLE, expression = "[A-Za-zÑñÁÉÍÓÚáéíóúÜü]([A-Za-zÑñÁÉÍÓÚáéíóúÜü0-9.,/#]|\\s|\\-)", key = "nombreError.max50"),
 			@RegexFieldValidator(fieldName = "model.descripcion", type = ValidatorType.SIMPLE, expression = "[A-Za-zÑñÁÉÍÓÚáéíóúÜü]([A-Za-zÑñÁÉÍÓÚáéíóúÜü0-9.,/#]|\\s|\\-){0,250}", key = "descripcionError.max250") }
 
 	)

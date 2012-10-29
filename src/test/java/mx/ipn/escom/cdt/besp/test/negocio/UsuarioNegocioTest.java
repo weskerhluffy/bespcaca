@@ -24,8 +24,9 @@ public class UsuarioNegocioTest extends
 	public void caca() {
 		List<Usuario> usuarios;
 		Usuario usuario;
-		usuario = usuarioNegocio.findById(3);
+		usuario = usuarioNegocio.findById(1);
 		usuarios = usuarioNegocio.getUsuariosDisponibles(usuario);
+		System.out.println("el usuario es:" + usuario);
 		logger.trace("Los usuarios encontrados son " + usuarios);
 		assert usuarios.size() > 0;
 	}
