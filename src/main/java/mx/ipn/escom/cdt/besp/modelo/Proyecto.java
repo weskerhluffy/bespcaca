@@ -39,7 +39,6 @@ public class Proyecto implements Serializable, Nodo {
 	private String nombre;
 	private String resumen;
 	private String objetivoGeneral;
-	private String datosPreregistro;
 	private Date fechaRegistro;
 	private Date fechaModificacion;
 	private Float costoTotal;
@@ -133,15 +132,8 @@ public class Proyecto implements Serializable, Nodo {
 		this.objetivoGeneral = objetivoGeneral;
 	}
 
-	@RemoteProperty
-	@Column(name = "tx_datos_preregistro")
-	public String getDatosPreregistro() {
-		return datosPreregistro;
-	}
 
-	public void setDatosPreregistro(String datosPreregistro) {
-		this.datosPreregistro = datosPreregistro;
-	}
+
 
 	@RemoteProperty
 	@Column(name = "fh_registro")
