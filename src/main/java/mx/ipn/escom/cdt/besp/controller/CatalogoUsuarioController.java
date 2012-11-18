@@ -350,7 +350,6 @@ public class CatalogoUsuarioController extends ActionSupport implements
 			@RegexFieldValidator(fieldName = "model.aptPat", type = ValidatorType.SIMPLE, expression = "([A-Za-zÑñÁÉÍÓÚáéíóúÜü0-9]){1,50}", key = "apPatError"),
 			@RegexFieldValidator(fieldName = "model.aptMat", type = ValidatorType.SIMPLE, expression = "([A-Za-zÑñÁÉÍÓÚáéíóúÜü0-9]){1,50}", key = "apMatError"),
 			@RegexFieldValidator(fieldName = "model.cargo", type = ValidatorType.SIMPLE, expression = "[A-Za-zÑñÁÉÍÓÚáéíóúÜü]([A-Za-zÑñÁÉÍÓÚáéíóúÜü0-9.,/#]|\\s|\\-){0,250}", key = "cargoError"),
-			@RegexFieldValidator(fieldName = "model.rfc", type = ValidatorType.SIMPLE, expression = "([A-Za-zÑñÁÉÍÓÚáéíóúÜü0-9-]){1,20}", key = "rfcError"),
 			@RegexFieldValidator(fieldName = "model.direccion.calle", type = ValidatorType.SIMPLE, expression = "([A-Za-zÑñÁÉÍÓÚáéíóúÜü0-9 -_,.#]){1,20}", key = "calleError"),
 			@RegexFieldValidator(fieldName = "model.direccion.colonia", type = ValidatorType.SIMPLE, expression = "([A-Za-zÑñÁÉÍÓÚáéíóúÜü0-9 -_,.#]){1,20}", key = "colError"),
 			@RegexFieldValidator(fieldName = "model.direccion.deleg", type = ValidatorType.SIMPLE, expression = "([A-Za-zÑñÁÉÍÓÚáéíóúÜü0-9 -_,.#]){1,20}([A-Za-zÑñÁÉÍÓÚáéíóúÜü0-9 ]){1,20}", key = "delError"),

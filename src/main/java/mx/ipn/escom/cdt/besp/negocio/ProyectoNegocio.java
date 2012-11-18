@@ -270,8 +270,8 @@ public class ProyectoNegocio {
 		Contacto telefono = new Contacto();
 		List<Contacto> contactosPrincipales = new ArrayList<Contacto>();
 
-		datos = p.getDatosPreregistro();
-		datosPrerregistro = r.fromJson(datos, DatosPrerregistro.class);
+		//datos = p.getDatosPreregistro();
+//		datosPrerregistro = r.fromJson(datos, DatosPrerregistro.class);
 
 		// logger.trace("Datos Preregistros: " + datosPrerregistro);
 

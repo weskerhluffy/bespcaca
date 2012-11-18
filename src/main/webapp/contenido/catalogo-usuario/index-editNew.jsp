@@ -186,7 +186,7 @@
 			<tr>
 				<td><label>Correo electrónico:</label></td>
 				<td><s:textfield id="txtCorreo" name="correo.contacto"
-						maxlength="25" /></td>
+						/></td>
 			</tr>
 			<tr>
 				<td><label>Descripción correo electrónico:</label></td>
