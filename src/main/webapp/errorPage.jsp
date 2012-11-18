@@ -8,11 +8,11 @@
 		omit-xml-declaration="true" />
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>TEST</title>
+<title>Aplicación no disponible</title>
 </head>
 <body>
       <body>
-      <div align="center">Aplicación no disponible por el momento</div>
+      <div align="center">Aplicación no disponible por el momento contacte con el administrador del sistema</div>
 </body>
 </body>
 </html>
