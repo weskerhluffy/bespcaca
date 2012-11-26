@@ -151,11 +151,11 @@ public class RegistrarProyectoController extends ActionSupport implements
 			conversionErrorFields = {
 			@ConversionErrorFieldValidator(fieldName = "model.costoTotal", key = "costoTotalError", type = ValidatorType.SIMPLE) },
 			regexFields = {
-			@RegexFieldValidator(fieldName = "model.nombre", type = ValidatorType.SIMPLE, expression = "([A-Za-zÑñÁÉÍÓÚáéíóúÜü0-9.,/#]|\\s|\\-){1,50}", key = "nombreError.max50"),
+			@RegexFieldValidator(fieldName = "model.nombre", type = ValidatorType.SIMPLE, expression =  "[A-Za-zÑñÁÉÍÓÚáéíóúÜü0-9\\.,/#\\s\\-]{1,50}", key = "nombreError.max50"),
 			@RegexFieldValidator(fieldName = "model.siglas", type = ValidatorType.SIMPLE, expression = "([A-Z]){1,10}", key = "siglasError.max10"),
 			@RegexFieldValidator(fieldName = "model.descripcion", type = ValidatorType.SIMPLE, expression = "[A-Za-zÑñÁÉÍÓÚáéíóúÜü]([A-Za-zÑñÁÉÍÓÚáéíóúÜü0-9.,/#]|\\s|\\-){0,250}", key = "descripcionError.max250"),
 			@RegexFieldValidator(fieldName = "model.objetivoGeneral", type = ValidatorType.SIMPLE, expression = "[A-Za-zÑñÁÉÍÓÚáéíóúÜü]([A-Za-zÑñÁÉÍÓÚáéíóúÜü0-9.,/#]|\\s|\\-){0,250}", key = "descripcionError.max250"),
-			@RegexFieldValidator(fieldName = "model.resumen", type = ValidatorType.SIMPLE, expression = "([A-Za-zÑñÁÉÍÓÚáéíóúÜü0-9 -_,.#]){1,500}", key = "resumenError")
+			@RegexFieldValidator(fieldName = "model.resumen", type = ValidatorType.SIMPLE, expression = "[A-Za-zÑñÁÉÍÓÚáéíóúÜü0-9\\.,/#\\s\\-]{1,500}", key = "resumenError")
 			})
 	public HttpHeaders create() {
 		usuarioActual = (Usuario) ActionContext.getContext().getSession()

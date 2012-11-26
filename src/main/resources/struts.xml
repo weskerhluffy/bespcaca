@@ -13,9 +13,11 @@
 	<constant name="struts.convention.default.parent.package"
 		value="besp-cdt" />
 	<constant name="struts.devMode" value="true" />
- 	<!--  <constant name="struts.messages.error.file.too.large" value="El tamaño del archivo debe ser menor a 5Mb." />
-	<constant name="struts.messages.error.content.type.not.allowed" value="El formato del archivo no es soportado. Seleccione un documento PDF o una imagen PNG." />--> 
-	<constant name="struts.multipart.maxSize" value="5242880"/>
+	<!-- <constant name="struts.messages.error.file.too.large" value="El tamaño 
+		del archivo debe ser menor a 5Mb." /> <constant name="struts.messages.error.content.type.not.allowed" 
+		value="El formato del archivo no es soportado. Seleccione un documento PDF 
+		o una imagen PNG." /> -->
+	<constant name="struts.multipart.maxSize" value="5242880" />
 	<constant name="struts.custom.i18n.resources" value="global" />
 	<constant name="struts.ognl.allowStaticMethodAccess" value="true" />
 	<constant name="struts.mapper.idParameterName" value="idSel" />
@@ -46,9 +48,9 @@
 				<interceptor-ref name="modelDriven">
 					<param name="refreshModelBeforeResult">true</param>
 				</interceptor-ref>
-				<interceptor-ref name="fileUpload" >
-				    <param name="allowedTypes">application/pdf,image/png</param>
-				   </interceptor-ref>
+				<interceptor-ref name="fileUpload">
+					<param name="allowedTypes">application/pdf,image/png</param>
+				</interceptor-ref>
 				<interceptor-ref name="checkbox" />
 				<interceptor-ref name="staticParams" />
 				<interceptor-ref name="params">
@@ -71,11 +73,12 @@
 			</interceptor-stack>
 		</interceptors>
 
-		<default-interceptor-ref name="bespCdtStack" /> 
-			<global-results> <result name="login">/login.jsp</result> <result name="error">/errorPage.jsp</result> 
-			<result name="next" type="redirectAction">${#session["current"]}</result> 
-			</global-results> <global-exception-mappings> <exception-mapping exception="java.lang.Exception" 
-			result="error" /> </global-exception-mappings>
+		<default-interceptor-ref name="bespCdtStack" />
+		<global-results>
+			<result name="login">/login.jsp</result>
+			<result name="error">/errorPage.jsp</result>
+			<result name="next" type="redirectAction">${#session["current"]}</result>
+		</global-results>
 	</package>
 
 
