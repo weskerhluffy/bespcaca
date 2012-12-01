@@ -8,7 +8,6 @@
 <title>Eliminar Usuario</title>
 <jsp:text>
 	<![CDATA[ 
-			<script src="${pageContext.request.contextPath}/scripts/Administrador.js" type="text/javascript"></script>
 			<script src="${pageContext.request.contextPath}/scripts/eliminar-desactivar_usuario.js" type="text/javascript"></script>
 		 ]]>
 </jsp:text>
@@ -82,8 +81,7 @@
 				asociados, no es posible eliminar. ¿Desea desactivar el usuario?</p>
 		</sj:dialog>
 		<br />
-		<sj:a id="btnAceptar" button="true" 
-			href="#" onclick="validaSinProyectos()">Aceptar</sj:a>
+		<sj:submit id="btnAceptar" value="Aceptar" button="true" />
 		<sj:a id="btnCancelar" button="true"  
 			href="#" onclick="location.href='%{urlCancelar}'">Cancelar</sj:a>
 	</s:form>

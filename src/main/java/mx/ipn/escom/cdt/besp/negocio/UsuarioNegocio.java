@@ -86,12 +86,14 @@ public class UsuarioNegocio {
 	/**
 	 * 
 	 * @param usuario
-	 * @return Si el usuario tiene proyectos o programas asociados
+	 * @return Si el usuario tiene proyectos, programas o empleados asociados
 	 */
 	@Transactional
 	public Boolean validaTrabajoAsociado(Usuario usuario) {
 		return (usuario.getProyectos().size() > 0)
-				|| (usuario.getProgramas().size() > 0);
+				|| (usuario.getProgramas().size() > 0)
+				|| (usuario.getSuperior() != null && usuario.getSuperior()
+						.size() > 0);
 	}
 
 	@Transactional

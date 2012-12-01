@@ -47,7 +47,8 @@ import com.opensymphony.xwork2.validator.annotations.ValidatorType;
 				"actionName",
 				"gestionar-proyecto-preregistrado/${idProyectoPreregistrado}/edit" }),
 		@Result(name = "success", type = "redirectAction", params = {
-				"actionName", "catalogo-usuario" }) })
+				"actionName", "catalogo-usuario" }),
+		@Result(name = "input", location = "catalogo-usuario/index-deleteConfirm.jsp") })
 public class CatalogoUsuarioController extends ActionSupport implements
 		ModelDriven<Usuario> {
 	/**
@@ -167,8 +168,6 @@ public class CatalogoUsuarioController extends ActionSupport implements
 			@RequiredStringValidator(fieldName = "model.apPat", type = ValidatorType.FIELD, key = "introApPat"),
 			@RequiredStringValidator(fieldName = "model.apMat", type = ValidatorType.FIELD, key = "introApMat"),
 			@RequiredStringValidator(fieldName = "model.cargo", type = ValidatorType.FIELD, key = "introCargo"),
-			// @RequiredStringValidator(fieldName = "model.rfc", type =
-			// ValidatorType.FIELD, key = "introRFC"),
 			@RequiredStringValidator(fieldName = "model.direccion.calle", type = ValidatorType.FIELD, key = "introCalle"),
 			@RequiredStringValidator(fieldName = "model.direccion.colonia", type = ValidatorType.FIELD, key = "introCol"),
 			@RequiredStringValidator(fieldName = "model.direccion.deleg", type = ValidatorType.FIELD, key = "introDel"),
