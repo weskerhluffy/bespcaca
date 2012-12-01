@@ -60,12 +60,12 @@
 			<tr>
 				<td><label>Apellido Paterno:</label></td>
 				<td><s:textfield id="txtApPat" name="model.apPat"
-						maxlength="20" /></td>
+						 /></td>
 			</tr>
 			<tr>
 				<td><label>Apellido Materno:</label></td>
 				<td><s:textfield id="txtApMat" name="model.apMat"
-						maxlength="20" /></td>
+						 /></td>
 			</tr>
 			<tr>
 				<td><label>RFC (*):</label></td>
@@ -136,12 +136,12 @@
 			</tr>
 			<tr>
 				<td colspan="2"><s:textarea id="txtCargo" rows="3" cols="70"
-						name="model.cargo" maxlength="70" /></td>
+						name="model.cargo" /></td>
 			</tr>
 			<tr>
 				<td><label>Calle:</label></td>
 				<td><s:textfield id="txtCalle" name="model.direccion.calle"
-						maxlength="50" /></td>
+						 /></td>
 			</tr>
 			<tr>
 				<td><label>Número:</label></td>
@@ -161,12 +161,12 @@
 			<tr>
 				<td><label>Delegación:</label></td>
 				<td><s:textfield id="txtDeleg" name="model.direccion.deleg"
-						maxlength="20" /></td>
+						/></td>
 			</tr>
 			<tr>
 				<td><label>Estado:</label></td>
 				<td><s:textfield id="txtEdo" name="model.direccion.edo"
-						maxlength="20" /></td>
+						 /></td>
 			</tr>
 			<tr>
 				<td><label>País:</label></td>

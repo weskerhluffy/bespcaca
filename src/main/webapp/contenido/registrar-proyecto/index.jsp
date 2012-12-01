@@ -22,18 +22,18 @@
 	<h1>Registrar proyecto</h1>
 	<s:form action="%{#request.contextPath}/registrar-proyecto"
 		method="post" theme="simple" acceptcharset="UTF-8">
-		<s:hidden id="hdnMethod" name="_method" value="put" />
+	<!-- 	<s:hidden id="hdnMethod" name="_method" value="put" />-->
 		<table>
-			<s:if
+		<s:if
 				test="%{#session[@mx.ipn.escom.cdt.besp.util.NombreObjetosSesion@USUARIO].idPerfilUsuario==
 			@mx.ipn.escom.cdt.besp.modelo.PerfilUsuario@GERENTE}">
-				<tr>
+				<!-- <tr>
 					<td>Coordinadores:</td>
 					<td><s:select list="listCoordinadores" listValue="nombre"
 							listKey="idUsuario" name="idCoordinadorSel"
 							headerValue="- - Seleccione una opción - -" headerKey="-1"
 							requiered="true" /></td>
-				</tr>
+				</tr>-->
 			</s:if>
 			<s:else>
 				<tr>

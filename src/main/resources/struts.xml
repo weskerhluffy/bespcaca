@@ -79,6 +79,10 @@
 			<result name="error">/errorPage.jsp</result>
 			<result name="next" type="redirectAction">${#session["current"]}</result>
 		</global-results>
+		<global-exception-mappings>
+			<exception-mapping exception="java.lang.Exception"
+				result="error" />
+		</global-exception-mappings>
 	</package>
 
 
