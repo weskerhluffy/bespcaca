@@ -9,7 +9,6 @@
 <jsp:text>
 	<![CDATA[
 		<script src="${pageContext.request.contextPath}/scripts/catalogo-contacto.js" type="text/javascript"></script> 
-			<script src="${pageContext.request.contextPath}/scripts/Administrador.js" type="text/javascript"></script>
 			<script src="${pageContext.request.contextPath}/scripts/desactivarUsuario.js" type="text/javascript"></script>
 		 ]]>
 </jsp:text>
@@ -41,26 +40,24 @@
 			</tr>
 			<tr>
 				<td colspan="2"><s:checkbox id="chkbxActivado"
-						name="model.activado" fieldValue="true" /><label>Activo/Inactivo.</label> <s:select list="usuariosExistentes"
-						listValue="nombre" id="lstUsuariosExistentes" listKey="idUsuario"
+						name="model.activado" fieldValue="true" /><label>Activo/Inactivo.</label>
+					<s:select list="usuariosExistentes" listValue="nombre"
+						id="lstUsuariosExistentes" listKey="idUsuario"
 						name="idNuevoUsuarioAsignado"
 						headerValue="- - Seleccione una Coordinador - -" headerKey="-1"
 						requiered="true" /></td>
 			</tr>
 			<tr>
 				<td><label>Nombre:</label></td>
-				<td><s:textfield id="txtNombre" name="model.nombre"
-						 /></td>
+				<td><s:textfield id="txtNombre" name="model.nombre" /></td>
 			</tr>
 			<tr>
 				<td><label>Apellido Paterno:</label></td>
-				<td><s:textfield id="txtApPat" name="model.apPat"
-						 /></td>
+				<td><s:textfield id="txtApPat" name="model.apPat" /></td>
 			</tr>
 			<tr>
 				<td><label>Apellido Materno:</label></td>
-				<td><s:textfield id="txtApMat" name="model.apMat"
-						 /></td>
+				<td><s:textfield id="txtApMat" name="model.apMat" /></td>
 			</tr>
 			<tr>
 				<td><label>RFC:</label></td>
@@ -68,19 +65,7 @@
 			</tr>
 			<tr>
 				<td><label>Perfil de Usuario:</label></td>
-				<td><s:if
-						test="%{#session[@mx.ipn.escom.cdt.besp.util.NombreObjetosSesion@USUARIO].idPerfilUsuario==
-			@mx.ipn.escom.cdt.besp.modelo.PerfilUsuario@DIRECTORGENERAL}">
-						<s:label value="Coordinador" />
-						<s:hidden name="model.idPerfilUsuario"
-							value="%{@mx.ipn.escom.cdt.besp.modelo.PerfilUsuario@COORDINADOR}" />
-					</s:if> <s:else>
-						<s:select list="perfilUsuarios" listValue="nombre"
-							disabled="%{!model.proyectos.isEmpty}" listKey="idPerfilUsuario"
-							name="model.idPerfilUsuario"
-							headerValue="- - Seleccione una opción - -" headerKey="-1"
-							requiered="true" />
-					</s:else></td>
+				<td><s:property value="model.perfilUsuario.nombre" /></td>
 			</tr>
 			<tr>
 				<td><label>Dirección:</label></td>
@@ -104,8 +89,7 @@
 			</tr>
 			<tr>
 				<td><label>Calle:</label></td>
-				<td><s:textfield id="txtCalle" name="model.direccion.calle"
-						 /></td>
+				<td><s:textfield id="txtCalle" name="model.direccion.calle" /></td>
 			</tr>
 			<tr>
 				<td><label>Número:</label></td>
@@ -124,13 +108,11 @@
 			</tr>
 			<tr>
 				<td><label>Delegación:</label></td>
-				<td><s:textfield id="txtDeleg" name="model.direccion.deleg"
-						 /></td>
+				<td><s:textfield id="txtDeleg" name="model.direccion.deleg" /></td>
 			</tr>
 			<tr>
 				<td><label>Estado:</label></td>
-				<td><s:textfield id="txtEdo" name="model.direccion.edo"
-						 /></td>
+				<td><s:textfield id="txtEdo" name="model.direccion.edo" /></td>
 			</tr>
 			<tr>
 				<td><label>País:</label></td>
@@ -152,21 +134,24 @@
 				</tr>
 			</thead>
 			<tbody>
-			<s:actionerror theme="jquery" />
-			<s:actionmessage id="message" theme="jquery"/>
+				<s:actionerror theme="jquery" />
+				<s:actionmessage id="message" theme="jquery" />
 				<s:iterator value="listContactos">
 					<tr>
 						<td>${tipoContacto.nombre}</td>
 						<td>${Contacto}</td>
-						<td><s:if test="principal!=true">Normal</s:if><s:else>Principal</s:else></td>
+						<td><s:if test="principal!=true">Normal</s:if>
+							<s:else>Principal</s:else></td>
 						<td>${descripcion}</td>
 						<td><a
 							href="${pageContext.request.contextPath}/catalogo-contacto/${idContacto}!edit?idUsuarioSel=${idUsuario}">
-							<img height="20" width="20" src="${pageContext.request.contextPath}/images/buttons/editar.png"/></a>
-							<a
+								<img height="20" width="20"
+								src="${pageContext.request.contextPath}/images/buttons/editar.png" />
+						</a> <a
 							href="${pageContext.request.contextPath}/catalogo-contacto/${idContacto}!deleteConfirm?idUsuarioSel=${idUsuario}">
-							<img height="20" width="20" src="${pageContext.request.contextPath}/images/buttons/eliminar.png"/></a>
-						</td>
+								<img height="20" width="20"
+								src="${pageContext.request.contextPath}/images/buttons/eliminar.png" />
+						</a></td>
 					</tr>
 				</s:iterator>
 			</tbody>
@@ -177,10 +162,9 @@
 		</p>
 		<br />
 
-		<sj:submit id="btnAceptar" value="Aceptar" button="true"
-		/>
-		<sj:a id="btnCancelar" button="true"  
-			href="#" onclick="location.href='%{urlCancelar}'">Cancelar</sj:a>
+		<sj:submit id="btnAceptar" value="Aceptar" button="true" />
+		<sj:a id="btnCancelar" button="true" href="#"
+			onclick="location.href='%{urlCancelar}'">Cancelar</sj:a>
 	</s:form>
 </body>
 	</html>

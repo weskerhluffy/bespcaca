@@ -59,13 +59,11 @@
 			</tr>
 			<tr>
 				<td><label>Apellido Paterno:</label></td>
-				<td><s:textfield id="txtApPat" name="model.apPat"
-						 /></td>
+				<td><s:textfield id="txtApPat" name="model.apPat" /></td>
 			</tr>
 			<tr>
 				<td><label>Apellido Materno:</label></td>
-				<td><s:textfield id="txtApMat" name="model.apMat"
-						 /></td>
+				<td><s:textfield id="txtApMat" name="model.apMat" /></td>
 			</tr>
 			<tr>
 				<td><label>RFC (*):</label></td>
@@ -89,9 +87,12 @@
 					</s:if> <s:if
 						test="%{#session[@mx.ipn.escom.cdt.besp.util.NombreObjetosSesion@USUARIO].idPerfilUsuario==
 						@mx.ipn.escom.cdt.besp.modelo.PerfilUsuario@ADMINISTRADOR}">
-						<s:label value="Director" />
-						<s:hidden name="model.idPerfilUsuario"
-							value="%{@mx.ipn.escom.cdt.besp.modelo.PerfilUsuario@DIRECTORGENERAL}" />
+
+						<s:select
+							list="#{@mx.ipn.escom.cdt.besp.modelo.PerfilUsuario@DIRECTORGENERAL:'Dreictor',
+											@mx.ipn.escom.cdt.besp.modelo.PerfilUsuario@SECRETARIO :'Secretaria'}"
+							name="model.idPerfilUsuario" required="true" />
+
 					</s:if></td>
 
 			</tr>
@@ -140,8 +141,7 @@
 			</tr>
 			<tr>
 				<td><label>Calle:</label></td>
-				<td><s:textfield id="txtCalle" name="model.direccion.calle"
-						 /></td>
+				<td><s:textfield id="txtCalle" name="model.direccion.calle" /></td>
 			</tr>
 			<tr>
 				<td><label>Número:</label></td>
@@ -160,13 +160,11 @@
 			</tr>
 			<tr>
 				<td><label>Delegación:</label></td>
-				<td><s:textfield id="txtDeleg" name="model.direccion.deleg"
-						/></td>
+				<td><s:textfield id="txtDeleg" name="model.direccion.deleg" /></td>
 			</tr>
 			<tr>
 				<td><label>Estado:</label></td>
-				<td><s:textfield id="txtEdo" name="model.direccion.edo"
-						 /></td>
+				<td><s:textfield id="txtEdo" name="model.direccion.edo" /></td>
 			</tr>
 			<tr>
 				<td><label>País:</label></td>
@@ -185,8 +183,7 @@
 			</tr>
 			<tr>
 				<td><label>Correo electrónico:</label></td>
-				<td><s:textfield id="txtCorreo" name="correo.contacto"
-						/></td>
+				<td><s:textfield id="txtCorreo" name="correo.contacto" /></td>
 			</tr>
 			<tr>
 				<td><label>Descripción correo electrónico:</label></td>
