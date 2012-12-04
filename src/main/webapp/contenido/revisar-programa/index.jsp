@@ -42,22 +42,12 @@
 	</center>
 
 
-<!-- 	<s:if
-		test="%{#session[@mx.ipn.escom.cdt.besp.util.NombreObjetosSesion@USUARIO].idPerfilUsuario eq @mx.ipn.escom.cdt.besp.modelo.PerfilUsuario@DIRECTOR}">
-
-		
-	</s:if>  -->
 	<s:if
 		test="%{#session[@mx.ipn.escom.cdt.besp.util.NombreObjetosSesion@USUARIO].idPerfilUsuario eq @mx.ipn.escom.cdt.besp.modelo.PerfilUsuario@GERENTE}">
 		<sj:a id="btnGestionProgramas" button="true" href="#"
 			onclick="location.href='%{urlGestionProgramas}'">Gestión de Programas	</sj:a>
-		<!--<sj:a id="btnCancelar" button="true" 
-			href="#" onclick="location.href='%{urlGestion}'">Gestión de Estructura</sj:a>-->
-		<!-- <a href="${pageContext.request.contextPath}/catalogo-estructura"
-		id="programas">Gestión de Estructura
-	</a>!-->
+
 	</s:if>
-	<!--input type="button" value="Revisar Proyecto" onclick="valida()"></input-->
 	<sj:a id="btnRevisarProyecto" button="true" onclick="valida()">Revisar Proyecto</sj:a>
 	<br />
 
@@ -67,9 +57,26 @@
 	<s:form method="get"
 		action="%{#request.contextPath}/catalogo-estructura" theme="simple"
 		id="frmEstructura" acceptcharset="UTF-8">
-		<div id="contenedorGanttPapiChulo">
-			<div style="width: 950px;" id="prjDiv"></div>
-		</div>
+		<table>
+			<thead>
+				<tr>
+					<th>Proyecto</th>
+					<th>Acciones</th>
+				</tr>
+			</thead>
+			<tbody>
+				<s:iterator value="listaProyectos ">
+					<tr>
+						<td><s:property value="nombre" /></td>
+
+						<s:url id="urlAprobar"
+							value="/aprobar-proyecto/%{idProyecto}/edit"
+							includeContext="true" />
+						<td><s:a href="%{urlAprobar}">Aprobar/Rechazar</s:a></td>
+					</tr>
+				</s:iterator>
+			</tbody>
+		</table>
 	</s:form>
 </body>
 	</html>

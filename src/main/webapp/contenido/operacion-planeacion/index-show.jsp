@@ -65,10 +65,7 @@
 		</div>
 		<br />
 		<br />
-		<!--<jsp:include page="%{urlPresupuesto}" />
-		<iframe border="0" frameborder="0" framespacing="0"
-				width="100%" height="550px;" src="${urlPresupuesto}"> Su
-				navegador no soporta esta funcion </iframe>!-->
+
 		<p align="right">
 			<sj:a button="true"
 				onclick="window.location='%{urlAprobar}/%{idSel}/edit'">
@@ -85,8 +82,9 @@
 		<div class="section">
 			Financiamiento
 			<blockquote></blockquote>
-			
-			<h4>Costo total:
+
+			<h4>
+				Costo total:
 				<s:property
 					value="getText('$ {0,number,#,##0.00}',{#session.proyecto.costoTotal})" />
 			</h4>
@@ -102,8 +100,7 @@
 			<thead>
 				<tr>
 					<th colspan="3"><div style="text-align: center;">Financimiento
-						</div>
-					</th>
+						</div></th>
 					<th colspan="3"><div style="text-align: center;">Dictamen</div>
 					</th>
 					<th colspan="2"><div style="text-align: center;">Ejercido</div>
@@ -123,17 +120,13 @@
 			<tbody>
 				<s:iterator value="list">
 					<tr>
-						<td><b>${nombreFuente}</b>
-						</td>
-						<td><s:date name="fechaSolicitado" format="yyyy-MM-dd" />
-						</td>
+						<td><b>${nombreFuente}</b></td>
+						<td><s:date name="fechaSolicitado" format="yyyy-MM-dd" /></td>
 						<td>${montoSolicitado}</td>
-						<td><s:date name="fechaAprobado" format="yyyy-MM-dd" />
-						</td>
+						<td><s:date name="fechaAprobado" format="yyyy-MM-dd" /></td>
 						<td></td>
 						<td>${montoAprobado}</td>
-						<td><s:date name="fecha" format="yyyy-MM-dd" />
-						</td>
+						<td><s:date name="fecha" format="yyyy-MM-dd" /></td>
 						<td>${monto}</td>
 
 					</tr>
@@ -162,9 +155,7 @@
 			<td></td>
 		</table>
 
-		<!--<s:property
-					value="%{#session[@mx.ipn.escom.cdt.besp.util.NombreObjetosSesion@PROYECTOS_ASOCIADOS]}"
-					var="proyecto"/>!-->
+		
 
 
 

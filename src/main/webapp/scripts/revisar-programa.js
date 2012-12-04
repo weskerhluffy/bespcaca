@@ -1,9 +1,6 @@
 $(document).ready(function() {
 	logger.trace("Dom inicializado");
-	accion = $("#frmEstructura").attr("action");
-	RevisarProgramaController.getNodos(generarGantt);
 	logger.trace("Fin document ready");
-	$("input[name='task']:radio").live("click", tipo);
 });
 
 function tipo() {

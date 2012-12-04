@@ -53,6 +53,8 @@ public class Usuario {
 	private List<Programa> programas;
 	private List<Contacto> contactos;
 	private List<Usuario> superior;
+	private List<Proyecto> proyectosEnEdicion;
+	private List<Proyecto> proyectosEnRevision;
 
 	public Usuario() {
 	}
@@ -273,20 +275,6 @@ public class Usuario {
 	}
 
 	/**
-	 * Se obtiene la cantidad de restricciones no atendidas del proyecto
-	 * 
-	 * @return Cantidad de restricciones no atendidas del proyecto en cuestion
-	 */
-	/*
-	 * @Transient public List<Proyecto> getProyectosCreados() { List<Proyecto>
-	 * proyectos; List<Proyecto> proyectosCreados = new ArrayList<Proyecto>();
-	 * proyectos = this.getProyectos(); for (Proyecto proyecto : proyectos) { if
-	 * (proyecto.getIdEstado().equals(estado.REGISTRADO))
-	 * proyectosCreados.add(proyecto); } Collections.reverse(proyectosCreados);
-	 * return proyectosCreados; }
-	 */
-
-	/**
 	 * Se obtienen los proyectos creados por el usuario
 	 * 
 	 * @return Una lista con los proyectos que tienen estado de registrado,
@@ -386,6 +374,28 @@ public class Usuario {
 		}
 
 		return proyectosConPendientes;
+	}
+
+	@OneToMany(mappedBy = "responsable")
+	@Where(clause = "id_estado = " + Estado.EDICION)
+	@OrderBy("fechaRegistro DESC, idProyecto DESC ")
+	public List<Proyecto> getProyectosEnEdicion() {
+		return proyectosEnEdicion;
+	}
+
+	public void setProyectosEnEdicion(List<Proyecto> proyectosEnEdicion) {
+		this.proyectosEnEdicion = proyectosEnEdicion;
+	}
+
+	@OneToMany(mappedBy = "responsable")
+	@Where(clause = "id_estado = " + Estado.REVISION)
+	@OrderBy("fechaRegistro DESC, idProyecto DESC ")
+	public List<Proyecto> getProyectosEnRevision() {
+		return proyectosEnRevision;
+	}
+
+	public void setProyectosEnRevision(List<Proyecto> proyectosEnRevision) {
+		this.proyectosEnRevision = proyectosEnRevision;
 	}
 
 }

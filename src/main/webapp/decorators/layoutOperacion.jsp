@@ -66,31 +66,7 @@
 
 		<div id="pageMenu">
 			<div class="menu">
-				<!--<s:if
-				test="%{#session.usuario.idPerfilUsuario eq @mx.ipn.escom.cdt.besp.modelo.PerfilUsuario@GERENTE}">
-				<h3>Gerente</h3>
-				<h3>Programa</h3>
-				<a class="selected"
-					href="${pageContext.request.contextPath}/catalogo-nivel">Gestión
-					de niveles</a>
-				<br />
-				<a class="selected"
-					href="${pageContext.request.contextPath}/revisar-programa">Revisar
-					programas</a>
-				<br />
-				<h3>Estructura</h3>
-				<a class="selected"
-					href="${pageContext.request.contextPath}/catalogo-estructura">Gestión
-					de estructuras</a>
-				<br />
-				<h3>Proyectos</h3>
-				<a class="selected"
-					href="${pageContext.request.contextPath}/consultar-proyectos">Consultar
-					proyectos</a>
-				<br />
-				<br />
-				<br />
-			</s:if>-->
+				
 				<s:if
 					test="%{#session.usuario.idPerfilUsuario eq @mx.ipn.escom.cdt.besp.modelo.PerfilUsuario@COORDINADOR}">
 					<h3>Líder de proyecto</h3>

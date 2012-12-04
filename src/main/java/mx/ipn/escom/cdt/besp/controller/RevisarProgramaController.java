@@ -9,9 +9,11 @@ import javax.servlet.http.HttpServletRequest;
 import mx.ipn.escom.cdt.besp.modelo.Nodo;
 import mx.ipn.escom.cdt.besp.modelo.PerfilUsuario;
 import mx.ipn.escom.cdt.besp.modelo.Programa;
+import mx.ipn.escom.cdt.besp.modelo.Proyecto;
 import mx.ipn.escom.cdt.besp.modelo.RaizAuxiliar;
 import mx.ipn.escom.cdt.besp.modelo.Usuario;
 import mx.ipn.escom.cdt.besp.negocio.ProgramaNegocio;
+import mx.ipn.escom.cdt.besp.negocio.ProyectoNegocio;
 import mx.ipn.escom.cdt.besp.util.NombreObjetosSesion;
 
 import org.apache.log4j.Logger;
@@ -24,21 +26,29 @@ import org.directwebremoting.WebContextFactory;
 import org.directwebremoting.annotations.RemoteMethod;
 import org.directwebremoting.annotations.RemoteProxy;
 
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
-@SuppressWarnings("serial")
 @Named
 @Results({ @Result(name = "success", type = "redirectAction", params = {
 		"actionName", "catalogo-estructura" }) })
 @RemoteProxy
 public class RevisarProgramaController extends ActionSupport {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1961670065733485548L;
 	private RaizAuxiliar raizAuxiliar;
 	private ProgramaNegocio programaNegocio;
+	private ProyectoNegocio proyectoNegocio;
 	private List<Programa> listaProgramas;
+	private List<Proyecto> listaProyectos;
 
 	Logger logger = Logger.getLogger(RevisarProgramaController.class);
 
 	public HttpHeaders index() {
+		listaProyectos = proyectoNegocio.getProyectosAAprobar((Usuario) ActionContext
+				.getContext().getSession().get(NombreObjetosSesion.USUARIO));
 		logger.trace("Fin del index");
 		return new DefaultHttpHeaders("index").disableCaching();
 	}
@@ -91,6 +101,22 @@ public class RevisarProgramaController extends ActionSupport {
 
 	public void setProgramaNegocio(ProgramaNegocio programaNegocio) {
 		this.programaNegocio = programaNegocio;
+	}
+
+	public ProyectoNegocio getProyectoNegocio() {
+		return proyectoNegocio;
+	}
+
+	public void setProyectoNegocio(ProyectoNegocio proyectoNegocio) {
+		this.proyectoNegocio = proyectoNegocio;
+	}
+
+	public List<Proyecto> getListaProyectos() {
+		return listaProyectos;
+	}
+
+	public void setListaProyectos(List<Proyecto> listaProyectos) {
+		this.listaProyectos = listaProyectos;
 	}
 
 }

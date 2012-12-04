@@ -26,6 +26,8 @@ public class AprobarProyectoController extends ActionSupport implements
 		ModelDriven<Proyecto> {
 
 	private static final long serialVersionUID = -1607905446228964721L;
+	private static Logger logger = Logger
+			.getLogger(AprobarProyectoController.class);
 
 	private ProyectoNegocio proyectoNegocio;
 	private List<Proyecto> listaProyectos;
@@ -33,12 +35,9 @@ public class AprobarProyectoController extends ActionSupport implements
 	private Integer idProyectoSeleccionado;
 	private Proyecto model = null;
 	private Integer idSel = null;
-	private Logger logger;
 	private Bitacora bitacora;
 	private BitacoraNegocio bitacoraNegocio;
-	private TipoRegistro tipoRegistro;
 	private Usuario usuarioLogeado;
-	private Estado estado;
 
 	private String observacion;
 
@@ -56,20 +55,21 @@ public class AprobarProyectoController extends ActionSupport implements
 	}
 
 	public void validateUpdate() {
-		if (model.getIdEstado().equals(estado.EDICION)
+		if (model.getIdEstado().equals(Estado.EDICION)
 				&& observacion.equals("")) {
 			addActionError("Favor de ingresar una observacion");
 		}
 	}
 
 	public String update() {
+		logger.trace("WTF!?");
 		// ejecutar la actualizacion
 		usuarioLogeado = (Usuario) ActionContext.getContext().getSession()
 				.get(NombreObjetosSesion.USUARIO);
 		bitacora = new Bitacora();
-		if (model.getIdEstado().equals(estado.EDICION)) {
+		if (model.getIdEstado().equals(Estado.EDICION)) {
 			bitacora.setIdProyecto(model.getIdProyecto());
-			bitacora.setIdTipoRegistro(tipoRegistro.OBSERVACION);
+			bitacora.setIdTipoRegistro(TipoRegistro.OBSERVACION);
 			bitacora.setIdRemitente(usuarioLogeado.getIdUsuario());
 			bitacora.setIdDestinatario(model.getIdResponsable());
 			bitacora.setDescripcion(observacion);
@@ -158,28 +158,12 @@ public class AprobarProyectoController extends ActionSupport implements
 		this.bitacoraNegocio = bitacoraNegocio;
 	}
 
-	public TipoRegistro getTipoRegistro() {
-		return tipoRegistro;
-	}
-
-	public void setTipoRegistro(TipoRegistro tipoRegistro) {
-		this.tipoRegistro = tipoRegistro;
-	}
-
 	public Usuario getUsuarioLogeado() {
 		return usuarioLogeado;
 	}
 
 	public void setUsuarioLogeado(Usuario usuarioLogeado) {
 		this.usuarioLogeado = usuarioLogeado;
-	}
-
-	public Estado getEstado() {
-		return estado;
-	}
-
-	public void setEstado(Estado estado) {
-		this.estado = estado;
 	}
 
 }

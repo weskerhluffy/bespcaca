@@ -2,7 +2,10 @@ package mx.ipn.escom.cdt.besp.controller;
 
 import javax.inject.Named;
 
-import org.apache.log4j.Logger;
+import mx.ipn.escom.cdt.besp.modelo.Estado;
+import mx.ipn.escom.cdt.besp.modelo.Proyecto;
+import mx.ipn.escom.cdt.besp.negocio.ProyectoNegocio;
+
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
 import org.apache.struts2.interceptor.validation.SkipValidation;
@@ -11,10 +14,6 @@ import org.apache.struts2.rest.HttpHeaders;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
-
-import mx.ipn.escom.cdt.besp.modelo.Estado;
-import mx.ipn.escom.cdt.besp.modelo.Proyecto;
-import mx.ipn.escom.cdt.besp.negocio.ProyectoNegocio;
 
 @Named
 @Results({ @Result(name = "success", type = "redirectAction", params = {

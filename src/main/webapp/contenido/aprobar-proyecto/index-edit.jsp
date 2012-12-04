@@ -24,65 +24,49 @@
 		<div class="section">Datos del proyecto</div>
 		<table>
 			<tr>
-				<td><label>Siglas:</label>
-				</td>
-				<td><s:property value="model.siglas" />
-				</td>
+				<td><label>Siglas:</label></td>
+				<td><s:property value="model.siglas" /></td>
 			</tr>
 			<tr>
-				<td><label>Nombre:</label>
-				</td>
-				<td><s:property value="model.nombre" />
-				</td>
+				<td><label>Nombre:</label></td>
+				<td><s:property value="model.nombre" /></td>
 			</tr>
 			<tr>
-				<td><label>Resumen:</label>
-				</td>
-				<td><s:property value="model.resumen" />
-				</td>
+				<td><label>Resumen:</label></td>
+				<td><s:property value="model.resumen" /></td>
 			</tr>
 			<tr>
-				<td><label>Responsable:</label>
-				</td>
+				<td><label>Responsable:</label></td>
 				<td><s:property
 						value="model.responsable.nombre + ' '+ model.responsable.apPat + ' ' + model.responsable.apMat" />
 				</td>
 			</tr>
 			<tr>
-				<td><label>Objetivo General:</label>
-				</td>
-				<td><s:property value="model.objetivoGeneral" />
-				</td>
+				<td><label>Objetivo General:</label></td>
+				<td><s:property value="model.objetivoGeneral" /></td>
 			</tr>
 			<tr>
-				<td><label>Duración:</label>
-				</td>
-				<td><s:property value="model.periodo.duracion" />
-				</td>
+				<td><label>Duración:</label></td>
+				<td><s:property value="model.periodo.duracion" /></td>
 			</tr>
 			<tr>
-				<td><label>Inicio:</label>
-				</td>
-				<td><s:property value="model.periodo.fechaInicio" />
-				</td>
+				<td><label>Inicio:</label></td>
+				<td><s:property value="model.periodo.fechaInicio" /></td>
 			</tr>
 			<tr>
-				<td><label>Fin:</label>
-				</td>
-				<td><s:property value="model.periodo.fechaFin" />
-				</td>
+				<td><label>Fin:</label></td>
+				<td><s:property value="model.periodo.fechaFin" /></td>
 			</tr>
 			<tr>
-				<td><label>Estado:</label>
-				</td>
-				<td><s:property value="model.estado.nombre" />
-				</td>
+				<td><label>Estado:</label></td>
+				<td><s:property value="model.estado.nombre" /></td>
 			</tr>
 			<s:if
 				test="%{#session[@mx.ipn.escom.cdt.besp.util.NombreObjetosSesion@PROYECTO].idEstado  == @mx.ipn.escom.cdt.besp.modelo.Estado@REVISION}">
 				<tr>
 					<td colspan="2">
-						<div class="section">Resolución de aprobación</div></td>
+						<div class="section">Resolución de aprobación</div>
+					</td>
 				</tr>
 				<tr>
 					<td colspan="2"><label>El proyecto se pasa a:</label>
@@ -91,8 +75,7 @@
 								value="4" onclick="opcion('aprobado');" /> <label>Ejecución</label>
 							<input type="radio" id="edoRechazado" name="model.idEstado"
 								value="2" onclick="opcion('rechazado');" /> <label>Rechazado</label>
-						</div>
-					</td>
+						</div></td>
 				</tr>
 			</s:if>
 
@@ -103,16 +86,14 @@
 							proyecto ha sido rechazado:</label>
 						<s:textarea name="observacion"
 							cssStyle="width:100%; margin-bottom:10px; height:100px;"></s:textarea>
-					</div></td>
+					</div>
+				</td>
 			</tr>
 			<s:if
 				test="%{#session[@mx.ipn.escom.cdt.besp.util.NombreObjetosSesion@PROYECTO].idEstado  == @mx.ipn.escom.cdt.besp.modelo.Estado@REVISION}">
 				<tr>
 					<td colspan="2"><sj:submit id="btnAceptar" value="Aceptar"
-							button="true" cssStyle="float:right;" /> <!--<sj:a id="btnCancelar"
-						button="true"  href="#"
-						onclick="location.href='%{urlCancelar}'">Cancelar</sj:a>-->
-					</td>
+							button="true" cssStyle="float:right;" /></td>
 				</tr>
 			</s:if>
 

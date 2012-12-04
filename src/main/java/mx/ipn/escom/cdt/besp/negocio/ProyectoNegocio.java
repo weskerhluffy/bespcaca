@@ -1,6 +1,10 @@
 package mx.ipn.escom.cdt.besp.negocio;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
 import javax.inject.Named;
 import javax.inject.Singleton;
 
@@ -11,9 +15,6 @@ import mx.ipn.escom.cdt.besp.dao.ProyectoEstructuraDao;
 import mx.ipn.escom.cdt.besp.dao.ProyectoTemaDao;
 import mx.ipn.escom.cdt.besp.modelo.Accion;
 import mx.ipn.escom.cdt.besp.modelo.AvanceFinanciero;
-import mx.ipn.escom.cdt.besp.modelo.Bitacora;
-import mx.ipn.escom.cdt.besp.modelo.Contacto;
-import mx.ipn.escom.cdt.besp.modelo.DatosPrerregistro;
 import mx.ipn.escom.cdt.besp.modelo.EjeTematico;
 import mx.ipn.escom.cdt.besp.modelo.Estado;
 import mx.ipn.escom.cdt.besp.modelo.Estructura;
@@ -26,13 +27,10 @@ import mx.ipn.escom.cdt.besp.modelo.ProyectoEje;
 import mx.ipn.escom.cdt.besp.modelo.ProyectoEstructura;
 import mx.ipn.escom.cdt.besp.modelo.ProyectoTema;
 import mx.ipn.escom.cdt.besp.modelo.TemaTransversal;
-import mx.ipn.escom.cdt.besp.modelo.TipoContacto;
 import mx.ipn.escom.cdt.besp.modelo.Usuario;
 
 import org.apache.log4j.Logger;
 import org.springframework.transaction.annotation.Transactional;
-
-import com.google.gson.Gson;
 
 @Singleton
 @Named("proyectoNegocio")
@@ -121,6 +119,16 @@ public class ProyectoNegocio {
 			List<Integer> idEjes, List<Integer> idTemas, List<Integer> idAreas) {
 		List<Proyecto> proyectos = this.proyectoDao.getProyectos(idProgramas,
 				idEjes, idTemas, idAreas);
+		return proyectos;
+	}
+
+	@Transactional
+	public List<Proyecto> getProyectosAAprobar(Usuario coordinador) {
+		List<Proyecto> proyectos = null;
+		proyectos = new ArrayList<Proyecto>();
+		for (Usuario lider : coordinador.getSuperior()) {
+			proyectos.addAll(lider.getProyectosEnRevision());
+		}
 		return proyectos;
 	}
 
@@ -258,44 +266,6 @@ public class ProyectoNegocio {
 
 		save(proyecto);
 		return proyecto;
-	}
-
-	public Usuario getDatosPreregistro(Proyecto p) {
-		String datos;
-		Gson r = new Gson();
-		DatosPrerregistro datosPrerregistro = null;
-
-		Usuario usuario = new Usuario();
-		Contacto correo = new Contacto();
-		Contacto telefono = new Contacto();
-		List<Contacto> contactosPrincipales = new ArrayList<Contacto>();
-
-		//datos = p.getDatosPreregistro();
-//		datosPrerregistro = r.fromJson(datos, DatosPrerregistro.class);
-
-		// logger.trace("Datos Preregistros: " + datosPrerregistro);
-
-		usuario.setNombre(datosPrerregistro.getNombre());
-		usuario.setApPat(datosPrerregistro.getApPat());
-		usuario.setApMat(datosPrerregistro.getApMat());
-		usuario.setCargo(datosPrerregistro.getCargo());
-		usuario.setIdArea(datosPrerregistro.getIdArea());
-		usuario.setRfc(datosPrerregistro.getRfc());
-
-		correo.setIdTipoContacto(TipoContacto.CORREO);
-		correo.setPrincipal(1);
-		correo.setContacto(datosPrerregistro.getCorreo());
-
-		telefono.setIdTipoContacto(TipoContacto.TELEFONO);
-		telefono.setPrincipal(1);
-		telefono.setContacto(datosPrerregistro.getTelefono());
-
-		contactosPrincipales.add(correo);
-		contactosPrincipales.add(telefono);
-
-		usuario.setContactos(contactosPrincipales);
-		// logger.trace("Fin Metodo getDatos preregistrro");
-		return usuario;
 	}
 
 	/**
