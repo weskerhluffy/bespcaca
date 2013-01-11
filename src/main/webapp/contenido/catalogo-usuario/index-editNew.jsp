@@ -89,7 +89,7 @@
 						@mx.ipn.escom.cdt.besp.modelo.PerfilUsuario@ADMINISTRADOR}">
 
 						<s:select
-							list="#{@mx.ipn.escom.cdt.besp.modelo.PerfilUsuario@DIRECTORGENERAL:'Dreictor',
+							list="#{@mx.ipn.escom.cdt.besp.modelo.PerfilUsuario@DIRECTORGENERAL:'Director',
 											@mx.ipn.escom.cdt.besp.modelo.PerfilUsuario@SECRETARIO :'Secretaria'}"
 							name="model.idPerfilUsuario" required="true" />
 
