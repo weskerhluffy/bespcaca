@@ -78,9 +78,9 @@ public class CatalogoAreaController extends ActionSupport implements
 			@RequiredStringValidator(fieldName = "model.nombre", type = ValidatorType.FIELD, key = "introNombre"),
 			@RequiredStringValidator(fieldName = "model.siglas", type = ValidatorType.FIELD, key = "introSiglas"),
 			@RequiredStringValidator(fieldName = "model.descripcion", type = ValidatorType.FIELD, key = "introDescrip") }, regexFields = {
-			@RegexFieldValidator(fieldName = "model.nombre", type = ValidatorType.SIMPLE, expression = "([A-Za-zÑñÁÉÍÓÚáéíóúÜü0-9.,/#]|\\s|\\-){1,50}", key = "nombreError.max50"),
-			@RegexFieldValidator(fieldName = "model.siglas", type = ValidatorType.SIMPLE, expression = "([A-Z]){1,10}", key = "siglasError.max10"),
-			@RegexFieldValidator(fieldName = "model.descripcion", type = ValidatorType.SIMPLE, expression = "[A-Za-zÑñÁÉÍÓÚáéíóúÜü]([A-Za-zÑñÁÉÍÓÚáéíóúÜü0-9.,/#]|\\s|\\-){0,250}", key = "descripcionError.max250") })
+			//@RegexFieldValidator(fieldName = "model.nombre", type = ValidatorType.SIMPLE, expression = "([A-Za-zÑñÁÉÍÓÚáéíóúÜü0-9.,/#]|\\s|\\-)", key = "nombreError.max50") })
+			@RegexFieldValidator(fieldName = "model.siglas", type = ValidatorType.SIMPLE, expression = "([A-Z]){1,10}", key = "siglasError.max10") })
+			//@RegexFieldValidator(fieldName = "model.descripcion", type = ValidatorType.SIMPLE, expression = "[A-Za-zÑñÁÉÍÓÚáéíóúÜü]([A-Za-zÑñÁÉÍÓÚáéíóúÜü0-9.,/#]|\\s|\\-)", key = "descripcionError.max250") })
 	public HttpHeaders create() { // TODO:
 		model = areaNegocio.save(model);
 		addActionMessage(getText("areaAgre"));
@@ -93,7 +93,7 @@ public class CatalogoAreaController extends ActionSupport implements
 		return "edit";
 	}
 
-	@Validations(requiredStrings = { @RequiredStringValidator(fieldName = "model.descripcion", type = ValidatorType.FIELD, key = "introDescrip") }, regexFields = { @RegexFieldValidator(fieldName = "model.descripcion", type = ValidatorType.SIMPLE, expression = "[A-Za-zÑñÁÉÍÓÚáéíóúÜü]([A-Za-zÑñÁÉÍÓÚáéíóúÜü0-9.,/#]|\\s|\\-){0,250}", key = "descripcionError.max250") })
+	//@Validations(requiredStrings = { @RequiredStringValidator(fieldName = "model.descripcion", type = ValidatorType.FIELD, key = "introDescrip") }, regexFields = { @RegexFieldValidator(fieldName = "model.descripcion", type = ValidatorType.SIMPLE, expression = "[A-Za-zÑñÁÉÍÓÚáéíóúÜü]([A-Za-zÑñÁÉÍÓÚáéíóúÜü0-9.,/#]|\\s|\\-)", key = "descripcionError.max250") })
 	public String update() {
 		areaNegocio.save(model);
 		addActionMessage(getText("areaEdit"));

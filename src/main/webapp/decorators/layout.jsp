@@ -197,6 +197,10 @@
 					</a>
 				</s:if>
 				<!-- -->
+				    <h3>Home</h3>
+					<a href="http://148.204.56.138:8094/SIDAM"
+					class="selected">SIDAM
+					</a>
 			</div>
 		</div>
 

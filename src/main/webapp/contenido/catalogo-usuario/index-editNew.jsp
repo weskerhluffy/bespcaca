@@ -151,7 +151,7 @@
 			<tr>
 				<td><label>Colonia:</label></td>
 				<td><s:textfield id="txtColonia" name="model.direccion.colonia"
-						maxlength="20" /></td>
+						maxlength="100" /></td>
 			</tr>
 			<tr>
 				<td><label>Código Postal:</label></td>

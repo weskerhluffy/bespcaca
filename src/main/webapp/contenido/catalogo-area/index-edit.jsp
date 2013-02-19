@@ -25,7 +25,7 @@
 				<td><label>Nombre:</label>
 				</td>
 				<td><s:textfield id="nombre" name="model.nombre"
-						disabled="true" maxlength="100" />
+						disabled="true"  />
 				</td>
 			</tr>
 			<tr>
@@ -39,7 +39,7 @@
 				<td><label>Descripción: </label>
 				</td>
 				<td><s:textarea rows="3" cols="70" id="descripcion"
-						name="model.descripcion" maxlength="200" />
+						name="model.descripcion"  />
 				</td>
 			</tr>
 		</table>

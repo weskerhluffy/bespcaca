@@ -23,7 +23,7 @@
 		<table>
 			<tr>
 				<td><label>Nombre:</label></td>
-				<td><s:textfield id="Nombre" name="model.nombre" maxlength="100" /></td>
+				<td><s:textfield id="Nombre" name="model.nombre" /></td>
 			</tr>
 			<tr>
 				<td><label>Siglas:</label></td>
@@ -32,7 +32,7 @@
 			<tr>
 				<td><label>Descripción:</label></td>
 				<td><s:textarea rows="3" cols="70" id="Descripcion"
-			name="model.descripcion" maxlength="200" /></td>
+			name="model.descripcion" /></td>
 			</tr>
 		</table>
 		<sj:submit id="btnAceptar" value="Aceptar" button="true"

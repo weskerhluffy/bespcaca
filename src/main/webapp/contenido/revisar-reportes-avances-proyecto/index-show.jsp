@@ -12,7 +12,7 @@
 </jsp:text>
 </head>
 <body>
-	<h1>Reportes de avances de una acción</h1>
+	<h1>Reportes de avances de una meta intermedia</h1>
 	<s:form>
 		<table>
 			<thead>
