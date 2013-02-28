@@ -11,6 +11,10 @@ import com.opensymphony.xwork2.ModelDriven;
 
 public class RevisarProyectoController extends ActionSupport implements
 ModelDriven<Proyecto> {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5082899085279395188L;
 	private Logger logger = Logger.getLogger(RevisarProgramaController.class);
 	private Proyecto model;
 	private ProyectoNegocio proyectoNegocio;

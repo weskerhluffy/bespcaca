@@ -76,8 +76,7 @@
 				</tr>
 				<tr class="dtsProy">
 					<td>Costo total:</td>
-					<td><label><s:property
-								value="getText('$ {0,number,#,##0.00}',{model.costoTotal})" />
+					<td><label>${model.costoTotal}
 					</label></td>
 				</tr>
 				<tr class="dtsProy">
@@ -96,7 +95,7 @@
 
 		</center>
 
-
+<!-- value="getText('$ {0,number,#,##0.00}',{model.costoTotal})"  -->
 		<center>
 			<!-- <div>  -->
 			<s:if

@@ -53,7 +53,7 @@
 					<sj:select href="%{urlUnidad}" id="comboUnidad" formIds="frmIndi"
 						reloadTopics="reloadsecondlist" name="model.idUnidad"
 						list="listUnidad" listValue="nombre" listKey="idUnidad"
-						emptyOption="true" headerKey="-1"
+						emptyOption="false" headerKey="-1"
 						headerValue="Seleccione una unidad" />
 				</td>
 			</tr>

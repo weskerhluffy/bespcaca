@@ -266,9 +266,7 @@ public class CatalogoEstructuraController extends ActionSupport implements
 	@Validations(requiredStrings = {
 			@RequiredStringValidator(fieldName = "model.nombre", type = ValidatorType.SIMPLE, key = "Datos incompletos"),
 			@RequiredStringValidator(fieldName = "model.nombre", type = ValidatorType.SIMPLE, key = "introNombre"),
-			@RequiredStringValidator(fieldName = "model.descripcion", type = ValidatorType.SIMPLE, key = "introDescrip") }, regexFields = {
-			@RegexFieldValidator(fieldName = "model.nombre", type = ValidatorType.SIMPLE, expression = "[A-Za-zÑñÁÉÍÓÚáéíóúÜü]([A-Za-zÑñÁÉÍÓÚáéíóúÜü0-9.,/#]|\\s|\\-)", key = "nombreErrore"),
-			@RegexFieldValidator(fieldName = "model.descripcion", type = ValidatorType.SIMPLE, expression = "[A-Za-zÑñÁÉÍÓÚáéíóúÜü]([A-Za-zÑñÁÉÍÓÚáéíóúÜü0-9.,/#]|\\s|\\-){0,250}", key = "descripcionError.max250") }
+			@RequiredStringValidator(fieldName = "model.descripcion", type = ValidatorType.SIMPLE, key = "introDescrip") }
 
 	)
 	public String create() {
@@ -344,10 +342,7 @@ public class CatalogoEstructuraController extends ActionSupport implements
 
 	@Validations(requiredStrings = {
 			@RequiredStringValidator(fieldName = "model.nombre", type = ValidatorType.SIMPLE, key = "introNombre"),
-			@RequiredStringValidator(fieldName = "model.descripcion", type = ValidatorType.SIMPLE, key = "introDescrip") }, regexFields = {
-			@RegexFieldValidator(fieldName = "model.nombre", type = ValidatorType.SIMPLE, expression = "[A-Za-zÑñÁÉÍÓÚáéíóúÜü]([A-Za-zÑñÁÉÍÓÚáéíóúÜü0-9.,/#]|\\s|\\-)", key = "nombreErrore"),
-			@RegexFieldValidator(fieldName = "model.descripcion", type = ValidatorType.SIMPLE, expression = "[A-Za-zÑñÁÉÍÓÚáéíóúÜü]([A-Za-zÑñÁÉÍÓÚáéíóúÜü0-9.,/#]|\\s|\\-){0,250}", key = "descripcionError.max250") }
-
+			@RequiredStringValidator(fieldName = "model.descripcion", type = ValidatorType.SIMPLE, key = "introDescrip") }
 	)
 	public String update() {
 

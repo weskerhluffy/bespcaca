@@ -28,7 +28,7 @@ import com.opensymphony.xwork2.ModelDriven;
 		"operacion-revisar-avances/${#session[@mx.ipn.escom.cdt.besp.util.NombreObjetosSesion@ACCION].idProyecto}" }) })
 @RemoteProxy
 public class OperacionRevisarAvancesController extends ActionSupport implements
-ModelDriven<Proyecto> {
+		ModelDriven<Proyecto> {
 	/**
 	 * 
 	 */
@@ -42,92 +42,104 @@ ModelDriven<Proyecto> {
 	private Proyecto proyecto;
 	private double totalEjercido;
 	private double porcentajePonderado;
-	
-	
-	
+
 	@SkipValidation
 	public HttpHeaders index() {
-		int x,y,z;
-////////////////Avance Total Ponderado////////////////
-int a=0;
-List<Accion> accPonderadas;
-List<Indicador> pondera;
-porcentajePonderado=0;
-accPonderadas = proyecto.getAcciones();
-	for(a=0;a<accPonderadas.size();a++){//recorre las acciones y cada accion solo tiene un indicador
-		pondera = accPonderadas.get(0).getIndicadores();
-		//si el indicador es ponderado
-		if(pondera.get(0).getUnidad().getIdTipoUnidad()==pondera.get(0).getUnidad().getTipoUnidad().PONDERADO){
-			//(avance/meta)*peso;
-			porcentajePonderado+= (accPonderadas.get(0).getIndicadores().get(0).getAvance()/accPonderadas.get(0).getIndicadores().get(0).getMeta())*accPonderadas.get(0).getIndicadores().get(0).getPeso();
+		int x, y, z;
+		// //////////////Avance Total Ponderado////////////////
+		int a = 0;
+		List<Accion> accPonderadas;
+		List<Indicador> pondera;
+		porcentajePonderado = 0;
+		accPonderadas = proyecto.getAcciones();
+		for (a = 0; a < accPonderadas.size(); a++) {// recorre las acciones y
+													// cada accion solo tiene un
+													// indicador
+			pondera = accPonderadas.get(0).getIndicadores();
+			// si el indicador es ponderado
+			if (pondera.get(0).getUnidad().getIdTipoUnidad() == pondera.get(0)
+					.getUnidad().getTipoUnidad().PONDERADO) {
+				// (avance/meta)*peso;
+				porcentajePonderado += (accPonderadas.get(0).getIndicadores()
+						.get(0).getAvance() / accPonderadas.get(0)
+						.getIndicadores().get(0).getMeta())
+						* accPonderadas.get(0).getIndicadores().get(0)
+								.getPeso();
+			}
 		}
-	}
-ActionContext.getContext().getSession()
-.put("porcentajePonderado", porcentajePonderado);
-///////////////////////////////
-		x=0;
-		y=0;
-		z=list.size();
-		for(x=0;x<z;x++){
-			y+=list.get(x).getMontoErogado();
+		ActionContext.getContext().getSession()
+				.put("porcentajePonderado", porcentajePonderado);
+		// /////////////////////////////
+		x = 0;
+		y = 0;
+		z = list.size();
+		for (x = 0; x < z; x++) {
+			y += list.get(x).getMontoErogado();
 		}
-		totalEjercido = (y/proyecto.getCostoTotal())*100;
+		totalEjercido = (y / proyecto.getCostoTotal()) * 100;
 		ActionContext.getContext().getSession()
-		.put(NombreObjetosSesion.OPERACION_ESTADO, 3);
+				.put(NombreObjetosSesion.OPERACION_ESTADO, 3);
 		ActionContext.getContext().getSession()
-		.put("totalEjercido", totalEjercido);
-		
+				.put("totalEjercido", totalEjercido);
+
 		return new DefaultHttpHeaders("index").disableCaching();
 	}
 
 	public String show() {
-		int x,y,z;
+		int x, y, z;
 		ActionContext.getContext().getSession()
-		.put(NombreObjetosSesion.OPERACION_ESTADO, 3);
+				.put(NombreObjetosSesion.OPERACION_ESTADO, 3);
 		proyecto = proyectoNegocio.findById(idSel);
 		list = proyecto.getIndicadoresFinancieros();
-////////////////Avance Total Ponderado////////////////
-int a=0;
-List<Accion> accPonderadas;
-List<Indicador> pondera;
-porcentajePonderado=0;
-accPonderadas = proyecto.getAcciones();
-for(a=0;a<accPonderadas.size();a++){//recorre las acciones y cada accion solo tiene un indicador
-	pondera = accPonderadas.get(0).getIndicadores();
-	//si el indicador es ponderado
-	if(pondera.get(0).getUnidad().getIdTipoUnidad()==pondera.get(0).getUnidad().getTipoUnidad().PONDERADO){
-		//(avance/meta)*peso;
-		porcentajePonderado+= (accPonderadas.get(0).getIndicadores().get(0).getAvance()/accPonderadas.get(0).getIndicadores().get(0).getMeta())*accPonderadas.get(0).getIndicadores().get(0).getPeso();
-	}
-}
-ActionContext.getContext().getSession()
-.put("porcentajePonderado", porcentajePonderado);
-///////////////////////////////
-		x=0;
-		y=0;
-		z=list.size();
-		for(x=0;x<z;x++){
-			y+=list.get(x).getMontoErogado();
+		// //////////////Avance Total Ponderado////////////////
+		int a = 0;
+		List<Accion> accPonderadas;
+		List<Indicador> pondera;
+		porcentajePonderado = 0;
+		accPonderadas = proyecto.getAcciones();
+		for (a = 0; a < accPonderadas.size(); a++) {// recorre las acciones y
+													// cada accion solo tiene un
+													// indicador
+			pondera = accPonderadas.get(0).getIndicadores();
+			// si el indicador es ponderado
+			if (pondera.get(0).getUnidad().getIdTipoUnidad() == pondera.get(0)
+					.getUnidad().getTipoUnidad().PONDERADO) {
+				// (avance/meta)*peso;
+				porcentajePonderado += (accPonderadas.get(0).getIndicadores()
+						.get(0).getAvance() / accPonderadas.get(0)
+						.getIndicadores().get(0).getMeta())
+						* accPonderadas.get(0).getIndicadores().get(0)
+								.getPeso();
+			}
 		}
-		totalEjercido = (y/proyecto.getCostoTotal())*100;
 		ActionContext.getContext().getSession()
-		.put("totalEjercido", totalEjercido);
+				.put("porcentajePonderado", porcentajePonderado);
+		// /////////////////////////////
+		x = 0;
+		y = 0;
+		z = list.size();
+		for (x = 0; x < z; x++) {
+			y += list.get(x).getMontoErogado();
+		}
+		totalEjercido = (y / proyecto.getCostoTotal()) * 100;
+		ActionContext.getContext().getSession()
+				.put("totalEjercido", totalEjercido);
 		return "show";
 	}
-	
+
 	@RemoteMethod
 	public Nodo getNodos(Integer idSel) {
 		Nodo raiz;
 		AvanceFinanciero avanceFinanciero;
-		
+
 		logger.trace(idSel);
 		proyecto = proyectoNegocio.findById(idSel);
-		
+
 		raiz = proyecto;
 		proyecto.getNodosHijo();
 		return raiz;
 	}
-	
+
 	@Override
 	public Proyecto getModel() {
 		// TODO Auto-generated method stub
@@ -176,17 +188,17 @@ ActionContext.getContext().getSession()
 	}
 
 	public double getTotalEjercido() {
-		int x,y,z;
+		int x, y, z;
 		list = proyecto.getIndicadoresFinancieros();
-		x=0;
-		y=0;
-		z=list.size();
-		for(x=0;x<z;x++){
-			y+=list.get(x).getMontoErogado();
+		x = 0;
+		y = 0;
+		z = list.size();
+		for (x = 0; x < z; x++) {
+			y += list.get(x).getMontoErogado();
 		}
-		totalEjercido = (y/proyecto.getCostoTotal())*100;
+		totalEjercido = (y / proyecto.getCostoTotal()) * 100;
 		ActionContext.getContext().getSession()
-		.put("totalEjercido", totalEjercido);
+				.put("totalEjercido", totalEjercido);
 		return totalEjercido;
 	}
 
@@ -195,23 +207,30 @@ ActionContext.getContext().getSession()
 	}
 
 	public double getPorcentajePonderado() {
-////////////////Avance Total Ponderado////////////////
-int a=0;
-List<Accion> accPonderadas;
-List<Indicador> pondera;
-porcentajePonderado=0;
-accPonderadas = proyecto.getAcciones();
-for(a=0;a<accPonderadas.size();a++){//recorre las acciones y cada accion solo tiene un indicador
-pondera = accPonderadas.get(0).getIndicadores();
-//si el indicador es ponderado
-if(pondera.get(0).getUnidad().getIdTipoUnidad()==pondera.get(0).getUnidad().getTipoUnidad().PONDERADO){
-//(avance/meta)*peso;
-porcentajePonderado+= (accPonderadas.get(0).getIndicadores().get(0).getAvance()/accPonderadas.get(0).getIndicadores().get(0).getMeta())*accPonderadas.get(0).getIndicadores().get(0).getPeso();
-}
-}
-ActionContext.getContext().getSession()
-.put("porcentajePonderado", porcentajePonderado);
-///////////////////////////////
+		// //////////////Avance Total Ponderado////////////////
+		int a = 0;
+		List<Accion> accPonderadas;
+		List<Indicador> pondera;
+		porcentajePonderado = 0;
+		accPonderadas = proyecto.getAcciones();
+		for (a = 0; a < accPonderadas.size(); a++) {// recorre las acciones y
+													// cada accion solo tiene un
+													// indicador
+			pondera = accPonderadas.get(0).getIndicadores();
+			// si el indicador es ponderado
+			if (pondera.get(0).getUnidad().getIdTipoUnidad() == pondera.get(0)
+					.getUnidad().getTipoUnidad().PONDERADO) {
+				// (avance/meta)*peso;
+				porcentajePonderado += (accPonderadas.get(0).getIndicadores()
+						.get(0).getAvance() / accPonderadas.get(0)
+						.getIndicadores().get(0).getMeta())
+						* accPonderadas.get(0).getIndicadores().get(0)
+								.getPeso();
+			}
+		}
+		ActionContext.getContext().getSession()
+				.put("porcentajePonderado", porcentajePonderado);
+		// /////////////////////////////
 		return porcentajePonderado;
 	}
 
@@ -219,8 +238,4 @@ ActionContext.getContext().getSession()
 		this.porcentajePonderado = porcentajePonderado;
 	}
 
-	
-	
-	
-	
 }

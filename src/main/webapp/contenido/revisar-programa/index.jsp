@@ -41,7 +41,7 @@
 		<h1>Revisar Programa</h1>
 	</center>
 
-
+ <!-- 
 	<s:if
 		test="%{#session[@mx.ipn.escom.cdt.besp.util.NombreObjetosSesion@USUARIO].idPerfilUsuario eq @mx.ipn.escom.cdt.besp.modelo.PerfilUsuario@GERENTE}">
 		<sj:a id="btnGestionProgramas" button="true" href="#"
@@ -50,7 +50,7 @@
 	</s:if>
 	<sj:a id="btnRevisarProyecto" button="true" onclick="valida()">Revisar Proyecto</sj:a>
 	<br />
-
+-->
 
 	<s:hidden id="revision" name="rev" />
 

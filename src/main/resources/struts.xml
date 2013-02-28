@@ -12,7 +12,7 @@
 	<constant name="struts.convention.action.mapAllMatches" value="true" />
 	<constant name="struts.convention.default.parent.package"
 		value="besp-cdt" />
-	<constant name="struts.devMode" value="true" />
+	<constant name="struts.devMode" value="false" />
 	<!-- <constant name="struts.messages.error.file.too.large" value="El tamaño 
 		del archivo debe ser menor a 5Mb." /> <constant name="struts.messages.error.content.type.not.allowed" 
 		value="El formato del archivo no es soportado. Seleccione un documento PDF 

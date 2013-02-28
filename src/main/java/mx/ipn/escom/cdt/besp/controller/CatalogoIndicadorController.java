@@ -76,10 +76,10 @@ public class CatalogoIndicadorController extends ActionSupport implements
 			logger.trace("esta es una mierda" + list);
 		}
 
-		// FIXME esto es solo para pruebas
+		/*// FIXME esto es solo para pruebas
 		if (accion == null && idAccionSel == null) {
 			list = indicadorNegocio.findAll();
-		}
+		}*/
 		return new DefaultHttpHeaders("index").disableCaching();
 	}
 
@@ -140,9 +140,9 @@ public class CatalogoIndicadorController extends ActionSupport implements
 
 		// FIXME esta mierda es de prueba
 
-		if (accion == null) {
+	/*	if (accion == null) {
 			accion = accionNegocio.findById(1);
-		}
+		}*/
 		model.setIdProyecto(((Proyecto) ActionContext.getContext().getSession()
 				.get(NombreObjetosSesion.PROYECTO)).getIdProyecto());
 		model.setIdAccion(accion.getId());
@@ -170,6 +170,8 @@ public class CatalogoIndicadorController extends ActionSupport implements
 
 		logger.trace("entrando a  validadeUopdate");
 		Indicador indicador=indicadorNegocio.findById(model.getIdIndicador());
+		
+		
 		if (model.getPeso() != null) {
 			if (!indicadorNegocio.validaIndicador(model)) {
 				addActionError(getText("errorValidaIndicador"));
