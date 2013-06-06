@@ -128,6 +128,8 @@ public class ProyectoNegocio {
 		proyectos = new ArrayList<Proyecto>();
 		for (Usuario lider : coordinador.getSuperior()) {
 			proyectos.addAll(lider.getProyectosEnRevision());
+			
+			
 		}
 		return proyectos;
 	}
